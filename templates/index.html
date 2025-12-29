@@ -13,17 +13,9 @@
     .btn-main { background-color: #e67e22; color: white; border-radius: 8px; font-weight: bold; }
     .btn-main:hover { background-color: #d35400; color: white; }
     .price-tag { color: #c0392b; font-weight: bold; font-size: 1.2rem; }
-    #debug-bar { background: #ffcccc; padding: 10px; border: 2px solid red; margin-bottom: 20px; word-break: break-all; font-family: monospace; font-size: 12px; }
   </style>
 </head>
 <body>
-
-  <!-- 超級除錯條 -->
-  <div id="debug-bar">
-    <strong>DEBUG INFO:</strong><br>
-    UserID: <span id="debug-uid">Waiting...</span><br>
-    InClient: <span id="debug-inclient">?</span> | LoggedIn: <span id="debug-loggedin">?</span>
-  </div>
 
   <div id="loading" class="text-center mt-5">
     <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;"></div>
@@ -113,10 +105,6 @@
       </div>
     </div>
   </div>
-  
-  <div class="text-center mt-5 text-muted" style="font-size: 0.8rem;">
-    System v2.1 (Super Debug Mode)
-  </div>
 
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
@@ -124,67 +112,44 @@
     var userId = null; // 初始化為 null
     var userName = "";
 
-    function updateDebugInfo() {
-        document.getElementById('debug-uid').innerText = userId || "null";
-        try {
-            document.getElementById('debug-inclient').innerText = liff.isInClient();
-            document.getElementById('debug-loggedin').innerText = liff.isLoggedIn();
-        } catch(e) {
-            document.getElementById('debug-inclient').innerText = "Error";
-        }
-    }
-
     // 啟動邏輯
     window.onload = function() {
-      // alert("Step 1: Start Init"); 
       liff.init({ liffId: MY_LIFF_ID })
         .then(() => {
-          updateDebugInfo();
           if (!liff.isLoggedIn()) {
-             // alert("Step 2: Not Logged In. InClient=" + liff.isInClient());
-             
+             // 為了方便開發，如果你在電腦瀏覽器看，就不強制登入 LINE
              if(!liff.isInClient()) {
                 console.log("電腦開發模式: 使用測試帳號");
-                userId = "TEST_USER_001";
-                alert("模式：電腦開發 (TEST_USER_001)");
-                updateDebugInfo();
+                userId = "TEST_USER_001"; // 只有在電腦且未登入時才使用測試帳號
                 checkMemberStatus();
              } else {
-                alert("模式：手機未登入，準備轉跳登入...");
                 liff.login(); 
              }
           } else {
             liff.getProfile().then(profile => {
               userId = profile.userId;
               userName = profile.displayName;
-              // alert("Step 3: Got Profile! ID=" + userId);
-              updateDebugInfo();
               checkMemberStatus();
             }).catch(err => {
                 console.error("GetProfile Error", err);
-                alert("Fatal Error: 無法取得使用者資料 " + err);
                 document.getElementById('loading').innerHTML += '<p class="text-danger">無法取得使用者資料: ' + err + '</p>';
             });
           }
         })
         .catch(err => {
             console.log("LIFF Init Error:", err);
-            alert("Fatal Error: LIFF Init 失敗 " + err);
+            // 就算 LIFF 失敗（例如電腦沒開權限），也讓畫面顯示出來方便測試
             document.getElementById('loading').innerHTML += '<p class="text-danger">LIFF 初始化失敗: ' + err + '</p>';
-            
+            // 嘗試使用測試帳號 fallback，方便電腦除錯，但手機上看到錯誤訊息比較重要
             if(!liff.isInClient()) {
                 userId = "TEST_USER_001";
-                updateDebugInfo();
                 checkMemberStatus();
             }
         });
     };
 
     function checkMemberStatus() {
-        if (!userId) {
-            alert("Error: checkMemberStatus called but userId is null!");
-            return;
-        }
+        if (!userId) return;
 
         // 如果網址有指定 page，就直接去該頁面，不檢查會員 (例如想直接看歷史紀錄)
         const urlParams = new URLSearchParams(window.location.search);
