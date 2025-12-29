@@ -105,6 +105,10 @@
       </div>
     </div>
   </div>
+  
+  <div class="text-center mt-5 text-muted" style="font-size: 0.8rem;">
+    System v2.0 (Debug Mode)
+  </div>
 
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
@@ -114,9 +118,11 @@
 
     // 啟動邏輯
     window.onload = function() {
+      // alert("DEBUG: 開始 LIFF Init"); // 為了不干擾太多，先註解掉，如果有需要再打開
       liff.init({ liffId: MY_LIFF_ID })
         .then(() => {
           if (!liff.isLoggedIn()) {
+             // alert("DEBUG: 未登入. InClient: " + liff.isInClient());
              // 為了方便開發，如果你在電腦瀏覽器看，就不強制登入 LINE
              if(!liff.isInClient()) {
                 console.log("電腦開發模式: 使用測試帳號");
@@ -127,18 +133,21 @@
              }
           } else {
             liff.getProfile().then(profile => {
+              // alert("DEBUG: 已登入 ID=" + profile.userId);
               userId = profile.userId;
               userName = profile.displayName;
               // document.getElementById('loading').style.display = 'none'; // 先不要關 loading
               checkMemberStatus();
             }).catch(err => {
                 console.error("GetProfile Error", err);
+                alert("無法取得使用者資料: " + err);
                 document.getElementById('loading').innerHTML += '<p class="text-danger">無法取得使用者資料: ' + err + '</p>';
             });
           }
         })
         .catch(err => {
             console.log("LIFF Init Error:", err);
+            alert("LIFF 初始化失敗: " + err + "\n請確認 LIFF ID 設定是否正確");
             // 就算 LIFF 失敗（例如電腦沒開權限），也讓畫面顯示出來方便測試
             document.getElementById('loading').innerHTML += '<p class="text-danger">LIFF 初始化失敗: ' + err + '</p>';
             // 嘗試使用測試帳號 fallback，方便電腦除錯，但手機上看到錯誤訊息比較重要
