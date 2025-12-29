@@ -22,6 +22,18 @@
     <h4 class="mt-3 text-muted">系統啟動中...</h4>
   </div>
 
+  <div id="p-welcome" class="page text-center">
+    <div class="card p-5">
+        <h3 class="mb-3">歡迎回來！</h3>
+        <h2 class="text-primary mb-4" id="welcome-name">會員</h2>
+        <p class="text-muted">您已經是我們的會員了。</p>
+        <div class="d-grid gap-2">
+            <button class="btn btn-main btn-lg" onclick="location.href='/?page=order'">我要訂蛋</button>
+            <button class="btn btn-outline-secondary" onclick="location.href='/?page=history'">查看紀錄</button>
+        </div>
+    </div>
+  </div>
+
   <div id="p-register" class="page">
     <div class="card p-4">
       <h3 class="mb-4 text-center">🐣 會員資料填寫</h3>
@@ -108,8 +120,8 @@
              // 為了方便開發，如果你在電腦瀏覽器看，就不強制登入 LINE
              if(!liff.isInClient()) {
                 console.log("電腦開發模式: 使用測試帳號");
-                document.getElementById('loading').style.display = 'none';
-                resolveRoute();
+                // document.getElementById('loading').style.display = 'none'; // 先不要關 loading，等檢查完
+                checkMemberStatus();
              } else {
                 liff.login(); 
              }
@@ -117,18 +129,52 @@
             liff.getProfile().then(profile => {
               userId = profile.userId;
               userName = profile.displayName;
-              document.getElementById('loading').style.display = 'none';
-              resolveRoute();
+              // document.getElementById('loading').style.display = 'none'; // 先不要關 loading
+              checkMemberStatus();
             });
           }
         })
         .catch(err => {
             console.log("LIFF Init Error:", err);
-            // 就算 LIFF 失敗（例如電腦沒開權限），也讓畫面顯示出來方便測試
+            // 就算 LIFF 失敗，也嘗試檢查狀態 (可能會用測試帳號)
+            checkMemberStatus();
+        });
+    };
+
+    function checkMemberStatus() {
+        // 如果網址有指定 page，就直接去該頁面，不檢查會員 (例如想直接看歷史紀錄)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('page')) {
+            document.getElementById('loading').style.display = 'none';
+            resolveRoute();
+            return;
+        }
+
+        // 呼叫後端檢查會員狀態
+        fetch('/api/check_member', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({userId: userId})
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('loading').style.display = 'none';
+            if (data.registered) {
+                // 已註冊 -> 顯示歡迎頁面
+                document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+                document.getElementById('p-welcome').classList.add('active');
+                document.getElementById('welcome-name').innerText = data.name;
+            } else {
+                // 未註冊 -> 顯示註冊頁面 (預設行為)
+                resolveRoute();
+            }
+        })
+        .catch(err => {
+            console.error("Check member error:", err);
             document.getElementById('loading').style.display = 'none';
             resolveRoute();
         });
-    };
+    }
 
     function resolveRoute() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -137,7 +183,7 @@
       
       if (page === 'register') {
         document.getElementById('p-register').classList.add('active');
-        if(document.getElementById('reg-name')) document.getElementById('reg-name').value = userName;
+        // if(document.getElementById('reg-name')) document.getElementById('reg-name').value = userName; // 移除預設值
       } else if (page === 'order') {
         document.getElementById('p-order').classList.add('active');
       } else if (page === 'history') {

@@ -37,9 +37,26 @@ def register():
     sheet.append_row([data.get('userId'), data.get('name'), data.get('phone'), data.get('address')])
     return jsonify({"status": "success", "msg": "註冊成功"})
 
+@app.route('/api/check_member', methods=['POST'])
+def check_member():
+    data = request.json
+    user_id = data.get('userId')
+    sheet = get_sheet("Members")
+    
+    # 取得所有會員資料 (包含標題)
+    all_members = sheet.get_all_values()
+    
+    # 假設 UserId 在第一欄 (index 0), Name 在第二欄 (index 1)
+    # 從第二行開始找 (跳過標題)
+    for row in all_members[1:]:
+        if len(row) > 0 and row[0] == user_id:
+            return jsonify({"registered": True, "name": row[1]})
+            
+    return jsonify({"registered": False})
+
 # 產品清單與價格 (Backend Source of Truth)
 PRODUCTS = {
-    "土雞蛋(10+1)盤": 2500,
+    "土雞蛋11盤": 2500,
     "土雞蛋1盤": 250
 }
 
