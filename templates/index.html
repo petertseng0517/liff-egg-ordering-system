@@ -39,8 +39,10 @@
       <h3 class="mb-4 text-center">🐣 會員資料填寫</h3>
       <form id="form-register">
         <div class="mb-3"><label>您的姓名</label><input type="text" class="form-control" id="reg-name" required></div>
+        <div class="mb-3"><label>出生日期</label><input type="date" class="form-control" id="reg-birthdate"></div>
         <div class="mb-3"><label>聯絡電話</label><input type="tel" class="form-control" id="reg-phone" inputmode="tel" required></div>
         <div class="mb-3"><label>配送地址</label><input type="text" class="form-control" id="reg-address" required></div>
+        <div class="mb-3"><label>第二配送地址 (選填)</label><input type="text" class="form-control" id="reg-address2"></div>
         <button type="button" class="btn btn-main w-100 btn-lg py-3" onclick="submitRegister()">確認註冊</button>
       </form>
     </div>
@@ -221,8 +223,10 @@
         const payload = {
             userId: userId,
             name: document.getElementById('reg-name').value,
+            birthDate: document.getElementById('reg-birthdate').value,
             phone: document.getElementById('reg-phone').value,
-            address: document.getElementById('reg-address').value
+            address: document.getElementById('reg-address').value,
+            address2: document.getElementById('reg-address2').value
         };
 
         fetch('/api/register', {
