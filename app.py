@@ -152,19 +152,34 @@ def order():
     # 2. 產生訂單資料
     order_id = "ORD" + str(int(datetime.now().timestamp()))
     
-    # 組合商品字串，例如: "放山土雞蛋(10入) x2 (備註: 放門口)"
-    item_str = f"{item_name} x{qty}"
-    if remarks:
-        item_str += f" ({remarks})"
+    # 寫入: 訂單編號, UserId, 商品, 金額, 日期, 狀態, DeliveryLogs, PaymentStatus
+    
+    # 針對商品名稱進行正規化，確保 item_str 中的數量是實際盤數
+    actual_item_name = item_name # 實際寫入 Google Sheet 的商品名稱，可能修改
+    actual_qty = qty             # 實際盤數
 
-    # 寫入: 訂單編號, UserId, 商品, 金額, 日期, 狀態
+    if item_name == "土雞蛋11盤":
+        actual_qty = qty * 11
+        # 可以選擇保留原始資訊，例如改成 "土雞蛋(11盤優惠組)"
+        actual_item_name = "土雞蛋(11盤優惠組)"
+    elif item_name == "土雞蛋1盤":
+        actual_qty = qty * 1
+        actual_item_name = "土雞蛋"
+
+    # 組合商品字串，例如: "土雞蛋 x22 (備註: 放門口)"
+    item_str_for_sheet = f"{actual_item_name} x{actual_qty}"
+    if remarks:
+        item_str_for_sheet += f" ({remarks})"
+
     sheet.append_row([
         order_id,
         user_id,
-        item_str,
+        item_str_for_sheet, # 使用正規化後的字串
         total_amount,
         datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "處理中"
+        "處理中",
+        "",         # DeliveryLogs
+        "未付款"     # PaymentStatus
     ])
     return jsonify({"status": "success", "msg": "訂購成功", "orderId": order_id})
 
@@ -176,23 +191,28 @@ def history():
     all_records = sheet.get_all_values() # 抓取所有資料
     
     # 標題列是第0列，資料從第1列開始
-    # 欄位索引: A=0(ID), B=1(UserId), C=2(Item), D=3(Amt), E=4(Date), F=5(Status)
+    # 欄位索引: A=0(ID), B=1(UserId), C=2(Item), D=3(Amt), E=4(Date), F=5(Status), G=6(Logs), H=7(Payment)
     history_list = []
     
     for row in all_records[1:]: # 跳過標題
         if len(row) > 1 and row[1] == user_id:
+            # 兼容舊資料 (可能沒有 H 欄)
+            pay_status = row[7] if len(row) > 7 else "未付款"
+
             history_list.append({
                 "orderId": row[0],
                 "items": row[2],
                 "amount": row[3],
                 "date": row[4],
-                "status": row[5]
+                "status": row[5],
+                "paymentStatus": pay_status
             })
             
     return jsonify(history_list)
 
 # === Admin API ===
 
+import json
 @app.route('/api/admin/orders', methods=['GET'])
 def admin_orders():
     if not session.get('logged_in'):
@@ -223,10 +243,21 @@ def admin_orders():
     # Skip header
     for row in orders_data[1:]:
         if len(row) < 6: continue
-        # Order Cols: ID=0, UserId=1, Items=2, Amt=3, Date=4, Status=5
+        # Order Cols: ID=0, UserId=1, Items=2, Amt=3, Date=4, Status=5, Logs=6, Payment=7
         uid = row[1]
         customer = member_map.get(uid, {})
         
+        # Parse Delivery Logs (Column G)
+        logs = []
+        if len(row) > 6 and row[6]:
+            try:
+                logs = json.loads(row[6])
+            except:
+                logs = []
+
+        # Parse Payment Status (Column H)
+        pay_status = row[7] if len(row) > 7 else "未付款"
+
         results.append({
             "orderId": row[0],
             "userId": uid,
@@ -234,10 +265,95 @@ def admin_orders():
             "amount": row[3],
             "date": row[4],
             "status": row[5],
+            "deliveryLogs": logs,
+            "paymentStatus": pay_status,
             "customer": customer
         })
     
     return jsonify(results)
+
+@app.route('/api/admin/order/add_delivery', methods=['POST'])
+def admin_add_delivery():
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+    order_id = data.get('orderId')
+    user_id = data.get('userId')
+    qty = int(data.get('qty', 0))
+    total_ordered = int(data.get('totalOrdered', 1))
+
+    sheet = get_sheet("Orders")
+    try:
+        cell = sheet.find(order_id)
+        if not cell:
+            return jsonify({"status": "error", "msg": "找不到訂單"}), 404
+        
+        # Get current logs (Column G = 7)
+        row_values = sheet.row_values(cell.row)
+        current_logs_str = row_values[6] if len(row_values) > 6 else "[]"
+        try:
+            logs = json.loads(current_logs_str)
+            if not isinstance(logs, list): logs = []
+        except:
+            logs = []
+            
+        # Add new log
+        new_log = {
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "qty": qty
+        }
+        logs.append(new_log)
+        
+        # Calculate new status
+        total_delivered = sum(int(l['qty']) for l in logs)
+        new_status = "已完成" if total_delivered >= total_ordered else "部分配送"
+        
+        # Update Sheet
+        # Status -> Col 6, Logs -> Col 7
+        sheet.update_cell(cell.row, 6, new_status) 
+        sheet.update_cell(cell.row, 7, json.dumps(logs, ensure_ascii=False))
+        
+        # Push Notification
+        msg = f"📦 出貨通知\n您好，我們已為您出貨 {qty} 盤土雞蛋。\n目前進度: {total_delivered}/{total_ordered} 盤。"
+        if new_status == "已完成":
+            msg += "\n🎉 您的訂單已全數出貨完畢，感謝您的訂購！"
+        else:
+            msg += "\n其餘商品將盡快安排配送。"
+            
+        send_line_push(user_id, msg)
+        
+        return jsonify({"status": "success"})
+
+    except Exception as e:
+        print(f"Error adding delivery: {e}")
+        return jsonify({"status": "error", "msg": str(e)}), 500
+
+@app.route('/api/admin/order/update_payment', methods=['POST'])
+def admin_update_payment():
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+    order_id = data.get('orderId')
+    new_payment = data.get('paymentStatus')
+    
+    if not order_id or not new_payment:
+        return jsonify({"status": "error", "msg": "缺少參數"}), 400
+
+    sheet = get_sheet("Orders")
+    try:
+        cell = sheet.find(order_id)
+        if not cell:
+            return jsonify({"status": "error", "msg": "找不到訂單"}), 404
+        
+        # Update Payment Status column (Column H = 8)
+        sheet.update_cell(cell.row, 8, new_payment)
+        
+        return jsonify({"status": "success"})
+    except Exception as e:
+        print(f"Error updating payment: {e}")
+        return jsonify({"status": "error", "msg": str(e)}), 500
 
 @app.route('/api/admin/order/update_status', methods=['POST'])
 def admin_update_status():

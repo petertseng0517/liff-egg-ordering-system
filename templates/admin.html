@@ -17,6 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">🥚 土雞蛋管理後台</a>
+    <a href="/logout" class="btn btn-outline-light btn-sm">登出</a>
   </div>
 </nav>
 
@@ -47,6 +48,7 @@
                             <option value="處理中">處理中</option>
                             <option value="已確認">已確認</option>
                             <option value="配送中">配送中</option>
+                            <option value="部分配送">部分配送</option>
                             <option value="已完成">已完成</option>
                             <option value="已取消">已取消</option>
                         </select>
@@ -72,12 +74,13 @@
                                     <th>客戶</th>
                                     <th>商品摘要</th>
                                     <th>金額</th>
+                                    <th>付款</th>
                                     <th>狀態</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="order-table-body">
-                                <tr><td colspan="7" class="text-center p-3">載入中...</td></tr>
+                                <tr><td colspan="8" class="text-center p-3">載入中...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -96,9 +99,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-6">
-                <h6>👤 客戶資料</h6>
+                <h6 class="text-primary">👤 客戶資料</h6>
                 <table class="table table-sm table-borderless">
                     <tr><td width="30%" class="text-muted">姓名</td><td id="m-name"></td></tr>
                     <tr><td class="text-muted">電話</td><td id="m-phone"></td></tr>
@@ -107,29 +110,96 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <h6>📦 訂單內容</h6>
+                <h6 class="text-primary">📦 訂單內容</h6>
                 <div class="alert alert-light border" id="m-items"></div>
-                <div class="d-flex justify-content-between fw-bold">
+                <div class="d-flex justify-content-between fw-bold mb-2">
                     <span>總金額</span>
                     <span class="text-danger" id="m-amount"></span>
                 </div>
+                <!-- Payment Management -->
+                <div class="d-flex align-items-center justify-content-between bg-white border p-2 rounded">
+                    <div>
+                        <small class="text-muted d-block">付款狀態</small>
+                        <span id="m-payment-status" class="badge bg-secondary">未付款</span>
+                    </div>
+                    <div class="d-flex gap-1">
+                        <select class="form-select form-select-sm" id="new-payment-select" style="width: auto;">
+                            <option value="未付款">未付款</option>
+                            <option value="已付款">已付款</option>
+                            <option value="退款中">退款中</option>
+                            <option value="已退款">已退款</option>
+                        </select>
+                        <button class="btn btn-sm btn-outline-primary" onclick="updatePaymentStatus()">更新</button>
+                    </div>
+                </div>
             </div>
         </div>
+        
         <hr>
-        <h6>⚙️ 狀態管理</h6>
-        <div class="d-flex align-items-center gap-2">
-            <span>目前狀態:</span>
-            <span class="badge bg-secondary" id="m-current-status"></span>
-            <span class="ms-3">變更為:</span>
-            <select class="form-select w-auto" id="new-status-select">
-                <option value="處理中">處理中</option>
-                <option value="已確認">已確認</option>
-                <option value="配送中">配送中</option>
-                <option value="已完成">已完成</option>
-                <option value="已取消">已取消</option>
-            </select>
-            <button class="btn btn-success" onclick="updateStatus()">更新狀態並推播</button>
+
+        <!-- Delivery Management Section -->
+        <div class="row">
+            <div class="col-12">
+                <h6 class="text-primary">🚚 分批出貨管理</h6>
+                
+                <!-- Progress Bar -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <small>出貨進度: <span id="delivery-progress-text" class="fw-bold">0 / 0</span></small>
+                        <small id="delivery-remaining" class="text-muted">剩餘: 0</small>
+                    </div>
+                    <div class="progress" style="height: 10px;">
+                        <div id="delivery-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Add Delivery Log -->
+                <div class="card bg-light mb-3">
+                    <div class="card-body py-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="text-nowrap">新增出貨:</label>
+                            <input type="number" class="form-control form-control-sm" id="new-delivery-qty" placeholder="數量" style="width: 80px;" min="1">
+                            <button class="btn btn-sm btn-success" onclick="addDeliveryLog()">確認出貨</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery History Table -->
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>出貨日期</th>
+                            <th>數量</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody id="delivery-logs-body">
+                        <!-- Logs here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <hr>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <span class="me-2">目前狀態:</span>
+                <span class="badge bg-secondary" id="m-current-status"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <select class="form-select w-auto" id="new-status-select">
+                    <option value="處理中">處理中</option>
+                    <option value="已確認">已確認</option>
+                    <option value="配送中">配送中</option>
+                    <option value="部分配送">部分配送</option>
+                    <option value="已完成">已完成</option>
+                    <option value="已取消">已取消</option>
+                </select>
+                <button class="btn btn-primary" onclick="updateStatus()">手動更新狀態</button>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -140,11 +210,10 @@
     let allOrders = [];
     let currentFilterDate = 'all'; // all, today, week, month
     let currentOrder = null;
+    let totalOrderedQty = 0; // Parsed from item string
 
     document.addEventListener('DOMContentLoaded', () => {
         loadOrders();
-        
-        // Search listener
         document.getElementById('search-input').addEventListener('input', applyFilters);
     });
 
@@ -160,7 +229,6 @@
 
     function filterDate(type) {
         currentFilterDate = type;
-        // Update button styles
         document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active', 'btn-secondary'));
         event.target.classList.add('active', 'btn-secondary');
         event.target.classList.remove('btn-outline-secondary');
@@ -172,16 +240,12 @@
         const status = document.getElementById('status-filter').value;
         
         let filtered = allOrders.filter(o => {
-            // Search
             const searchMatch = (o.orderId.toLowerCase().includes(query) || 
                                (o.customer.name && o.customer.name.toLowerCase().includes(query)) ||
                                (o.customer.phone && o.customer.phone.includes(query)));
             if (!searchMatch) return false;
-
-            // Status
             if (status && o.status !== status) return false;
 
-            // Date
             const orderDate = new Date(o.date);
             const now = new Date();
             if (currentFilterDate === 'today') {
@@ -193,22 +257,18 @@
                 return orderDate.getMonth() === new Date().getMonth() && 
                        orderDate.getFullYear() === new Date().getFullYear();
             }
-
             return true;
         });
 
-        // Sort by date desc
         filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
         renderTable(filtered);
     }
 
     function renderTable(orders) {
         const tbody = document.getElementById('order-table-body');
         tbody.innerHTML = '';
-        
         if (orders.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="text-center p-3 text-muted">無符合資料</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center p-3 text-muted">無符合資料</td></tr>';
             return;
         }
 
@@ -220,6 +280,7 @@
                 <td>${o.customer.name || '未知'} <br> <small class="text-muted">${o.customer.phone || ''}</small></td>
                 <td>${o.items}</td>
                 <td>$${o.amount}</td>
+                <td>${getPaymentBadge(o.paymentStatus)}</td>
                 <td><span class="badge ${getStatusBadge(o.status)}">${o.status}</span></td>
                 <td><button class="btn btn-sm btn-outline-primary" onclick='openModal("${o.orderId}")'>詳細</button></td>
             `;
@@ -232,10 +293,18 @@
             case '處理中': return 'bg-warning text-dark';
             case '已確認': return 'bg-info text-dark';
             case '配送中': return 'bg-primary';
+            case '部分配送': return 'bg-secondary text-dark';
             case '已完成': return 'bg-success';
             case '已取消': return 'bg-secondary';
             default: return 'bg-secondary';
         }
+    }
+
+    function getPaymentBadge(status) {
+        if(status === '已付款') return '<span class="badge bg-success">已付款</span>';
+        if(status === '退款中') return '<span class="badge bg-warning text-dark">退款中</span>';
+        if(status === '已退款') return '<span class="badge bg-dark">已退款</span>';
+        return '<span class="badge bg-danger">未付款</span>';
     }
 
     function openModal(orderId) {
@@ -243,30 +312,138 @@
         if(!currentOrder) return;
 
         document.getElementById('modal-order-id').innerText = currentOrder.orderId;
-        
-        // Customer Info
         document.getElementById('m-name').innerText = currentOrder.customer.name || 'N/A';
         document.getElementById('m-phone').innerText = currentOrder.customer.phone || 'N/A';
         document.getElementById('m-addr').innerText = currentOrder.customer.address || 'N/A';
         document.getElementById('m-addr2').innerText = currentOrder.customer.address2 || '-';
-        
-        // Order Info
         document.getElementById('m-items').innerText = currentOrder.items;
         document.getElementById('m-amount').innerText = '$' + currentOrder.amount;
         
-        // Status
         document.getElementById('m-current-status').innerText = currentOrder.status;
         document.getElementById('m-current-status').className = `badge ${getStatusBadge(currentOrder.status)}`;
         document.getElementById('new-status-select').value = currentOrder.status;
 
+        // Payment
+        const payStatus = currentOrder.paymentStatus || '未付款';
+        document.getElementById('m-payment-status').innerHTML = getPaymentBadge(payStatus);
+        document.getElementById('new-payment-select').value = payStatus;
+
+        // Parse Total Qty
+        totalOrderedQty = 1;
+        const match = currentOrder.items.match(/x(\d+)/);
+        if(match && match[1]) {
+            totalOrderedQty = parseInt(match[1]);
+        }
+
+        renderDeliveryLogs();
         new bootstrap.Modal(document.getElementById('orderModal')).show();
+    }
+
+    function renderDeliveryLogs() {
+        const logs = currentOrder.deliveryLogs || []; // Expecting array of {date, qty}
+        let deliveredTotal = 0;
+        
+        const tbody = document.getElementById('delivery-logs-body');
+        tbody.innerHTML = '';
+        
+        logs.forEach(log => {
+            deliveredTotal += parseInt(log.qty);
+            tbody.innerHTML += `
+                <tr>
+                    <td>${log.date}</td>
+                    <td>${log.qty}</td>
+                    <td>-</td>
+                </tr>
+            `;
+        });
+
+        if(logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">尚無出貨紀錄</td></tr>';
+        }
+
+        // Update UI stats
+        document.getElementById('delivery-progress-text').innerText = `${deliveredTotal} / ${totalOrderedQty}`;
+        document.getElementById('delivery-remaining').innerText = `剩餘: ${totalOrderedQty - deliveredTotal}`;
+        
+        const pct = Math.min(100, (deliveredTotal / totalOrderedQty) * 100);
+        document.getElementById('delivery-progress-bar').style.width = `${pct}%`;
+    }
+
+    function addDeliveryLog() {
+        const qtyInput = document.getElementById('new-delivery-qty');
+        const qty = parseInt(qtyInput.value);
+        if(!qty || qty <= 0) {
+            alert('請輸入有效數量');
+            return;
+        }
+
+        // Calculate current total delivered and remaining
+        let currentDeliveredTotal = 0;
+        if (currentOrder.deliveryLogs) {
+            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => sum + parseInt(log.qty), 0);
+        }
+        const remainingQty = totalOrderedQty - currentDeliveredTotal;
+
+        if (qty > remainingQty) {
+            alert(`新增出貨數量 (${qty} 盤) 不能超過剩餘數量 (${remainingQty} 盤)。`);
+            return;
+        }
+
+        if(!confirm(`確認新增出貨紀錄：${qty} 盤？`)) return;
+
+        fetch('/api/admin/order/add_delivery', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                orderId: currentOrder.orderId,
+                userId: currentOrder.userId,
+                qty: qty,
+                totalOrdered: totalOrderedQty
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert('出貨紀錄已新增，狀態已更新。');
+                loadOrders();
+                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+            } else {
+                alert('失敗: ' + data.msg);
+            }
+        });
+    }
+
+    function updatePaymentStatus() {
+        if(!currentOrder) return;
+        const newPayment = document.getElementById('new-payment-select').value;
+        
+        if(!confirm(`確認將付款狀態更新為「${newPayment}」？`)) return;
+
+        fetch('/api/admin/order/update_payment', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                orderId: currentOrder.orderId,
+                paymentStatus: newPayment
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert('付款狀態更新成功');
+                loadOrders();
+                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+            } else {
+                alert('更新失敗: ' + data.msg);
+            }
+        });
     }
 
     function updateStatus() {
         if(!currentOrder) return;
         const newStatus = document.getElementById('new-status-select').value;
         
-        if(!confirm(`確定將訂單 ${currentOrder.orderId} 狀態更新為「${newStatus}」嗎？\n(將會發送 LINE 通知給客戶)`)) return;
+        if(!confirm(`確定將訂單 ${currentOrder.orderId} 狀態更新為「${newStatus}」嗎？`)) return;
 
         fetch('/api/admin/order/update_status', {
             method: 'POST',
@@ -274,19 +451,14 @@
             body: JSON.stringify({
                 orderId: currentOrder.orderId,
                 status: newStatus,
-                userId: currentOrder.userId // Needed for push message
+                userId: currentOrder.userId
             })
         })
         .then(res => res.json())
         .then(data => {
             if(data.status === 'success') {
                 alert('更新成功');
-                // Hide modal
-                const modalEl = document.getElementById('orderModal');
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                modal.hide();
-                
-                // Reload
+                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
                 loadOrders();
             } else {
                 alert('更新失敗: ' + data.msg);
