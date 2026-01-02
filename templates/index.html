@@ -297,17 +297,43 @@
             var html = "";
             if(!orders || orders.length === 0) html="<p class='text-center mt-3'>無訂單資料</p>";
             else orders.forEach(o => {
+                const payStatus = o.paymentStatus || '未付款';
                 html += `<div class="card mb-3 p-3">
                     <div class="d-flex justify-content-between">
                         <small class="text-muted">${o.date}</small>
-                        <span class="badge bg-secondary">${o.status}</span>
+                        <span class="badge ${getStatusBadge(o.status)}">${o.status}</span>
                     </div>
                     <h5 class="mt-2">${o.items}</h5>
-                    <p class="text-end mb-0 price-tag">$${o.amount}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="badge ${getPaymentBadgeClass(payStatus)}">${payStatus}</span>
+                        <p class="text-end mb-0 price-tag">$${o.amount}</p>
+                    </div>
                 </div>`;
             });
             document.getElementById('history-list').innerHTML = html;
         });
+    }
+
+    function getStatusBadge(status) {
+        switch(status) {
+            case '處理中': return 'bg-warning text-dark';
+            case '已確認': return 'bg-info text-dark';
+            case '配送中': return 'bg-primary';
+            case '部分配送': return 'bg-secondary text-dark';
+            case '已完成': return 'bg-success';
+            case '已取消': return 'bg-secondary';
+            default: return 'bg-secondary';
+        }
+    }
+
+    function getPaymentBadgeClass(status) {
+        switch(status) {
+            case '已付款': return 'bg-success';
+            case '退款中': return 'bg-warning text-dark';
+            case '已退款': return 'bg-dark';
+            case '未付款': return 'bg-danger';
+            default: return 'bg-danger';
+        }
     }
   </script>
 </body>

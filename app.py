@@ -152,7 +152,23 @@ def order():
     # 2. 產生訂單資料
     order_id = "ORD" + str(int(datetime.now().timestamp()))
     
-    # 寫入: 訂單編號, UserId, 商品, 金額, 日期, 狀態, DeliveryLogs, PaymentStatus
+    # 針對商品名稱進行正規化，確保 item_str 中的數量是實際盤數
+    actual_item_name = item_name # 實際寫入 Google Sheet 的商品名稱，可能修改
+    actual_qty = qty             # 實際盤數
+
+    if item_name == "土雞蛋11盤":
+        actual_qty = qty * 11
+        # 可以選擇保留原始資訊，例如改成 "土雞蛋(11盤優惠組)"
+        actual_item_name = "土雞蛋(11盤優惠組)"
+    elif item_name == "土雞蛋1盤": # 確保這裡只處理了單盤的情況，其他商品名稱則按原樣處理
+        actual_qty = qty * 1
+        actual_item_name = "土雞蛋"
+
+    # 組合商品字串，例如: "土雞蛋 x22 (備註: 放門口)"
+    item_str_for_sheet = f"{actual_item_name} x{actual_qty}"
+    if remarks:
+        item_str_for_sheet += f" ({remarks})"
+
     sheet.append_row([
         order_id,
         user_id,
