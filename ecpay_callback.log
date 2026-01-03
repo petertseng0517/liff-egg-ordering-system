@@ -1,0 +1,55 @@
+2026-01-03 14:09:32,105 WARNING:  * Debugger is active!
+2026-01-03 14:09:32,115 INFO:  * Debugger PIN: 359-575-910
+2026-01-03 14:17:26,735 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-03 14:17:26,735 INFO: [33mPress CTRL+C to quit[0m
+2026-01-03 14:17:26,735 INFO:  * Restarting with stat
+2026-01-03 14:17:27,223 WARNING:  * Debugger is active!
+2026-01-03 14:17:27,233 INFO:  * Debugger PIN: 359-575-910
+2026-01-03 14:18:08,622 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-03 14:18:08,623 INFO: [33mPress CTRL+C to quit[0m
+2026-01-03 14:18:08,623 INFO:  * Restarting with stat
+2026-01-03 14:18:09,163 WARNING:  * Debugger is active!
+2026-01-03 14:18:09,171 INFO:  * Debugger PIN: 359-575-910
+2026-01-03 14:19:46,892 INFO: 127.0.0.1 - - [03/Jan/2026 14:19:46] "GET / HTTP/1.1" 200 -
+2026-01-03 14:19:47,239 INFO: 127.0.0.1 - - [03/Jan/2026 14:19:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-03 14:19:49,495 INFO: 127.0.0.1 - - [03/Jan/2026 14:19:49] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-03 14:19:54,385 INFO: 127.0.0.1 - - [03/Jan/2026 14:19:54] "GET /?page=order HTTP/1.1" 200 -
+2026-01-03 14:20:06,176 INFO: 127.0.0.1 - - [03/Jan/2026 14:20:06] "POST /api/order HTTP/1.1" 200 -
+2026-01-03 14:20:47,756 INFO: ECPay Callback Received: {'CustomField1': '', 'CustomField2': '', 'CustomField3': '', 'CustomField4': '', 'MerchantID': '2000132', 'MerchantTradeNo': 'ORD1767421205', 'PaymentDate': '2026/01/03 14:20:46', 'PaymentType': 'Credit_CreditCard', 'PaymentTypeChargeFee': '401', 'RtnCode': '1', 'RtnMsg': '交易成功', 'SimulatePaid': '0', 'StoreID': '', 'TradeAmt': '20000', 'TradeDate': '2026/01/03 14:20:06', 'TradeNo': '2601031420063330', 'CheckMacValue': 'C7B23B2E9AA57A23FD668499C812DACA75B3916B07ED622027133E9D5B66D349'}
+2026-01-03 14:20:47,756 INFO: Payment Success for Order: ORD1767421205
+2026-01-03 14:20:49,285 INFO: Order ORD1767421205 marked as paid in Google Sheets.
+2026-01-03 14:20:49,696 INFO: 127.0.0.1 - - [03/Jan/2026 14:20:49] "POST /api/ecpay/callback HTTP/1.1" 200 -
+2026-01-03 14:20:54,565 INFO: 127.0.0.1 - - [03/Jan/2026 14:20:54] "[32mGET /api/ecpay/client_return HTTP/1.1[0m" 302 -
+2026-01-03 14:20:54,657 INFO: 127.0.0.1 - - [03/Jan/2026 14:20:54] "GET /?page=history HTTP/1.1" 200 -
+2026-01-03 14:20:55,944 INFO: 127.0.0.1 - - [03/Jan/2026 14:20:55] "POST /api/history HTTP/1.1" 200 -
+2026-01-03 14:23:42,141 INFO: 127.0.0.1 - - [03/Jan/2026 14:23:42] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-03 14:23:42,241 INFO: 127.0.0.1 - - [03/Jan/2026 14:23:42] "GET /login HTTP/1.1" 200 -
+2026-01-03 14:23:47,090 INFO: 127.0.0.1 - - [03/Jan/2026 14:23:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-03 14:23:47,195 INFO: 127.0.0.1 - - [03/Jan/2026 14:23:47] "GET /admin HTTP/1.1" 200 -
+2026-01-03 14:23:49,614 INFO: 127.0.0.1 - - [03/Jan/2026 14:23:49] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-03 14:26:37,927 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-03 14:26:38,050 INFO:  * Restarting with stat
+2026-01-03 15:42:58,629 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-01-03 15:42:58,629 INFO: [33mPress CTRL+C to quit[0m
+2026-01-03 15:42:58,630 INFO:  * Restarting with stat
+2026-01-03 15:42:59,139 WARNING:  * Debugger is active!
+2026-01-03 15:42:59,148 INFO:  * Debugger PIN: 359-575-910
+2026-01-03 15:44:25,898 INFO: 127.0.0.1 - - [03/Jan/2026 15:44:25] "GET / HTTP/1.1" 200 -
+2026-01-03 15:44:28,395 INFO: 127.0.0.1 - - [03/Jan/2026 15:44:28] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-03 15:44:36,687 INFO: 127.0.0.1 - - [03/Jan/2026 15:44:36] "GET /?page=order HTTP/1.1" 200 -
+2026-01-03 15:44:55,529 INFO: 127.0.0.1 - - [03/Jan/2026 15:44:55] "POST /api/order HTTP/1.1" 200 -
+2026-01-03 15:45:37,394 INFO: ECPay Callback Received: {'CustomField1': '', 'CustomField2': '', 'CustomField3': '', 'CustomField4': '', 'MerchantID': '2000132', 'MerchantTradeNo': 'ORD1767426295', 'PaymentDate': '2026/01/03 15:45:36', 'PaymentType': 'Credit_CreditCard', 'PaymentTypeChargeFee': '601', 'RtnCode': '1', 'RtnMsg': '交易成功', 'SimulatePaid': '0', 'StoreID': '', 'TradeAmt': '30000', 'TradeDate': '2026/01/03 15:44:55', 'TradeNo': '2601031544553356', 'CheckMacValue': 'E19E9219B66268BF1BF3B23DC6CC1D1D8D97C537BE022E54E18AE17D6FEF131E'}
+2026-01-03 15:45:37,395 INFO: Payment Success for Order: ORD1767426295
+2026-01-03 15:45:39,332 INFO: Order ORD1767426295 marked as paid in Google Sheets.
+2026-01-03 15:45:39,793 INFO: 127.0.0.1 - - [03/Jan/2026 15:45:39] "POST /api/ecpay/callback HTTP/1.1" 200 -
+2026-01-03 15:45:45,403 INFO: 127.0.0.1 - - [03/Jan/2026 15:45:45] "[32mGET /api/ecpay/client_return HTTP/1.1[0m" 302 -
+2026-01-03 15:45:45,497 INFO: 127.0.0.1 - - [03/Jan/2026 15:45:45] "GET /?page=history HTTP/1.1" 200 -
+2026-01-03 15:45:47,186 INFO: 127.0.0.1 - - [03/Jan/2026 15:45:47] "POST /api/history HTTP/1.1" 200 -
+2026-01-03 15:46:20,963 INFO: 127.0.0.1 - - [03/Jan/2026 15:46:20] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-03 15:46:21,057 INFO: 127.0.0.1 - - [03/Jan/2026 15:46:21] "GET /login HTTP/1.1" 200 -
+2026-01-03 15:46:28,390 INFO: 127.0.0.1 - - [03/Jan/2026 15:46:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-03 15:46:28,500 INFO: 127.0.0.1 - - [03/Jan/2026 15:46:28] "GET /admin HTTP/1.1" 200 -
+2026-01-03 15:46:30,792 INFO: 127.0.0.1 - - [03/Jan/2026 15:46:30] "GET /api/admin/orders HTTP/1.1" 200 -

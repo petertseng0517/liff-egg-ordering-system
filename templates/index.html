@@ -71,6 +71,19 @@
           <label>備註 (選填)</label>
           <textarea class="form-control" id="order-remarks" rows="2" placeholder="例如：請下午配送"></textarea>
         </div>
+
+        <div class="mb-3">
+            <label class="d-block mb-2">付款方式</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="pay-transfer" value="transfer" checked>
+                <label class="form-check-label" for="pay-transfer">銀行轉帳/貨到付款</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="pay-ecpay" value="ecpay">
+                <label class="form-check-label" for="pay-ecpay">線上支付 (信用卡/ATM)</label>
+            </div>
+        </div>
+
         <div class="alert alert-warning text-center">總金額: <span class="price-tag">$<span id="total-price">2500</span></span></div>
         <button type="button" class="btn btn-main w-100 btn-lg py-3" onclick="submitOrder()">送出訂單</button>
       </form>
@@ -268,12 +281,14 @@
        var itemName = document.getElementById('order-items').value;
        var qty = document.getElementById('order-qty').value;
        var remarks = document.getElementById('order-remarks').value;
+       var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
        const payload = {
            userId: userId,
            itemName: itemName,
            qty: qty,
-           remarks: remarks
+           remarks: remarks,
+           paymentMethod: paymentMethod
        };
 
        fetch('/api/order', {
@@ -285,6 +300,24 @@
        .then(data => {
             if(data.status === 'error') {
                 alert("錯誤: " + data.msg);
+            } else if (data.status === 'ecpay_init') {
+                // Handle ECPay Redirection
+                var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", data.actionUrl);
+                
+                var params = data.ecpayParams;
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+                        form.appendChild(hiddenField);
+                    }
+                }
+                document.body.appendChild(form);
+                form.submit();
             } else {
                 // 隱藏原本的訂購頁，顯示成功頁
                 document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
@@ -320,13 +353,24 @@
                     </div>
                     <h5 class="mt-2">${o.items}</h5>
                     <div class="d-flex justify-content-between align-items-center mt-2">
-                        <span class="badge ${getPaymentBadgeClass(payStatus)}">${payStatus}</span>
+                        <div>
+                            <span class="badge ${getPaymentBadgeClass(payStatus)}">${payStatus}</span>
+                            <small class="text-muted ms-2">${formatPaymentMethod(o.paymentMethod)}</small>
+                        </div>
                         <p class="text-end mb-0 price-tag">$${o.amount}</p>
                     </div>
                 </div>`;
             });
             document.getElementById('history-list').innerHTML = html;
         });
+    }
+
+    function formatPaymentMethod(method) {
+        switch(method) {
+            case 'transfer': return '銀行轉帳/貨到付款';
+            case 'ecpay': return '線上支付 (綠界)';
+            default: return method || '未指定';
+        }
     }
 
     function getStatusBadge(status) {
