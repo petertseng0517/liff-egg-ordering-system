@@ -124,8 +124,22 @@
 
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    var MY_LIFF_ID = "2008795367-LqjjCaaQ"; 
-    var userId = null; // 初始化為 null
+    /**
+     * LINE LIFF SDK 初始化說明
+     * 
+     * LIFF (LINE Front-end Framework) 是 LINE 提供的前端框架，讓 Web App 在 LINE 應用內運行
+     * 並取得使用者信息、發送訊息等功能。
+     * 
+     * 步驟：
+     * 1. 在 LINE Developers 建立 LIFF App 並取得 LIFF ID
+     * 2. 在下面的 MY_LIFF_ID 填入你的 LIFF ID
+     * 3. 部署應用並在 LIFF 設定中配置 URL
+     * 
+     * LINE 官方文檔：https://developers.line.biz/en/docs/liff/
+     */
+    
+    var MY_LIFF_ID = "2008795367-LqjjCaaQ";  // 替換為你的 LIFF ID
+    var userId = null;
     var userName = "";
 
     // 啟動邏輯
@@ -133,12 +147,13 @@
       liff.init({ liffId: MY_LIFF_ID })
         .then(() => {
           if (!liff.isLoggedIn()) {
-             // 為了方便開發，如果你在電腦瀏覽器看，就不強制登入 LINE
+             // 開發模式：在電腦瀏覽器使用測試帳號
              if(!liff.isInClient()) {
-                console.log("電腦開發模式: 使用測試帳號");
-                userId = "TEST_USER_001"; // 只有在電腦且未登入時才使用測試帳號
+                console.log("🖥️ 開發模式: 使用測試帳號");
+                userId = "TEST_USER_001";
                 checkMemberStatus();
              } else {
+                // 在 LINE App 內需要登入
                 liff.login(); 
              }
           } else {
@@ -147,16 +162,15 @@
               userName = profile.displayName;
               checkMemberStatus();
             }).catch(err => {
-                console.error("GetProfile Error", err);
+                console.error("❌ 取得使用者資料失敗:", err);
                 document.getElementById('loading').innerHTML += '<p class="text-danger">無法取得使用者資料: ' + err + '</p>';
             });
           }
         })
         .catch(err => {
-            console.log("LIFF Init Error:", err);
-            // 就算 LIFF 失敗（例如電腦沒開權限），也讓畫面顯示出來方便測試
+            console.log("❌ LIFF 初始化失敗:", err);
             document.getElementById('loading').innerHTML += '<p class="text-danger">LIFF 初始化失敗: ' + err + '</p>';
-            // 嘗試使用測試帳號 fallback，方便電腦除錯，但手機上看到錯誤訊息比較重要
+            // Fallback：在開發環境使用測試帳號
             if(!liff.isInClient()) {
                 userId = "TEST_USER_001";
                 checkMemberStatus();
@@ -259,13 +273,59 @@
     // === 新版：使用 fetch 呼叫 Python API ===
 
     function submitRegister() {
+        // 表單驗證
+        const name = document.getElementById('reg-name').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
+        const address = document.getElementById('reg-address').value.trim();
+        const birthdate = document.getElementById('reg-birthdate').value.trim();
+        const address2 = document.getElementById('reg-address2').value.trim();
+        
+        // 驗證邏輯
+        if (!name) {
+            alert("❌ 姓名不能為空");
+            return;
+        }
+        if (name.length > 50) {
+            alert("❌ 姓名長度不能超過 50 個字元");
+            return;
+        }
+        
+        if (!phone) {
+            alert("❌ 聯絡電話不能為空");
+            return;
+        }
+        const phonePattern = /^\d{10}$|^09\d{8}$/;
+        if (!phonePattern.test(phone.replace('-', ''))) {
+            alert("❌ 電話格式不正確，請輸入 10 位數字 (例：0912345678)");
+            return;
+        }
+        
+        if (!address) {
+            alert("❌ 配送地址不能為空");
+            return;
+        }
+        if (address.length > 200) {
+            alert("❌ 地址長度不能超過 200 個字元");
+            return;
+        }
+        
+        if (birthdate && !/^\d{4}-\d{2}-\d{2}$/.test(birthdate)) {
+            alert("❌ 出生日期格式不正確 (格式：YYYY-MM-DD)");
+            return;
+        }
+        
+        if (address2 && address2.length > 200) {
+            alert("❌ 第二地址長度不能超過 200 個字元");
+            return;
+        }
+        
         const payload = {
             userId: userId,
-            name: document.getElementById('reg-name').value,
-            birthDate: document.getElementById('reg-birthdate').value,
-            phone: document.getElementById('reg-phone').value,
-            address: document.getElementById('reg-address').value,
-            address2: document.getElementById('reg-address2').value
+            name: name,
+            birthDate: birthdate,
+            phone: phone,
+            address: address,
+            address2: address2
         };
 
         fetch('/api/register', {
@@ -276,20 +336,21 @@
         .then(res => res.json())
         .then(data => {
             if(data.status === 'error') {
-                alert("錯誤: " + data.msg);
+                const errorMsg = data.errors ? data.errors.join('\n') : data.msg;
+                alert("❌ 註冊失敗:\n" + errorMsg);
             } else {
                 // 若在 LINE App 內，嘗試發送訊息給官方帳號
                 if (liff.isInClient()) {
-                    const msg = `📝 會員資料\n姓名：${payload.name}\n電話：${payload.phone}\n生日：${payload.birthDate}\n地址：${payload.address}\n備用地址：${payload.address2 || '無'}`;
+                    const msg = `📝 會員資料\n姓名：${payload.name}\n電話：${payload.phone}\n生日：${payload.birthDate || '未提供'}\n地址：${payload.address}\n備用地址：${payload.address2 || '無'}`;
                     liff.sendMessages([
                         {
                             type: 'text',
                             text: msg
                         }
                     ]).then(() => {
-                        console.log("message sent");
+                        console.log("✅ 訊息已發送");
                     }).catch((err) => {
-                        console.log("error sending message", err);
+                        console.log("⚠️ 無法發送訊息", err);
                     });
                 }
 
@@ -297,17 +358,37 @@
                 document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
                 document.getElementById('p-register-success').classList.add('active');
                 
-                // 可以選擇清空表單
+                // 清空表單
                 document.getElementById('form-register').reset();
             }
+        })
+        .catch(err => {
+            console.error("Registration error:", err);
+            alert("❌ 系統錯誤，請稍後重試");
         });
     }
 
     function submitOrder() {
-       var itemName = document.getElementById('order-items').value;
-       var qty = document.getElementById('order-qty').value;
-       var remarks = document.getElementById('order-remarks').value;
-       var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+       const itemName = document.getElementById('order-items').value;
+       const qty = parseInt(document.getElementById('order-qty').value);
+       const remarks = document.getElementById('order-remarks').value.trim();
+       const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+       // 驗證邏輯
+       if (!itemName) {
+           alert("❌ 請選擇商品");
+           return;
+       }
+       
+       if (!qty || qty < 1 || qty > 1000) {
+           alert("❌ 數量必須在 1-1000 之間");
+           return;
+       }
+       
+       if (remarks && remarks.length > 500) {
+           alert("❌ 備註長度不能超過 500 個字元");
+           return;
+       }
 
        const payload = {
            userId: userId,
@@ -325,9 +406,10 @@
        .then(res => res.json())
        .then(data => {
             if(data.status === 'error') {
-                alert("錯誤: " + data.msg);
+                const errorMsg = data.errors ? data.errors.join('\n') : data.msg;
+                alert("❌ 訂購失敗:\n" + errorMsg);
             } else if (data.status === 'ecpay_init') {
-                // Handle ECPay Redirection
+                // ECPay 付款流程
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
                 form.setAttribute("action", data.actionUrl);
@@ -345,18 +427,20 @@
                 document.body.appendChild(form);
                 form.submit();
             } else {
-                // 隱藏原本的訂購頁，顯示成功頁
+                // 訂購成功 - 顯示成功頁
                 document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
                 document.getElementById('p-success').classList.add('active');
-                
-                // 更新成功頁面的訂單編號
                 document.getElementById('success-order-id').innerText = data.orderId;
                 
-                // 清空原本的備註欄位 (數量保留或重置看需求，這裡重置為1)
+                // 清空表單
                 document.getElementById('order-remarks').value = '';
                 document.getElementById('order-qty').value = '1';
                 calcPrice();
             }
+       })
+       .catch(err => {
+           console.error("Order error:", err);
+           alert("❌ 系統錯誤，請稍後重試");
        });
     }
 

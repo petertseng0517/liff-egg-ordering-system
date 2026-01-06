@@ -1,0 +1,71 @@
+"""
+應用程式配置管理
+"""
+import os
+from dotenv import load_dotenv
+
+# 載入環境變數
+load_dotenv()
+
+
+class Config:
+    """基礎配置"""
+    # Flask 配置
+    SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'dev_secret_key_change_in_production')
+    DEBUG = os.getenv('FLASK_ENV', 'development') == 'development'
+    
+    # 管理員配置
+    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin')
+    MAX_LOGIN_ATTEMPTS = 5  # 最多嘗試次數
+    LOGIN_ATTEMPT_TIMEOUT = 300  # 秒 (5分鐘)
+    
+    # Google Sheets 配置
+    SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+    GOOGLE_SHEETS_SCOPES = [
+        'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/drive'
+    ]
+    
+    # LINE Bot 配置
+    LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+    
+    # ECPay 配置 (測試環境)
+    ECPAY_MERCHANT_ID = os.getenv('ECPAY_MERCHANT_ID', '2000132')
+    ECPAY_HASH_KEY = os.getenv('ECPAY_HASH_KEY', '5294y06JbISpM5x9')
+    ECPAY_HASH_IV = os.getenv('ECPAY_HASH_IV', 'v77hoKGq4kWxNNIS')
+    ECPAY_ACTION_URL = 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+    
+    # 應用程式基礎 URL
+    APP_BASE_URL = os.getenv('APP_BASE_URL', None)
+    
+    # 日誌配置
+    LOG_FILE = 'ecpay_callback.log'
+    LOG_FORMAT = '%(asctime)s %(levelname)s: %(message)s'
+
+
+class ProductConfig:
+    """產品配置"""
+    PRODUCTS = {
+        "土雞蛋11盤": 2500,
+        "土雞蛋1盤": 250
+    }
+    
+    # 土雞蛋 1 盤的分級定價
+    BULK_PRICING = {
+        "土雞蛋1盤": [
+            (1, 9, 250),      # 1-9盤: $250
+            (10, 19, 240),    # 10-19盤: $240
+            (20, float('inf'), 230)  # 20盤以上: $230
+        ]
+    }
+    
+    @staticmethod
+    def get_unit_price(item_name, qty):
+        """獲取單位價格，考慮批量折扣"""
+        if item_name not in ProductConfig.BULK_PRICING:
+            return ProductConfig.PRODUCTS.get(item_name)
+        
+        for min_qty, max_qty, price in ProductConfig.BULK_PRICING[item_name]:
+            if min_qty <= qty <= max_qty:
+                return price
+        return ProductConfig.PRODUCTS.get(item_name, 0)

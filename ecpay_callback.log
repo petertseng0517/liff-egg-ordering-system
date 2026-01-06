@@ -75,3 +75,202 @@
 2026-01-04 17:35:33,441 INFO: 127.0.0.1 - - [04/Jan/2026 17:35:33] "POST /api/order HTTP/1.1" 200 -
 2026-01-04 17:35:35,358 INFO: 127.0.0.1 - - [04/Jan/2026 17:35:35] "GET /?page=history HTTP/1.1" 200 -
 2026-01-04 17:35:36,771 INFO: 127.0.0.1 - - [04/Jan/2026 17:35:36] "POST /api/history HTTP/1.1" 200 -
+2026-01-06 11:34:02,713 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:34:02,715 INFO: Application initialized successfully
+2026-01-06 11:34:20,836 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:34:20,837 INFO: Application initialized successfully
+2026-01-06 11:36:17,369 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:36:17,371 INFO: Application initialized successfully
+2026-01-06 11:36:27,551 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:36:27,551 INFO: Application initialized successfully
+2026-01-06 11:36:42,752 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:36:42,752 INFO: Application initialized successfully
+2026-01-06 11:37:15,258 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:37:15,260 INFO: Application initialized successfully
+2026-01-06 11:37:15,278 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:15,288 WARNING: Failed login attempt from IP 127.0.0.1
+2026-01-06 11:37:15,291 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:15,291 INFO: Admin logged out from IP 127.0.0.1
+2026-01-06 11:37:21,446 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:37:21,446 INFO: Application initialized successfully
+2026-01-06 11:37:21,453 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:21,459 WARNING: Failed login attempt from IP 127.0.0.1
+2026-01-06 11:37:21,460 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:21,460 INFO: Admin logged out from IP 127.0.0.1
+2026-01-06 11:37:57,079 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:37:57,081 INFO: Application initialized successfully
+2026-01-06 11:37:57,097 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:57,106 WARNING: Failed login attempt from IP 127.0.0.1
+2026-01-06 11:37:57,109 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:37:57,109 INFO: Admin logged out from IP 127.0.0.1
+2026-01-06 11:37:57,908 INFO: Order added: ORD1767670677
+2026-01-06 11:39:03,283 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:39:03,285 INFO: Application initialized successfully
+2026-01-06 11:39:03,303 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:39:03,313 WARNING: Failed login attempt from IP 127.0.0.1
+2026-01-06 11:39:03,316 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 11:39:03,317 INFO: Admin logged out from IP 127.0.0.1
+2026-01-06 11:39:04,131 INFO: Order added: ORD1767670743
+2026-01-06 11:41:42,079 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:41:42,080 INFO: Application initialized successfully
+2026-01-06 11:44:09,840 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:44:09,840 INFO: Application initialized successfully
+2026-01-06 11:44:42,598 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:44:42,599 INFO: Application initialized successfully
+2026-01-06 11:44:42,638 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.137.70:5001
+2026-01-06 11:44:42,638 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 11:44:42,639 INFO:  * Restarting with stat
+2026-01-06 11:44:43,593 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:44:43,593 INFO: Application initialized successfully
+2026-01-06 11:44:43,627 WARNING:  * Debugger is active!
+2026-01-06 11:44:43,643 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 11:45:36,575 INFO: 127.0.0.1 - - [06/Jan/2026 11:45:36] "GET / HTTP/1.1" 200 -
+2026-01-06 11:45:36,970 INFO: 127.0.0.1 - - [06/Jan/2026 11:45:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-06 11:45:38,289 INFO: 127.0.0.1 - - [06/Jan/2026 11:45:38] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-06 11:52:18,292 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:52:18,294 INFO: Application initialized successfully
+2026-01-06 11:52:18,338 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-06 11:52:18,339 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 11:52:18,339 INFO:  * Restarting with stat
+2026-01-06 11:52:19,235 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:52:19,235 INFO: Application initialized successfully
+2026-01-06 11:52:19,270 WARNING:  * Debugger is active!
+2026-01-06 11:52:19,285 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 11:53:49,721 INFO: 127.0.0.1 - - [06/Jan/2026 11:53:49] "GET / HTTP/1.1" 200 -
+2026-01-06 11:53:49,832 INFO: 127.0.0.1 - - [06/Jan/2026 11:53:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-06 11:53:50,969 INFO: 127.0.0.1 - - [06/Jan/2026 11:53:50] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-06 11:56:31,382 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-06 11:56:31,511 INFO:  * Restarting with stat
+2026-01-06 11:56:32,632 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:56:32,632 INFO: Application initialized successfully
+2026-01-06 11:56:32,657 WARNING:  * Debugger is active!
+2026-01-06 11:56:32,668 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 11:56:41,071 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-06 11:56:41,197 INFO:  * Restarting with stat
+2026-01-06 11:56:42,175 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:56:42,176 INFO: Application initialized successfully
+2026-01-06 11:56:42,208 WARNING:  * Debugger is active!
+2026-01-06 11:56:42,256 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 11:57:06,241 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:57:06,242 INFO: Application initialized successfully
+2026-01-06 11:57:06,285 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-06 11:57:06,285 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 11:57:06,286 INFO:  * Restarting with stat
+2026-01-06 11:57:07,165 INFO: Google Sheets connection initialized successfully
+2026-01-06 11:57:07,166 INFO: Application initialized successfully
+2026-01-06 11:57:07,205 WARNING:  * Debugger is active!
+2026-01-06 11:57:07,219 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 12:00:30,530 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:00:30,531 INFO: Application initialized successfully
+2026-01-06 12:00:30,569 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-06 12:00:30,569 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 12:00:30,570 INFO:  * Restarting with stat
+2026-01-06 12:00:31,457 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:00:31,458 INFO: Application initialized successfully
+2026-01-06 12:00:31,493 WARNING:  * Debugger is active!
+2026-01-06 12:00:31,508 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 12:04:03,116 ERROR: 127.0.0.1 - - [06/Jan/2026 12:04:03] code 400, message Bad request version ('\x9a\x9a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06eêê\x00\x00DÍ\x00\x05\x00\x03\x02h2\x00-\x00\x02\x01\x01\x00#\x00\x00\x00')
+2026-01-06 12:04:03,117 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:03] "[31m[1m\x16\x03\x01\x06Ò\x01\x00\x06Î\x03\x03S\x8bÆÖïè\x04\x8cÉQ\x1b\x8a¡¢\x11\x17ì0\x00à\x86J«¼\x13\x8c\x82\x1f\x14\x02"è ¤j\x12B¯¬îvªwÐ{Z\x1e­»2\x90C\x91\x94­î!®Ä\x1f\x0fè^GÉ\x00 \x9a\x9a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06eêê\x00\x00DÍ\x00\x05\x00\x03\x02h2\x00-\x00\x02\x01\x01\x00#\x00\x00\x00[0m" 400 -
+2026-01-06 12:04:03,117 ERROR: 127.0.0.1 - - [06/Jan/2026 12:04:03] code 400, message Bad request version ('\x00\x02\x01\x00\x00-\x00\x02\x01\x01\x00\x1b\x00\x03\x02\x00\x02\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00+\x00\x07\x06ÚÚ\x03\x04\x03\x03\x00')
+2026-01-06 12:04:03,117 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:03] "[31m[1m\x16\x03\x01\x07\x12\x01\x00\x07\x0e\x03\x03ÈyKè\x8eK\x1e×õ6|\x8däÖ\x04TÍù;gt\x1b(oõ\x8e KÔ\x800\x1a à\x9ce>\x92yýÅJ_{Uç\x85~ÕF\x02|Ûq õ\x88Ë\x043y?òùf\x00 zz\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06¥\x8a\x8a\x00\x00\x00\x12\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00\x17\x00\x00\x00#\x00\x00\x00\x0b\x00\x02\x01\x00\x00-\x00\x02\x01\x01\x00\x1b\x00\x03\x02\x00\x02\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00+\x00\x07\x06ÚÚ\x03\x04\x03\x03\x00[0m" 400 -
+2026-01-06 12:04:03,117 ERROR: 127.0.0.1 - - [06/Jan/2026 12:04:03] code 400, message Bad request version ('Ë\x81Ëæ<ÅSM©\x8a\x97\x90lKï')
+2026-01-06 12:04:03,118 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:03] "[31m[1m\x16\x03\x01\x07\x12\x01\x00\x07\x0e\x03\x03ô\x00³\x1eÞ¼¿ãN\x9bW\x89¦\x9b\x14\x8f§\x19ýqïF¼\x80U\x9båËå²\x09\x17 6\x9f\x1d&\x7f\x87­\x99\x17#\x97^\x00Û0\x18ºx\x95¹\x8c}®\x0c©"ë\x16\x81ì2_\x00 ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06¥ÚÚ\x00\x00\x00\x0b\x00\x02\x01\x00DÍ\x00\x05\x00\x03\x02h2\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00+\x00\x07\x06úú\x03\x04\x03\x03\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x003\x04ï\x04íjj\x00\x01\x00\x11ì\x04ÀU{O¦d\x19ýòZ\x8f`uÕl;ò\x05¢\x9fG\x89KYÊ~d\x94Jp?«2\x92\x17c.«h\x83\x09Û¾\x14\x8a 'bËp²¨²$»ÿÀ¡Úd\x7fÊ\x08HpÀª¬\x1cTê´\x82*±5HÔ³n\x06\x95J7\x83Ø$qQr\x00\x82kc\x8eñ0 Ë\x81Ëæ<ÅSM©\x8a\x97\x90lKï[0m" 400 -
+2026-01-06 12:04:03,118 ERROR: 127.0.0.1 - - [06/Jan/2026 12:04:03] code 400, message Bad request version ('\x12\x08Ð"\x15\x98\x99H=')
+2026-01-06 12:04:03,118 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:03] "[31m[1m\x16\x03\x01\x06ò\x01\x00\x06î\x03\x03ÈØ1kJW5Ô\x09\x9a\\\x8c\x7fEf\x06çÑÌ¦\x96\x9b¹ `þ¸oÄg\x9eè \x12\x08Ð"\x15\x98\x99H=[0m" 400 -
+2026-01-06 12:04:06,057 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:06] "GET / HTTP/1.1" 200 -
+2026-01-06 12:04:06,899 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-06 12:04:07,919 INFO: 127.0.0.1 - - [06/Jan/2026 12:04:07] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-06 12:05:51,222 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-06 12:05:51,337 INFO:  * Restarting with stat
+2026-01-06 12:05:52,584 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:05:52,584 INFO: Application initialized successfully
+2026-01-06 12:05:52,621 WARNING:  * Debugger is active!
+2026-01-06 12:05:52,634 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 12:06:06,300 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:06:06,301 INFO: Application initialized successfully
+2026-01-06 12:06:06,350 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-06 12:06:06,350 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 12:06:06,351 INFO:  * Restarting with stat
+2026-01-06 12:06:07,204 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:06:07,204 INFO: Application initialized successfully
+2026-01-06 12:06:07,221 WARNING:  * Debugger is active!
+2026-01-06 12:06:07,230 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 12:06:35,360 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-06 12:06:35,476 INFO:  * Restarting with stat
+2026-01-06 12:06:36,386 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:06:36,386 INFO: Application initialized successfully
+2026-01-06 12:06:36,418 WARNING:  * Debugger is active!
+2026-01-06 12:06:36,430 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 12:06:48,897 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:06:48,897 INFO: Application initialized successfully
+2026-01-06 12:06:48,950 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-06 12:06:48,950 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 12:06:48,950 INFO:  * Restarting with stat
+2026-01-06 12:06:49,812 INFO: Google Sheets connection initialized successfully
+2026-01-06 12:06:49,813 INFO: Application initialized successfully
+2026-01-06 12:06:49,845 WARNING:  * Debugger is active!
+2026-01-06 12:06:49,857 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 13:54:16,202 INFO: Google Sheets connection initialized successfully
+2026-01-06 13:54:16,202 INFO: Application initialized successfully
+2026-01-06 13:54:16,238 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.20.10.4:5005
+2026-01-06 13:54:16,238 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 13:54:16,239 INFO:  * Restarting with stat
+2026-01-06 13:54:17,296 INFO: Google Sheets connection initialized successfully
+2026-01-06 13:54:17,296 INFO: Application initialized successfully
+2026-01-06 13:54:17,334 WARNING:  * Debugger is active!
+2026-01-06 13:54:17,350 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 13:56:21,653 INFO: 127.0.0.1 - - [06/Jan/2026 13:56:21] "GET / HTTP/1.1" 200 -
+2026-01-06 13:56:23,354 INFO: 127.0.0.1 - - [06/Jan/2026 13:56:23] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-06 14:07:53,898 INFO: Google Sheets connection initialized successfully
+2026-01-06 14:07:53,898 INFO: Application initialized successfully
+2026-01-06 14:07:53,944 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.20.10.4:5005
+2026-01-06 14:07:53,944 INFO: [33mPress CTRL+C to quit[0m
+2026-01-06 14:07:53,945 INFO:  * Restarting with stat
+2026-01-06 14:07:55,003 INFO: Google Sheets connection initialized successfully
+2026-01-06 14:07:55,004 INFO: Application initialized successfully
+2026-01-06 14:07:55,041 WARNING:  * Debugger is active!
+2026-01-06 14:07:55,079 INFO:  * Debugger PIN: 359-575-910
+2026-01-06 14:10:13,257 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:13] "GET / HTTP/1.1" 200 -
+2026-01-06 14:10:13,587 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-06 14:10:15,091 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:15] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-06 14:10:49,432 INFO: Member added: TEST_USER_001
+2026-01-06 14:10:49,433 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:49] "POST /api/register HTTP/1.1" 200 -
+2026-01-06 14:10:50,905 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:50] "GET /?page=order HTTP/1.1" 200 -
+2026-01-06 14:10:55,966 INFO: Order added: ORD1767679855
+2026-01-06 14:10:55,966 WARNING: LINE token not configured, skipping push message
+2026-01-06 14:10:55,967 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:55] "POST /api/order HTTP/1.1" 200 -
+2026-01-06 14:10:57,822 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:57] "GET /?page=history HTTP/1.1" 200 -
+2026-01-06 14:10:59,020 INFO: 127.0.0.1 - - [06/Jan/2026 14:10:59] "POST /api/history HTTP/1.1" 200 -
+2026-01-06 14:11:13,720 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:13] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-06 14:11:13,858 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:13] "GET /login HTTP/1.1" 200 -
+2026-01-06 14:11:23,408 WARNING: Failed login attempt from IP 127.0.0.1
+2026-01-06 14:11:23,409 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:23] "POST /login HTTP/1.1" 200 -
+2026-01-06 14:11:35,127 INFO: Admin login successful from IP 127.0.0.1
+2026-01-06 14:11:35,128 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:35] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-06 14:11:35,284 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:35] "GET /admin HTTP/1.1" 200 -
+2026-01-06 14:11:37,385 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:37] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-06 14:11:39,506 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:39] "GET /api/admin/orders HTTP/1.1" 200 -
