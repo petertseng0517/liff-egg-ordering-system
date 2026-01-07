@@ -14,10 +14,25 @@ class Config:
     SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'dev_secret_key_change_in_production')
     DEBUG = os.getenv('FLASK_ENV', 'development') == 'development'
     
-    # 管理員配置
-    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin')
+    # 管理員配置 - 從環境變數讀取帳號密碼
+    # 格式: ADMIN_ACCOUNTS=admin:admin123,manager:manager123
+    # 在 .env 檔案中設置，不要提交到 Git
+    @property
+    def ADMIN_ACCOUNTS(self):
+        """從環境變數解析帳號密碼對"""
+        accounts_str = os.getenv('ADMIN_ACCOUNTS', 'admin:admin123,manager:manager123')
+        accounts = {}
+        for pair in accounts_str.split(','):
+            if ':' in pair:
+                username, password = pair.split(':', 1)
+                accounts[username.strip()] = password.strip()
+        return accounts
     MAX_LOGIN_ATTEMPTS = 5  # 最多嘗試次數
     LOGIN_ATTEMPT_TIMEOUT = 300  # 秒 (5分鐘)
+    SESSION_TIMEOUT = 180  # 秒 (3分鐘) - 管理後台超時時間
+    
+    # 時區設置 - 台灣時區
+    TIMEZONE = 'Asia/Taipei'
     
     # Google Sheets 配置
     SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')

@@ -1,9 +1,10 @@
 """
 主應用程式入口 - 模組化結構
 """
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import logging
 import os
+from datetime import timedelta
 from config import Config
 from services.google_sheets import GoogleSheetsService
 from routes.auth import auth_bp
@@ -22,6 +23,10 @@ logger = logging.getLogger(__name__)
 # 建立 Flask 應用
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Config.SECRET_KEY
+
+# 設置 Session 超時時間（180秒 = 3分鐘）
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=Config.SESSION_TIMEOUT)
+app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 
 # 開發環境使用 HTTP，生產環境使用 HTTPS
 if Config.DEBUG:

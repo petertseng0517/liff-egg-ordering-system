@@ -10,6 +10,19 @@
         body { background-color: #f8f9fa; }
         .status-badge { font-size: 0.9em; }
         .table-hover tbody tr:hover { background-color: #f1f1f1; cursor: pointer; }
+        
+        /* RWD 改進 */
+        @media (max-width: 767.98px) {
+            .container-fluid > .row {
+                margin: -12px !important;
+            }
+            .container-fluid > .row > [class*="col-"] {
+                padding: 12px !important;
+            }
+            #order-cards-container {
+                margin: -12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -65,76 +78,8 @@
                     <button class="btn btn-sm btn-primary" onclick="loadOrders()"><i class="bi bi-arrow-clockwise"></i> 重新整理</button>
                 </div>
                 <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>土雞蛋訂單管理後台</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <style>
-        body { background-color: #f8f9fa; }
-        .status-badge { font-size: 0.9em; }
-        .table-hover tbody tr:hover { background-color: #f1f1f1; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">🥚 土雞蛋管理後台</a>
-    <a href="/logout" class="btn btn-outline-light btn-sm">登出</a>
-  </div>
-</nav>
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar / Filters -->
-        <div class="col-md-3 mb-3">
-            <div class="card">
-                <div class="card-header">篩選條件</div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">搜尋</label>
-                        <input type="text" class="form-control" id="search-input" placeholder="訂單號 / 姓名 / 手機">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">日期範圍</label>
-                        <div class="btn-group w-100" role="group">
-                            <button type="button" class="btn btn-outline-secondary" onclick="filterDate('all')">全部</button>
-                            <button type="button" class="btn btn-outline-secondary" onclick="filterDate('today')">今天</button>
-                            <button type="button" class="btn btn-outline-secondary" onclick="filterDate('week')">本週</button>
-                            <button type="button" class="btn btn-outline-secondary" onclick="filterDate('month')">本月</button>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">訂單狀態</label>
-                        <select class="form-select" id="status-filter" onchange="applyFilters()">
-                            <option value="">全部狀態</option>
-                            <option value="處理中">處理中</option>
-                            <option value="已確認">已確認</option>
-                            <option value="配送中">配送中</option>
-                            <option value="部分配送">部分配送</option>
-                            <option value="已完成">已完成</option>
-                            <option value="已取消">已取消</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Order List -->
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>訂單列表</span>
-                    <button class="btn btn-sm btn-primary" onclick="loadOrders()"><i class="bi bi-arrow-clockwise"></i> 重新整理</button>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
+                    <!-- 電腦版：表格 -->
+                    <div class="d-none d-md-block table-responsive">
                         <table class="table table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
@@ -154,6 +99,11 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- 手機版：卡片式列表 -->
+                    <div class="d-md-none" id="order-cards-container" style="padding: 12px;">
+                        <div class="text-center text-muted py-4">載入中...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,13 +121,40 @@
       <div class="modal-body">
         <div class="row mb-3">
             <div class="col-md-6">
-                <h6 class="text-primary">👤 客戶資料</h6>
-                <table class="table table-sm table-borderless">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-primary mb-0">👤 客戶資料</h6>
+                    <button class="btn btn-sm btn-outline-secondary" id="edit-member-btn" onclick="toggleEditMember()">✏️ 編輯</button>
+                </div>
+                <table class="table table-sm table-borderless" id="member-display">
                     <tr><td width="30%" class="text-muted">姓名</td><td id="m-name"></td></tr>
                     <tr><td class="text-muted">電話</td><td id="m-phone"></td></tr>
                     <tr><td class="text-muted">地址 1</td><td id="m-addr"></td></tr>
                     <tr><td class="text-muted">地址 2</td><td id="m-addr2"></td></tr>
                 </table>
+                
+                <!-- 編輯表單（初始隱藏）-->
+                <div id="member-edit" style="display: none;">
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm">姓名</label>
+                        <input type="text" class="form-control form-control-sm" id="edit-name">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm">電話</label>
+                        <input type="tel" class="form-control form-control-sm" id="edit-phone">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm">地址 1</label>
+                        <input type="text" class="form-control form-control-sm" id="edit-addr">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm">地址 2</label>
+                        <input type="text" class="form-control form-control-sm" id="edit-addr2" placeholder="選填">
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-primary" onclick="saveMemberData()">保存</button>
+                        <button class="btn btn-sm btn-secondary" onclick="toggleEditMember()">取消</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <h6 class="text-primary">📦 訂單內容</h6>
@@ -226,9 +203,10 @@
                 <!-- Add Delivery Log -->
                 <div class="card bg-light mb-3">
                     <div class="card-body py-2">
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
                             <label class="text-nowrap">新增出貨:</label>
                             <input type="number" class="form-control form-control-sm" id="new-delivery-qty" placeholder="數量" style="width: 80px;" min="1">
+                            <input type="text" class="form-control form-control-sm" id="new-delivery-address" placeholder="配送地點" style="flex: 1; min-width: 200px;">
                             <button class="btn btn-sm btn-success" onclick="addDeliveryLog()">確認出貨</button>
                         </div>
                     </div>
@@ -240,13 +218,23 @@
                         <tr>
                             <th>出貨日期</th>
                             <th>數量</th>
-                            <th>備註</th>
+                            <th>出貨地點</th>
+                            <th>狀態</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody id="delivery-logs-body">
                         <!-- Logs here -->
                     </tbody>
                 </table>
+
+                <!-- Delivery Audit Log (修正歷史) -->
+                <div class="mt-4 mb-3">
+                    <h6 class="text-muted">📋 出貨修正歷史</h6>
+                    <div class="alert alert-light border" id="audit-logs-container">
+                        <small class="text-muted">無修正記錄</small>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -270,6 +258,45 @@
             </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Correction Modal -->
+<div class="modal fade" id="correctModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">修正出貨紀錄</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">原出貨數量</label>
+          <input type="text" class="form-control" id="correct-old-qty" readonly>
+          <input type="hidden" id="correct-log-index">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">新出貨數量</label>
+          <input type="number" class="form-control" id="correct-new-qty" min="1">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">原出貨地點</label>
+          <input type="text" class="form-control" id="correct-old-address" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">新出貨地點</label>
+          <input type="text" class="form-control" id="correct-new-address" placeholder="若無修改保持不變">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">修正原因 *</label>
+          <textarea class="form-control" id="correct-reason" rows="3" placeholder="例：輸入錯誤、數量不符等..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="submitCorrection()">確認修正</button>
       </div>
     </div>
   </div>
@@ -337,12 +364,18 @@
     function renderTable(orders) {
         const tbody = document.getElementById('order-table-body');
         tbody.innerHTML = '';
+        
+        const cardsContainer = document.getElementById('order-cards-container');
+        cardsContainer.innerHTML = '';
+        
         if (orders.length === 0) {
             tbody.innerHTML = '<tr><td colspan="9" class="text-center p-3 text-muted">無符合資料</td></tr>';
+            cardsContainer.innerHTML = '<div class="text-center text-muted py-4">無符合資料</div>';
             return;
         }
 
         orders.forEach(o => {
+            // 電腦版：表格行
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${o.orderId}</td>
@@ -356,6 +389,37 @@
                 <td><button class="btn btn-sm btn-outline-primary" onclick='openModal("${o.orderId}")'>詳細</button></td>
             `;
             tbody.appendChild(tr);
+
+            // 手機版：卡片
+            const card = document.createElement('div');
+            card.className = 'card mb-2 border cursor-pointer';
+            card.style.cursor = 'pointer';
+            const paymentBadge = o.paymentStatus === '已付款' ? '<span class="badge bg-success">已付款</span>' : 
+                                 o.paymentStatus === '待付款' ? '<span class="badge bg-warning text-dark">待付款</span>' :
+                                 '<span class="badge bg-danger">未付款</span>';
+            card.innerHTML = `
+                <div class="card-body py-2 px-3" onclick='openModal("${o.orderId}")'>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h6 class="mb-1 text-primary fw-bold">${o.orderId}</h6>
+                            <small class="text-muted">${o.date}</small>
+                        </div>
+                        <span class="badge ${getStatusBadge(o.status)}">${o.status}</span>
+                    </div>
+                    <div class="mb-2">
+                        <small class="text-muted d-block">客戶：${o.customer.name || '未知'}</small>
+                        <small class="text-muted d-block">商品：${o.items}</small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">$${o.amount}</small>
+                            ${paymentBadge}
+                        </div>
+                        <button class="btn btn-xs btn-sm btn-outline-primary" onclick='event.stopPropagation(); openModal("${o.orderId}")'>詳細</button>
+                    </div>
+                </div>
+            `;
+            cardsContainer.appendChild(card);
         });
     }
 
@@ -369,9 +433,7 @@
             case '已取消': return 'bg-secondary';
             default: return 'bg-secondary';
         }
-    }
-
-    function getPaymentBadge(status) {
+    }    function getPaymentBadge(status) {
         if(status === '已付款') return '<span class="badge bg-success">已付款</span>';
         if(status === '退款中') return '<span class="badge bg-warning text-dark">退款中</span>';
         if(status === '已退款') return '<span class="badge bg-dark">已退款</span>';
@@ -395,6 +457,18 @@
         document.getElementById('m-phone').innerText = currentOrder.customer.phone || 'N/A';
         document.getElementById('m-addr').innerText = currentOrder.customer.address || 'N/A';
         document.getElementById('m-addr2').innerText = currentOrder.customer.address2 || '-';
+        
+        // 初始化編輯表單的隱藏值
+        document.getElementById('edit-name').value = currentOrder.customer.name || '';
+        document.getElementById('edit-phone').value = currentOrder.customer.phone || '';
+        document.getElementById('edit-addr').value = currentOrder.customer.address || '';
+        document.getElementById('edit-addr2').value = currentOrder.customer.address2 || '';
+        
+        // 重置編輯模式為隱藏
+        document.getElementById('member-display').style.display = 'table';
+        document.getElementById('member-edit').style.display = 'none';
+        document.getElementById('edit-member-btn').textContent = '✏️ 編輯';
+        
         document.getElementById('m-items').innerText = currentOrder.items;
         document.getElementById('m-amount').innerText = '$' + currentOrder.amount;
         
@@ -407,6 +481,9 @@
         document.getElementById('m-payment-status').innerHTML = getPaymentBadge(payStatus);
         document.getElementById('new-payment-select').value = payStatus;
 
+        // 預設出貨地點為客戶主要地址
+        document.getElementById('new-delivery-address').value = currentOrder.customer.address || '';
+
         // Parse Total Qty
         totalOrderedQty = 1;
         const match = currentOrder.items.match(/x(\d+)/);
@@ -418,385 +495,71 @@
         new bootstrap.Modal(document.getElementById('orderModal')).show();
     }
 
-    function renderDeliveryLogs() {
-        const logs = currentOrder.deliveryLogs || []; // Expecting array of {date, qty}
-        let deliveredTotal = 0;
+    function toggleEditMember() {
+        const displayDiv = document.getElementById('member-display');
+        const editDiv = document.getElementById('member-edit');
+        const btn = document.getElementById('edit-member-btn');
         
-        const tbody = document.getElementById('delivery-logs-body');
-        tbody.innerHTML = '';
-        
-        logs.forEach(log => {
-            deliveredTotal += parseInt(log.qty);
-            tbody.innerHTML += `
-                <tr>
-                    <td>${log.date}</td>
-                    <td>${log.qty}</td>
-                    <td>-</td>
-                </tr>
-            `;
-        });
-
-        if(logs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">尚無出貨紀錄</td></tr>';
+        if (editDiv.style.display === 'none') {
+            displayDiv.style.display = 'none';
+            editDiv.style.display = 'block';
+            btn.textContent = '';
+            btn.disabled = true;
+        } else {
+            displayDiv.style.display = 'table';
+            editDiv.style.display = 'none';
+            btn.textContent = '✏️ 編輯';
+            btn.disabled = false;
         }
-
-        // Update UI stats
-        document.getElementById('delivery-progress-text').innerText = `${deliveredTotal} / ${totalOrderedQty}`;
-        document.getElementById('delivery-remaining').innerText = `剩餘: ${totalOrderedQty - deliveredTotal}`;
-        
-        const pct = Math.min(100, (deliveredTotal / totalOrderedQty) * 100);
-        document.getElementById('delivery-progress-bar').style.width = `${pct}%`;
     }
 
-    function addDeliveryLog() {
-        const qtyInput = document.getElementById('new-delivery-qty');
-        const qty = parseInt(qtyInput.value);
-        if(!qty || qty <= 0) {
-            alert('請輸入有效數量');
+    function saveMemberData() {
+        const name = document.getElementById('edit-name').value.trim();
+        const phone = document.getElementById('edit-phone').value.trim();
+        const addr = document.getElementById('edit-addr').value.trim();
+        const addr2 = document.getElementById('edit-addr2').value.trim();
+        
+        if (!name || !phone || !addr) {
+            alert('姓名、電話和地址 1 為必填項目');
             return;
         }
-
-        // Calculate current total delivered and remaining
-        let currentDeliveredTotal = 0;
-        if (currentOrder.deliveryLogs) {
-            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => sum + parseInt(log.qty), 0);
-        }
-        const remainingQty = totalOrderedQty - currentDeliveredTotal;
-
-        if (qty > remainingQty) {
-            alert(`新增出貨數量 (${qty} 盤) 不能超過剩餘數量 (${remainingQty} 盤)。`);
-            return;
-        }
-
-        if(!confirm(`確認新增出貨紀錄：${qty} 盤？`)) return;
-
-        fetch('/api/admin/order/add_delivery', {
+        
+        if (!confirm(`確認更新會員資料？`)) return;
+        
+        fetch('/api/admin/member/update', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                orderId: currentOrder.orderId,
                 userId: currentOrder.userId,
-                qty: qty,
-                totalOrdered: totalOrderedQty
+                name: name,
+                phone: phone,
+                address: addr,
+                address2: addr2
             })
         })
         .then(res => res.json())
         .then(data => {
-            if(data.status === 'success') {
-                alert('出貨紀錄已新增，狀態已更新。');
-                loadOrders();
-                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
-            } else {
-                alert('失敗: ' + data.msg);
-            }
-        });
-    }
-
-    function updatePaymentStatus() {
-        if(!currentOrder) return;
-        const newPayment = document.getElementById('new-payment-select').value;
-        
-        if(!confirm(`確認將付款狀態更新為「${newPayment}」？`)) return;
-
-        fetch('/api/admin/order/update_payment', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                orderId: currentOrder.orderId,
-                paymentStatus: newPayment
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'success') {
-                alert('付款狀態更新成功');
-                loadOrders();
-                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
-            } else {
-                alert('更新失敗: ' + data.msg);
-            }
-        });
-    }
-
-    function updateStatus() {
-        if(!currentOrder) return;
-        const newStatus = document.getElementById('new-status-select').value;
-        
-        if(!confirm(`確定將訂單 ${currentOrder.orderId} 狀態更新為「${newStatus}」嗎？`)) return;
-
-        fetch('/api/admin/order/update_status', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                orderId: currentOrder.orderId,
-                status: newStatus,
-                userId: currentOrder.userId
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'success') {
-                alert('更新成功');
-                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
-                loadOrders();
-            } else {
-                alert('更新失敗: ' + data.msg);
-            }
-        })
-        .catch(err => alert('系統錯誤: ' + err));
-    }
-</script>
-
-</body>
-</html>
-
-<!-- Details Modal -->
-<div class="modal fade" id="orderModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">訂單詳情 <span id="modal-order-id"></span></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <h6 class="text-primary">👤 客戶資料</h6>
-                <table class="table table-sm table-borderless">
-                    <tr><td width="30%" class="text-muted">姓名</td><td id="m-name"></td></tr>
-                    <tr><td class="text-muted">電話</td><td id="m-phone"></td></tr>
-                    <tr><td class="text-muted">地址 1</td><td id="m-addr"></td></tr>
-                    <tr><td class="text-muted">地址 2</td><td id="m-addr2"></td></tr>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <h6 class="text-primary">📦 訂單內容</h6>
-                <div class="alert alert-light border" id="m-items"></div>
-                <div class="d-flex justify-content-between fw-bold mb-2">
-                    <span>總金額</span>
-                    <span class="text-danger" id="m-amount"></span>
-                </div>
-                <!-- Payment Management -->
-                <div class="d-flex align-items-center justify-content-between bg-white border p-2 rounded">
-                    <div>
-                        <small class="text-muted d-block">付款狀態</small>
-                        <span id="m-payment-status" class="badge bg-secondary">未付款</span>
-                    </div>
-                    <div class="d-flex gap-1">
-                        <select class="form-select form-select-sm" id="new-payment-select" style="width: auto;">
-                            <option value="未付款">未付款</option>
-                            <option value="已付款">已付款</option>
-                            <option value="退款中">退款中</option>
-                            <option value="已退款">已退款</option>
-                        </select>
-                        <button class="btn btn-sm btn-outline-primary" onclick="updatePaymentStatus()">更新</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <hr>
-
-        <!-- Delivery Management Section -->
-        <div class="row">
-            <div class="col-12">
-                <h6 class="text-primary">🚚 分批出貨管理</h6>
+            if (data.status === 'success') {
+                alert('會員資料已更新');
+                // 更新本地數據
+                currentOrder.customer.name = name;
+                currentOrder.customer.phone = phone;
+                currentOrder.customer.address = addr;
+                currentOrder.customer.address2 = addr2;
                 
-                <!-- Progress Bar -->
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <small>出貨進度: <span id="delivery-progress-text" class="fw-bold">0 / 0</span></small>
-                        <small id="delivery-remaining" class="text-muted">剩餘: 0</small>
-                    </div>
-                    <div class="progress" style="height: 10px;">
-                        <div id="delivery-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <!-- Add Delivery Log -->
-                <div class="card bg-light mb-3">
-                    <div class="card-body py-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <label class="text-nowrap">新增出貨:</label>
-                            <input type="number" class="form-control form-control-sm" id="new-delivery-qty" placeholder="數量" style="width: 80px;" min="1">
-                            <button class="btn btn-sm btn-success" onclick="addDeliveryLog()">確認出貨</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Delivery History Table -->
-                <table class="table table-sm table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>出貨日期</th>
-                            <th>數量</th>
-                            <th>備註</th>
-                        </tr>
-                    </thead>
-                    <tbody id="delivery-logs-body">
-                        <!-- Logs here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <hr>
-        
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <span class="me-2">目前狀態:</span>
-                <span class="badge bg-secondary" id="m-current-status"></span>
-            </div>
-            <div class="d-flex gap-2">
-                <select class="form-select w-auto" id="new-status-select">
-                    <option value="處理中">處理中</option>
-                    <option value="已確認">已確認</option>
-                    <option value="配送中">配送中</option>
-                    <option value="部分配送">部分配送</option>
-                    <option value="已完成">已完成</option>
-                    <option value="已取消">已取消</option>
-                </select>
-                <button class="btn btn-primary" onclick="updateStatus()">手動更新狀態</button>
-            </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    let allOrders = [];
-    let currentFilterDate = 'all'; // all, today, week, month
-    let currentOrder = null;
-    let totalOrderedQty = 0; // Parsed from item string
-
-    document.addEventListener('DOMContentLoaded', () => {
-        loadOrders();
-        document.getElementById('search-input').addEventListener('input', applyFilters);
-    });
-
-    function loadOrders() {
-        fetch('/api/admin/orders')
-            .then(res => res.json())
-            .then(data => {
-                allOrders = data;
-                applyFilters();
-            })
-            .catch(err => alert('載入失敗: ' + err));
-    }
-
-    function filterDate(type) {
-        currentFilterDate = type;
-        document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active', 'btn-secondary'));
-        event.target.classList.add('active', 'btn-secondary');
-        event.target.classList.remove('btn-outline-secondary');
-        applyFilters();
-    }
-
-    function applyFilters() {
-        const query = document.getElementById('search-input').value.toLowerCase();
-        const status = document.getElementById('status-filter').value;
-        
-        let filtered = allOrders.filter(o => {
-            const searchMatch = (o.orderId.toLowerCase().includes(query) || 
-                               (o.customer.name && o.customer.name.toLowerCase().includes(query)) ||
-                               (o.customer.phone && o.customer.phone.includes(query)));
-            if (!searchMatch) return false;
-            if (status && o.status !== status) return false;
-
-            const orderDate = new Date(o.date);
-            const now = new Date();
-            if (currentFilterDate === 'today') {
-                return orderDate.toDateString() === now.toDateString();
-            } else if (currentFilterDate === 'week') {
-                const oneWeekAgo = new Date(now.setDate(now.getDate() - 7));
-                return orderDate >= oneWeekAgo;
-            } else if (currentFilterDate === 'month') {
-                return orderDate.getMonth() === new Date().getMonth() && 
-                       orderDate.getFullYear() === new Date().getFullYear();
+                // 更新顯示
+                document.getElementById('m-name').innerText = name;
+                document.getElementById('m-phone').innerText = phone;
+                document.getElementById('m-addr').innerText = addr;
+                document.getElementById('m-addr2').innerText = addr2 || '-';
+                
+                // 關閉編輯模式
+                toggleEditMember();
+            } else {
+                alert('更新失敗: ' + data.msg);
             }
-            return true;
-        });
-
-        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-        renderTable(filtered);
-    }
-
-    function renderTable(orders) {
-        const tbody = document.getElementById('order-table-body');
-        tbody.innerHTML = '';
-        if (orders.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="text-center p-3 text-muted">無符合資料</td></tr>';
-            return;
-        }
-
-        orders.forEach(o => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${o.orderId}</td>
-                <td>${o.date.split(' ')[0]}</td>
-                <td>${o.customer.name || '未知'} <br> <small class="text-muted">${o.customer.phone || ''}</small></td>
-                <td>${o.items}</td>
-                <td>$${o.amount}</td>
-                <td>${getPaymentBadge(o.paymentStatus)}</td>
-                <td><span class="badge ${getStatusBadge(o.status)}">${o.status}</span></td>
-                <td><button class="btn btn-sm btn-outline-primary" onclick='openModal("${o.orderId}")'>詳細</button></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    function getStatusBadge(status) {
-        switch(status) {
-            case '處理中': return 'bg-warning text-dark';
-            case '已確認': return 'bg-info text-dark';
-            case '配送中': return 'bg-primary';
-            case '部分配送': return 'bg-secondary text-dark';
-            case '已完成': return 'bg-success';
-            case '已取消': return 'bg-secondary';
-            default: return 'bg-secondary';
-        }
-    }
-
-    function getPaymentBadge(status) {
-        if(status === '已付款') return '<span class="badge bg-success">已付款</span>';
-        if(status === '退款中') return '<span class="badge bg-warning text-dark">退款中</span>';
-        if(status === '已退款') return '<span class="badge bg-dark">已退款</span>';
-        return '<span class="badge bg-danger">未付款</span>';
-    }
-
-    function openModal(orderId) {
-        currentOrder = allOrders.find(o => o.orderId === orderId);
-        if(!currentOrder) return;
-
-        document.getElementById('modal-order-id').innerText = currentOrder.orderId;
-        document.getElementById('m-name').innerText = currentOrder.customer.name || 'N/A';
-        document.getElementById('m-phone').innerText = currentOrder.customer.phone || 'N/A';
-        document.getElementById('m-addr').innerText = currentOrder.customer.address || 'N/A';
-        document.getElementById('m-addr2').innerText = currentOrder.customer.address2 || '-';
-        document.getElementById('m-items').innerText = currentOrder.items;
-        document.getElementById('m-amount').innerText = '$' + currentOrder.amount;
-        
-        document.getElementById('m-current-status').innerText = currentOrder.status;
-        document.getElementById('m-current-status').className = `badge ${getStatusBadge(currentOrder.status)}`;
-        document.getElementById('new-status-select').value = currentOrder.status;
-
-        // Payment
-        const payStatus = currentOrder.paymentStatus || '未付款';
-        document.getElementById('m-payment-status').innerHTML = getPaymentBadge(payStatus);
-        document.getElementById('new-payment-select').value = payStatus;
-
-        // Parse Total Qty
-        totalOrderedQty = 1;
-        const match = currentOrder.items.match(/x(\d+)/);
-        if(match && match[1]) {
-            totalOrderedQty = parseInt(match[1]);
-        }
-
-        renderDeliveryLogs();
-        new bootstrap.Modal(document.getElementById('orderModal')).show();
+        })
+        .catch(err => alert('系統錯誤: ' + err));
     }
 
     function renderDeliveryLogs() {
@@ -806,19 +569,26 @@
         const tbody = document.getElementById('delivery-logs-body');
         tbody.innerHTML = '';
         
-        logs.forEach(log => {
-            deliveredTotal += parseInt(log.qty);
+        logs.forEach((log, index) => {
+            const actualQty = log.corrected_qty || log.qty;
+            deliveredTotal += parseInt(actualQty);
+            const isCorrected = log.corrected ? '✏️ 已修正' : '';
+            const address = log.address || '(未記錄)';
             tbody.innerHTML += `
                 <tr>
                     <td>${log.date}</td>
-                    <td>${log.qty}</td>
-                    <td>-</td>
+                    <td>${actualQty}</td>
+                    <td><small class="text-muted">${address}</small></td>
+                    <td>${isCorrected}</td>
+                    <td>
+                        <button class="btn btn-xs btn-sm btn-warning" onclick="showCorrectModal(${index})">修正</button>
+                    </td>
                 </tr>
             `;
         });
 
         if(logs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">尚無出貨紀錄</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">尚無出貨紀錄</td></tr>';
         }
 
         // Update UI stats
@@ -827,14 +597,133 @@
         
         const pct = Math.min(100, (deliveredTotal / totalOrderedQty) * 100);
         document.getElementById('delivery-progress-bar').style.width = `${pct}%`;
+        
+        // Load audit logs
+        loadDeliveryAuditLogs(currentOrder.orderId);
+    }
+
+    function showCorrectModal(logIndex) {
+        const log = currentOrder.deliveryLogs[logIndex];
+        if (!log) return;
+        
+        const oldQty = log.corrected_qty || log.qty;
+        const oldAddress = log.address || '(未記錄)';
+        document.getElementById('correct-log-index').value = logIndex;
+        document.getElementById('correct-old-qty').value = oldQty;
+        document.getElementById('correct-new-qty').value = oldQty;
+        document.getElementById('correct-old-address').value = oldAddress;
+        document.getElementById('correct-new-address').value = oldAddress;
+        document.getElementById('correct-reason').value = '';
+        
+        new bootstrap.Modal(document.getElementById('correctModal')).show();
+    }
+
+    function submitCorrection() {
+        const logIndex = parseInt(document.getElementById('correct-log-index').value);
+        const newQty = parseInt(document.getElementById('correct-new-qty').value);
+        const oldAddress = document.getElementById('correct-old-address').value;
+        const newAddress = document.getElementById('correct-new-address').value.trim();
+        const reason = document.getElementById('correct-reason').value.trim();
+        
+        if (!reason) {
+            alert('請填寫修正原因');
+            return;
+        }
+        
+        if (newQty <= 0) {
+            alert('新數量必須大於 0');
+            return;
+        }
+        
+        const oldQty = parseInt(document.getElementById('correct-old-qty').value);
+        let confirmMsg = `確認修正出貨紀錄？原數量: ${oldQty} 盤 → 新數量: ${newQty} 盤`;
+        if (newAddress && newAddress !== oldAddress) {
+            confirmMsg += `\n原地點: ${oldAddress} → 新地點: ${newAddress}`;
+        }
+        confirmMsg += '？';
+        
+        if (!confirm(confirmMsg)) {
+            return;
+        }
+        
+        fetch('/api/admin/order/correct_delivery', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                orderId: currentOrder.orderId,
+                userId: currentOrder.userId,
+                logIndex: logIndex,
+                newQty: newQty,
+                newAddress: newAddress || oldAddress,
+                reason: reason
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('出貨紀錄已修正，客戶已收到通知。');
+                bootstrap.Modal.getInstance(document.getElementById('correctModal')).hide();
+                loadOrders();
+            } else {
+                alert('修正失敗: ' + data.msg);
+            }
+        })
+        .catch(err => alert('系統錯誤: ' + err));
+    }
+    
+    function loadDeliveryAuditLogs(orderId) {
+        fetch(`/api/admin/order/delivery_audit/${orderId}`)
+            .then(res => res.json())
+            .then(logs => {
+                const container = document.getElementById('audit-logs-container');
+                if (!logs || logs.length === 0) {
+                    container.innerHTML = '<small class="text-muted">無修正記錄</small>';
+                    return;
+                }
+                
+                let html = '';
+                logs.forEach(log => {
+                    const timestamp = log.時間戳記 || log.timestamp || '';
+                    const admin = log.管理者帳號 || log.admin_name || '未知';
+                    const before = log.修改前數值 || log.before_value || '?';
+                    const after = log.修改後數值 || log.after_value || '?';
+                    const reason = log.原因 || log.reason || '';
+                    
+                    html += `
+                        <div class="border-bottom pb-2 mb-2">
+                            <small class="text-muted">${timestamp}</small><br>
+                            <strong>${admin}</strong> 修正出貨紀錄<br>
+                            修改前: <span class="text-danger">${before}</span> 盤 
+                            → 修改後: <span class="text-success">${after}</span> 盤<br>
+                            原因: ${reason}
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            })
+            .catch(err => console.error('Error loading audit logs:', err));
     }
 
     function addDeliveryLog() {
         const qtyInput = document.getElementById('new-delivery-qty');
+        const addressInput = document.getElementById('new-delivery-address');
         const qty = parseInt(qtyInput.value);
+        const address = addressInput.value.trim();
+        
         if(!qty || qty <= 0) {
             alert('請輸入有效數量');
             return;
+        }
+
+        // 如果沒有輸入地點，使用預設地點
+        let finalAddress = address;
+        if (!address) {
+            // 優先使用第二地址，如果沒有則使用主要地址
+            finalAddress = currentOrder.customer.address2 || currentOrder.customer.address || '';
+            if (!finalAddress) {
+                alert('請輸入出貨地點或補充客戶地址資訊');
+                return;
+            }
         }
 
         // Calculate current total delivered and remaining
@@ -849,7 +738,7 @@
             return;
         }
 
-        if(!confirm(`確認新增出貨紀錄：${qty} 盤？`)) return;
+        if(!confirm(`確認新增出貨紀錄：${qty} 盤至「${finalAddress}」？`)) return;
 
         fetch('/api/admin/order/add_delivery', {
             method: 'POST',
@@ -858,6 +747,7 @@
                 orderId: currentOrder.orderId,
                 userId: currentOrder.userId,
                 qty: qty,
+                address: finalAddress,
                 totalOrdered: totalOrderedQty
             })
         })
@@ -865,6 +755,8 @@
         .then(data => {
             if(data.status === 'success') {
                 alert('出貨紀錄已新增，狀態已更新。');
+                qtyInput.value = '';
+                addressInput.value = '';
                 loadOrders();
                 bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
             } else {
@@ -926,6 +818,35 @@
         })
         .catch(err => alert('系統錯誤: ' + err));
     }
+
+    // ===== 會話超時自動登出 (180秒) =====
+    let lastActivityTime = Date.now();
+    const SESSION_TIMEOUT_MS = 180 * 1000; // 180秒
+
+    // 監聽用戶活動
+    function updateActivity() {
+        lastActivityTime = Date.now();
+    }
+
+    // 定期檢查會話是否超時
+    function checkSessionTimeout() {
+        const now = Date.now();
+        const timeSinceLastActivity = now - lastActivityTime;
+
+        if (timeSinceLastActivity > SESSION_TIMEOUT_MS) {
+            alert('⏱️ 會話已超時，您將被登出');
+            location.href = '/logout';
+        }
+    }
+
+    // 頁面加載時開始監聽活動
+    document.addEventListener('mousedown', updateActivity);
+    document.addEventListener('keydown', updateActivity);
+    document.addEventListener('mousemove', updateActivity);
+    document.addEventListener('touchstart', updateActivity);
+
+    // 每10秒檢查一次會話
+    setInterval(checkSessionTimeout, 10000);
 </script>
 
 </body>
