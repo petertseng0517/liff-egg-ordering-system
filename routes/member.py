@@ -150,8 +150,9 @@ def create_order():
         unit_price = ProductConfig.get_unit_price(item_name, qty)
         total_amount = unit_price * qty
         
-        # 生成訂單
-        order_id = "ORD" + str(int(datetime.now(pytz.timezone('Asia/Taipei')).timestamp()))
+        # 生成訂單編號：ORD + 時間戳後8位（保持綠界20字元限制）
+        timestamp_str = str(int(datetime.now(pytz.timezone('Asia/Taipei')).timestamp()))
+        order_id = "ORD" + timestamp_str[-8:]  # 取最後8位時間戳
         
         # 正規化商品名稱與數量
         actual_item_name = item_name
@@ -282,8 +283,8 @@ def retry_payment():
             return jsonify({"status": "error", "msg": "訂單已付款，無需重新付款"}), 400
         
         # 為 ECPay 生成新的交易編號（含重試次數）
-        # 格式：ORD1234567890_retry_1, ORD1234567890_retry_2 ...
-        ecpay_trade_no = f"{order_id}_retry_{retry_count}"
+        # 格式：ORDxxxxxxxx_R1, ORDxxxxxxxx_R2 ... (控制在20字元以內)
+        ecpay_trade_no = f"{order_id}_R{retry_count}"
         amount = int(order['amount'])
         
         base_url = os.getenv('APP_BASE_URL')
@@ -313,7 +314,7 @@ def retry_payment():
             order_result_url=""
         )
         
-        logger.info(f"Retry payment for order {order_id}, ECPay Trade No: {ecpay_trade_no}")
+        logger.info(f"Retry payment for order {order_id}, ECPay Trade No: {ecpay_trade_no} (length: {len(ecpay_trade_no)})")
         return jsonify({
             "status": "ecpay_init",
             "actionUrl": 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',

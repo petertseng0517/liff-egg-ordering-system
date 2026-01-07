@@ -45,14 +45,14 @@ def ecpay_callback():
         if rtn_code == '1':
             merchant_trade_no = data.get('MerchantTradeNo')
             
-            # 提取原訂單號（處理 "ORDxxx_retry_N" 格式）
-            # 如果是重試付款，交易編號會是 "ORDxxx_retry_1" 或 "ORDxxx_retry_2" 等
-            if '_retry_' in merchant_trade_no:
-                order_id = merchant_trade_no.split('_retry_')[0]
-                logger.info(f"Payment Success for Retry Order: {order_id} (ECPay Trade No: {merchant_trade_no})")
+            # 提取原訂單號（處理 "ORDxxxxxx_RN" 格式）
+            # 如果是重試付款，交易編號會是 "ORDxxxxxx_R1" 或 "ORDxxxxxx_R2" 等
+            if '_R' in merchant_trade_no:
+                order_id = merchant_trade_no.split('_R')[0]
+                logger.info(f"Payment Success for Retry Order: {order_id} (ECPay Trade No: {merchant_trade_no}, length: {len(merchant_trade_no)})")
             else:
                 order_id = merchant_trade_no
-                logger.info(f"Payment Success for Order: {order_id}")
+                logger.info(f"Payment Success for Order: {order_id} (length: {len(merchant_trade_no)})")
             
             # 更新付款狀態
             success = GoogleSheetsService.update_order_payment_status(order_id, "已付款")
