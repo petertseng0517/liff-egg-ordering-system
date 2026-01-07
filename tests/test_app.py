@@ -65,27 +65,29 @@ class TestAuthRoutes(unittest.TestCase):
     def test_login_wrong_password(self):
         """測試錯誤密碼登入"""
         response = self.client.post('/login', data={
+            'username': 'admin',
             'password': 'wrong_password'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('密碼錯誤'.encode('utf-8'), response.data)
+        # 檢查是否返回登入頁面（有錯誤訊息）
+        self.assertIn('登入失敗'.encode('utf-8'), response.data)
     
     def test_login_correct_password(self):
         """測試正確密碼登入"""
-        with patch('config.Config.ADMIN_PASSWORD', 'test_admin'):
+        with patch('config.Config.ADMIN_ACCOUNTS', {'admin': 'test_admin', 'manager': 'manager123'}):
             response = self.client.post('/login', data={
+                'username': 'admin',
                 'password': 'test_admin'
             }, follow_redirects=True)
-            # 檢查 session 是否設定
-            with self.client.session_transaction() as sess:
-                # 登入成功應該設定 session
-                pass
+            # 檢查登入是否成功（狀態碼 200）
+            self.assertEqual(response.status_code, 200)
     
     def test_logout(self):
         """測試登出"""
         # 首先登入
-        with patch('config.Config.ADMIN_PASSWORD', 'test_admin'):
+        with patch('config.Config.ADMIN_ACCOUNTS', {'admin': 'test_admin', 'manager': 'manager123'}):
             self.client.post('/login', data={
+                'username': 'admin',
                 'password': 'test_admin'
             })
         

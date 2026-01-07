@@ -1109,3 +1109,23 @@
 2026-01-07 22:36:11,887 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:11] "GET /api/admin/orders HTTP/1.1" 200 -
 2026-01-07 22:36:21,842 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:21] "GET /api/admin/orders HTTP/1.1" 200 -
 2026-01-07 22:36:32,670 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:32] "GET /api/admin/order/delivery_audit/ORD1767796143 HTTP/1.1" 200 -
+2026-01-07 23:27:29,021 INFO: Google Sheets connection initialized successfully
+2026-01-07 23:27:29,023 INFO: Application initialized successfully
+2026-01-07 23:27:29,788 INFO: Order added: ORD1767799649
+2026-01-07 23:28:28,157 INFO: Google Sheets connection initialized successfully
+2026-01-07 23:28:28,158 INFO: Application initialized successfully
+2026-01-07 23:28:28,964 INFO: Order added: ORD1767799708
+2026-01-07 23:28:50,990 INFO: Google Sheets connection initialized successfully
+2026-01-07 23:28:50,991 INFO: Application initialized successfully
+2026-01-07 23:28:51,005 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 23:28:51,013 WARNING: Failed login attempt for user 'admin' from IP 127.0.0.1
+2026-01-07 23:28:51,016 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 23:28:51,016 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 23:28:51,670 INFO: Order added: ORD1767799731
+2026-01-07 23:29:13,121 INFO: Google Sheets connection initialized successfully
+2026-01-07 23:29:13,122 INFO: Application initialized successfully
+2026-01-07 23:29:13,133 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 23:29:13,140 WARNING: Failed login attempt for user 'admin' from IP 127.0.0.1
+2026-01-07 23:29:13,141 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 23:29:13,142 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 23:29:13,940 INFO: Order added: ORD1767799753
