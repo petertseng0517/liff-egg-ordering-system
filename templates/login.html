@@ -84,6 +84,22 @@
         {% endif %}
         
         <form method="POST" action="/login" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">帳號</label>
+                <input 
+                    type="text" 
+                    class="form-control form-control-lg" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    autofocus
+                    placeholder="請輸入帳號"
+                    minlength="2"
+                >
+                <div class="invalid-feedback d-block">
+                    帳號必須至少 2 個字元
+                </div>
+            </div>
             <div class="mb-3 password-field">
                 <label for="password" class="form-label">密碼</label>
                 <input 
@@ -92,8 +108,7 @@
                     id="password" 
                     name="password" 
                     required 
-                    autofocus
-                    placeholder="請輸入管理員密碼"
+                    placeholder="請輸入密碼"
                     minlength="3"
                 >
                 <button 

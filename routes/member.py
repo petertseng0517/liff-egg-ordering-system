@@ -10,6 +10,7 @@ from config import ProductConfig
 from ecpay_sdk import ECPaySDK
 import os
 import logging
+import pytz
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +79,45 @@ def register():
         return jsonify({"status": "error", "msg": "系統錯誤"}), 500
 
 
+@member_bp.route('/edit_member', methods=['POST'])
+def edit_member():
+    """編輯會員資料"""
+    try:
+        data = request.json
+        user_id = data.get('userId')
+        name = data.get('name', '').strip()
+        phone = data.get('phone', '').strip()
+        address = data.get('address', '').strip()
+        address2 = data.get('address2', '').strip()
+        
+        # 驗證
+        if not user_id or not name or not phone or not address:
+            return jsonify({
+                "status": "error",
+                "msg": "缺少必要信息"
+            }), 400
+        
+        # 更新會員資料
+        success = GoogleSheetsService.update_member(
+            user_id=user_id,
+            name=name,
+            phone=phone,
+            address=address,
+            address2=address2
+        )
+        
+        if success:
+            return jsonify({"status": "success", "msg": "會員資料已更新"})
+        else:
+            return jsonify({
+                "status": "error",
+                "msg": "會員不存在或更新失敗"
+            }), 404
+    except Exception as e:
+        logger.error(f"Error in edit_member: {e}")
+        return jsonify({"status": "error", "msg": "系統錯誤"}), 500
+
+
 @member_bp.route('/order', methods=['POST'])
 def create_order():
     """建立訂單"""
@@ -111,7 +151,7 @@ def create_order():
         total_amount = unit_price * qty
         
         # 生成訂單
-        order_id = "ORD" + str(int(datetime.now().timestamp()))
+        order_id = "ORD" + str(int(datetime.now(pytz.timezone('Asia/Taipei')).timestamp()))
         
         # 正規化商品名稱與數量
         actual_item_name = item_name

@@ -1,6 +1,7 @@
 import hashlib
 import urllib.parse
 from datetime import datetime
+import pytz
 
 class ECPaySDK:
     def __init__(self, merchant_id, hash_key, hash_iv, action_url):
@@ -43,7 +44,7 @@ class ECPaySDK:
         params = {
             "MerchantID": self.merchant_id,
             "MerchantTradeNo": order_id,  # Must be unique per transaction
-            "MerchantTradeDate": datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
+            "MerchantTradeDate": datetime.now(pytz.timezone('Asia/Taipei')).strftime("%Y/%m/%d %H:%M:%S"),
             "PaymentType": "aio",
             "TotalAmount": str(total_amount),
             "TradeDesc": "EggOrder",

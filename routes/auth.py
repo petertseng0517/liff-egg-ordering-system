@@ -15,6 +15,7 @@ auth_bp = Blueprint('auth', __name__)
 def login():
     """管理員登入"""
     if request.method == 'POST':
+        username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip()
         client_ip = request.remote_addr
         
@@ -25,15 +26,18 @@ def login():
             logger.warning(f"Login attempt locked for IP {client_ip}")
             return render_template('login.html', error=error_msg), 429
         
-        # 驗證密碼
-        if not password:
+        # 驗證帳號和密碼
+        if not username or not password:
             login_tracker.record_attempt(client_ip)
-            return render_template('login.html', error="密碼不能為空")
+            return render_template('login.html', error="帳號和密碼不能為空")
         
-        if password == AppConfig.ADMIN_PASSWORD:
+        # 檢查帳號是否存在且密碼正確
+        admin_accounts = AppConfig().ADMIN_ACCOUNTS
+        if username in admin_accounts and admin_accounts[username] == password:
             session['logged_in'] = True
+            session['user_name'] = username  # 儲存帳號到 session
             login_tracker.reset(client_ip)
-            logger.info(f"Admin login successful from IP {client_ip}")
+            logger.info(f"Admin login successful: {username} from IP {client_ip}")
             return redirect(url_for('admin_page'))
         else:
             login_tracker.record_attempt(client_ip)
@@ -41,8 +45,8 @@ def login():
                 login_tracker.get_key(client_ip),
                 {'count': 0}
             )['count']
-            error_msg = f"密碼錯誤 (剩餘嘗試次數: {max(0, attempts_left)})"
-            logger.warning(f"Failed login attempt from IP {client_ip}")
+            error_msg = f"帳號或密碼錯誤 (剩餘嘗試次數: {max(0, attempts_left)})"
+            logger.warning(f"Failed login attempt for user '{username}' from IP {client_ip}")
             return render_template('login.html', error=error_msg)
     
     return render_template('login.html')

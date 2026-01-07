@@ -274,3 +274,838 @@
 2026-01-06 14:11:35,284 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:35] "GET /admin HTTP/1.1" 200 -
 2026-01-06 14:11:37,385 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:37] "GET /api/admin/orders HTTP/1.1" 200 -
 2026-01-06 14:11:39,506 INFO: 127.0.0.1 - - [06/Jan/2026 14:11:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 13:46:11,660 INFO: Google Sheets connection initialized successfully
+2026-01-07 13:46:11,662 INFO: Application initialized successfully
+2026-01-07 13:46:11,714 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.20.10.4:5005
+2026-01-07 13:46:11,714 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 13:46:11,715 INFO:  * Restarting with stat
+2026-01-07 13:46:12,741 INFO: Google Sheets connection initialized successfully
+2026-01-07 13:46:12,742 INFO: Application initialized successfully
+2026-01-07 13:46:12,778 WARNING:  * Debugger is active!
+2026-01-07 13:46:12,795 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 13:46:25,404 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:25] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 13:46:25,409 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:25] "GET /login HTTP/1.1" 200 -
+2026-01-07 13:46:25,787 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:25] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 13:46:33,614 INFO: Admin login successful from IP 127.0.0.1
+2026-01-07 13:46:33,615 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:33] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 13:46:33,625 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:33] "GET /admin HTTP/1.1" 200 -
+2026-01-07 13:46:35,377 INFO: 127.0.0.1 - - [07/Jan/2026 13:46:35] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 13:49:35,764 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 13:49:35,889 INFO:  * Restarting with stat
+2026-01-07 13:49:37,088 INFO: Google Sheets connection initialized successfully
+2026-01-07 13:49:37,088 INFO: Application initialized successfully
+2026-01-07 13:49:37,109 WARNING:  * Debugger is active!
+2026-01-07 13:49:37,119 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 13:49:44,397 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 13:49:44,505 INFO:  * Restarting with stat
+2026-01-07 13:49:45,711 INFO: Google Sheets connection initialized successfully
+2026-01-07 13:49:45,711 INFO: Application initialized successfully
+2026-01-07 13:49:45,747 WARNING:  * Debugger is active!
+2026-01-07 13:49:45,761 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:02:14,752 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 14:02:14,869 INFO:  * Restarting with stat
+2026-01-07 14:02:16,643 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:02:16,643 INFO: Application initialized successfully
+2026-01-07 14:02:16,684 WARNING:  * Debugger is active!
+2026-01-07 14:02:16,699 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:04:00,992 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 14:04:01,123 INFO:  * Restarting with stat
+2026-01-07 14:04:02,427 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:04:02,427 INFO: Application initialized successfully
+2026-01-07 14:04:02,455 WARNING:  * Debugger is active!
+2026-01-07 14:04:02,468 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:04:31,758 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 14:04:31,889 INFO:  * Restarting with stat
+2026-01-07 14:04:33,159 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:04:33,160 INFO: Application initialized successfully
+2026-01-07 14:04:33,203 WARNING:  * Debugger is active!
+2026-01-07 14:04:33,216 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:04:36,389 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 14:04:36,513 INFO:  * Restarting with stat
+2026-01-07 14:04:37,887 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:04:37,888 INFO: Application initialized successfully
+2026-01-07 14:04:37,925 WARNING:  * Debugger is active!
+2026-01-07 14:04:37,939 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:07:12,154 INFO:  * Detected change in '/Users/peter/ai_eggs/services/line_service.py', reloading
+2026-01-07 14:07:12,273 INFO:  * Restarting with stat
+2026-01-07 14:07:13,386 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:07:13,386 INFO: Application initialized successfully
+2026-01-07 14:07:13,422 WARNING:  * Debugger is active!
+2026-01-07 14:07:13,436 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:07:55,217 INFO:  * Detected change in '/Users/peter/ai_eggs/services/line_service.py', reloading
+2026-01-07 14:07:55,352 INFO:  * Restarting with stat
+2026-01-07 14:07:56,785 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:07:56,785 INFO: Application initialized successfully
+2026-01-07 14:07:56,824 WARNING:  * Debugger is active!
+2026-01-07 14:07:56,838 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:25:37,472 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:25:37,473 INFO: Application initialized successfully
+2026-01-07 14:25:37,527 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-07 14:25:37,527 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 14:25:37,528 INFO:  * Restarting with stat
+2026-01-07 14:25:38,527 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:25:38,527 INFO: Application initialized successfully
+2026-01-07 14:25:38,566 WARNING:  * Debugger is active!
+2026-01-07 14:25:38,584 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:25:45,064 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:45] "GET / HTTP/1.1" 200 -
+2026-01-07 14:25:46,671 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:46] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 14:25:51,833 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:51] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:25:53,540 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:25:53,770 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 14:25:53,771 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:53] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 14:25:53,778 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:53] "GET /login HTTP/1.1" 200 -
+2026-01-07 14:25:55,599 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:55] "GET /login HTTP/1.1" 200 -
+2026-01-07 14:25:59,962 INFO: Admin login successful from IP 127.0.0.1
+2026-01-07 14:25:59,963 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:59] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 14:25:59,966 INFO: 127.0.0.1 - - [07/Jan/2026 14:25:59] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:26:01,318 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:01] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:26:07,618 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:07] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:26:19,446 INFO: Delivery log added for order ORD1767712718
+2026-01-07 14:26:20,861 WARNING: LINE token not configured, skipping push message
+2026-01-07 14:26:20,862 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:20] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 14:26:23,854 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:23] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:26:26,513 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:26] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:26:39,110 INFO: Delivery log added for order ORD1767712718
+2026-01-07 14:26:40,355 WARNING: LINE token not configured, skipping push message
+2026-01-07 14:26:40,356 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:40] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 14:26:42,795 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:42] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:26:43,921 INFO: 127.0.0.1 - - [07/Jan/2026 14:26:43] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:26:58,792 INFO: Audit log added: correct on ORD1767712718
+2026-01-07 14:26:59,438 INFO: Delivery log corrected for order ORD1767712718: 2 -> 1 by unknown
+2026-01-07 14:27:00,815 WARNING: LINE token not configured, skipping push message
+2026-01-07 14:27:00,815 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:00] "POST /api/admin/order/correct_delivery HTTP/1.1" 200 -
+2026-01-07 14:27:03,756 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:03] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:27:18,755 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:18] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:27:20,136 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:20] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:27:25,084 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:25] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:27:38,008 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:38] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:27:39,333 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:27:42,701 INFO: 127.0.0.1 - - [07/Jan/2026 14:27:42] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:28:51,799 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:51] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:28:53,254 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:28:53,307 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:53] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:28:54,580 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:54] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:28:55,991 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:55] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:28:57,543 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:57] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:28:58,271 INFO: 127.0.0.1 - - [07/Jan/2026 14:28:58] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:32:28,227 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 14:32:28,364 INFO:  * Restarting with stat
+2026-01-07 14:32:29,544 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:32:29,545 INFO: Application initialized successfully
+2026-01-07 14:32:29,574 WARNING:  * Debugger is active!
+2026-01-07 14:32:29,591 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:32:40,043 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/auth.py', reloading
+2026-01-07 14:32:40,161 INFO:  * Restarting with stat
+2026-01-07 14:32:41,159 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:32:41,160 INFO: Application initialized successfully
+2026-01-07 14:32:41,194 WARNING:  * Debugger is active!
+2026-01-07 14:32:41,206 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:32:52,700 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 14:32:52,817 INFO:  * Restarting with stat
+2026-01-07 14:32:53,935 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:32:53,935 INFO: Application initialized successfully
+2026-01-07 14:32:53,974 WARNING:  * Debugger is active!
+2026-01-07 14:32:53,988 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:34:47,397 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 14:34:47,532 INFO:  * Restarting with stat
+2026-01-07 14:34:48,798 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:34:48,799 INFO: Application initialized successfully
+2026-01-07 14:34:48,829 WARNING:  * Debugger is active!
+2026-01-07 14:34:48,843 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:34:50,961 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 14:34:51,075 INFO:  * Restarting with stat
+2026-01-07 14:34:52,040 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:34:52,040 INFO: Application initialized successfully
+2026-01-07 14:34:52,070 WARNING:  * Debugger is active!
+2026-01-07 14:34:52,081 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:35:00,402 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/auth.py', reloading
+2026-01-07 14:35:00,523 INFO:  * Restarting with stat
+2026-01-07 14:35:01,556 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:35:01,556 INFO: Application initialized successfully
+2026-01-07 14:35:01,575 WARNING:  * Debugger is active!
+2026-01-07 14:35:01,587 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:35:27,582 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/auth.py', reloading
+2026-01-07 14:35:27,706 INFO:  * Restarting with stat
+2026-01-07 14:35:28,927 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:35:28,928 INFO: Application initialized successfully
+2026-01-07 14:35:28,958 WARNING:  * Debugger is active!
+2026-01-07 14:35:28,973 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:36:49,816 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:49] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:36:50,693 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:50] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:36:51,491 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:51] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:36:52,982 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 14:36:52,983 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:52] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 14:36:52,989 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:52] "GET /login HTTP/1.1" 200 -
+2026-01-07 14:36:53,352 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:36:54,413 INFO: 127.0.0.1 - - [07/Jan/2026 14:36:54] "GET /login HTTP/1.1" 200 -
+2026-01-07 14:37:03,988 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 14:37:03,989 INFO: 127.0.0.1 - - [07/Jan/2026 14:37:03] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 14:37:03,992 INFO: 127.0.0.1 - - [07/Jan/2026 14:37:03] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:37:05,456 INFO: 127.0.0.1 - - [07/Jan/2026 14:37:05] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:39:27,009 INFO: 127.0.0.1 - - [07/Jan/2026 14:39:27] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:39:39,814 INFO: Delivery log added for order ORD1767712718
+2026-01-07 14:39:41,180 WARNING: LINE token not configured, skipping push message
+2026-01-07 14:39:41,181 INFO: 127.0.0.1 - - [07/Jan/2026 14:39:41] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 14:39:44,009 INFO: 127.0.0.1 - - [07/Jan/2026 14:39:44] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:39:45,953 INFO: 127.0.0.1 - - [07/Jan/2026 14:39:45] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:41:08,892 INFO: 127.0.0.1 - - [07/Jan/2026 14:41:08] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:41:25,075 INFO: 127.0.0.1 - - [07/Jan/2026 14:41:25] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:41:42,884 INFO: 127.0.0.1 - - [07/Jan/2026 14:41:42] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:46:54,565 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 14:46:54,704 INFO:  * Restarting with stat
+2026-01-07 14:46:55,890 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:46:55,890 INFO: Application initialized successfully
+2026-01-07 14:46:55,931 WARNING:  * Debugger is active!
+2026-01-07 14:46:55,947 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:47:00,160 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 14:47:00,287 INFO:  * Restarting with stat
+2026-01-07 14:56:12,168 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:56:12,170 INFO: Application initialized successfully
+2026-01-07 14:56:12,219 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-07 14:56:12,219 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 14:56:12,220 INFO:  * Restarting with stat
+2026-01-07 14:56:13,187 INFO: Google Sheets connection initialized successfully
+2026-01-07 14:56:13,187 INFO: Application initialized successfully
+2026-01-07 14:56:13,222 WARNING:  * Debugger is active!
+2026-01-07 14:56:13,239 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 14:56:35,583 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:35] code 400, message Bad request version ('Ü\x00')
+2026-01-07 14:56:35,584 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:35] "[31m[1m\x16\x03\x01\x06ò\x01\x00\x06î\x03\x03\x92H\x83³\x04\x9e\x89bÚ3\x91.ÿ«\x08ÓðáÌ\x04ÞàÜIÞ>8+\x82Å,* \x8fÚóà\x86\x94ãÈáÆti\x19ÿ/\x9f\x0f¿â°JhæÆUº\x19Usí\x1eÜ\x00 [0m" 400 -
+2026-01-07 14:56:35,585 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:35] code 400, message Bad request version ("\x05áÄ\x0f\x86*\x00Õ'\x170\x15~å\x02©!¾\x17\x11$Ãá¶\x08èbÏäqÜ")
+2026-01-07 14:56:35,585 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:35] "[31m[1m\x16\x03\x01\x06ò\x01\x00\x06î\x03\x035H­K\x8cT×\x84ÐyÉ'i\x02ó@\x15\x8aV2%¦A@\x83ÙI\x81ÎÍ\x8dG «\\q\x1e\x15}Y¡\x82%køQ\x1e\x04\x0fº\x0bé'\x93<\x08Ý¶\x14\x12p\x1f¨\x92\x9f\x00 ÚÚ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x85ZZ\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00#\x00\x00\x00\x17\x00\x00\x003\x04ï\x04íjj\x00\x01\x00\x11ì\x04ÀD\x85\x10ë+¬ACL\x1aÁ\x10\x8e\x17-\x13\x18Í\x07FEÀj»äÜ°\x08Wr\x89\x967¥ÕR>\x98\x19\x06¸[c¶\x98\x96S\x8cæ\x91yyØ\x1d\x00Ø­RÙi\x90 1É2&©á«\x17¨\x94\x0eÃI\x07å°Û¶¡\x09\x90\x8bHÒ¶Ê°9P#\x0fÙp\x7f¹W\x12Ì\x05=æûM\x05fD»qh\x04\x03\x16a\x02\x829TK'ü%±p«Ò\x12\x8a\x1aÜ\x8b\x90\x11²tYnbR\x1fç¼2"»g\x9eu?|¹\x88D\x86\x18#pR\x14[`î$\x8bÛ\x93°¹P4-Y\x8cRÒ\x0d¬¤\x94Ñ yQõ8e\x1bZ\x83ü\x1a\x97kZLÜ\x0d\x05áÄ\x0f\x86*\x00Õ'\x170\x15~å\x02©!¾\x17\x11$Ãá¶\x08èbÏäqÜ[0m" 400 -
+2026-01-07 14:56:35,585 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:35] code 400, message Bad request version ('\x00\x02\x01\x00\x00')
+2026-01-07 14:56:35,585 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:35] "[31m[1m\x16\x03\x01\x07\x12\x01\x00\x07\x0e\x03\x03\x92·¥ò7ÒNñVäuA\x81iQ¢ñ=©\x19ti[Jïø¶M´\x99´Á È2,Ô\x81#]èçC\x16¥PÚÛÏ\x1bóæ×ãt§á\x9fØªx.ü\x9aA\x00 ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06¥ºº\x00\x00\x00#\x00\x00\x00\x0d\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01\x00\x0b\x00\x02\x01\x00\x00[0m" 400 -
+2026-01-07 14:56:35,586 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:35] code 400, message Bad request version ('®')
+2026-01-07 14:56:35,586 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:35] "[31m[1m\x16\x03\x01\x07\x12\x01\x00\x07\x0e\x03\x03äû¬[\x1dzQ\x89´Ôþ2(\x10)N\x1d\x81´¨¶V\x0fZ¡²É¾õÆ4¡ \x0e\x90è ½(\x877\x8f:P;DM9M\x05+fà\x89¹m\x00á\x152\x8eY\x8d«Ü\x00 êê\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06¥JJ\x00\x00\x00\x0d\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01þ\x0d\x01\x1a\x00\x00\x01\x00\x01÷\x00 \x09öÏRWNÐ\x02â¼5­ùhéY\x17Rp\x0ec# T\x8cä´\x09Ä\x8fÒS\x00ð\x86E\x80\x86x\x87¾Í[Ö$\x1fµ!\x81s)x´¬\x9evo\x9b6tÁ®\x0d°Ýµç«\x1e$¡g#\x98(?\x1d*«Âì¾z7h\x03Rf­Ub\x0bÝ³\x12\x8b6\x00´ùí6>Lv2\x03\x91k_N³¼\x9cö\\·vä7\x114\x1aèü&+4nq\x14¯\x9e\x83Ë\x86ñý1\x0f \x06r\x1d\x9a.\x89¨hzìëÿ}Ð\x86E\x84ðwDu\x88\x09l_ZbªMÙ\x1dY¹`\x15\\y7½ ÓRs\x10\x09sj\x8f¤\x92\x9bD¸à\x86\x19l>\x0eÛ·qZ0¬K\x01KM\\T?××\x0d\x1d=\x93\x98`ÄE]BK¸a@j\x0c?Ø;æ-\x18"ì\x1a[\x1e\x93ÁEg\x15\x15ÙZ ª³á\x8asÅÕRä¬ ®[0m" 400 -
+2026-01-07 14:56:40,171 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:40] code 400, message Bad request version ('!l6r\x9cô¥~{O¥')
+2026-01-07 14:56:40,171 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:40] "[31m[1m\x16\x03\x01\x07\x12\x01\x00\x07\x0e\x03\x03\x0b½øo\x13\x13S'\x11ßHvùK\x86gÝ³$¬É9\x03¤\x97<!Èp\x08gA òÊÇêBÌ\x19¥\x16\x05«G½É\x94\x15\x11\x80¿\x9b\x82\x1dÛ\x17?ìÏdo\x8f$Û\x00 \x1a\x1a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06¥ZZ\x00\x00DÍ\x00\x05\x00\x03\x02h2\x00\x05\x00\x05\x01\x00\x00\x00\x00\x003\x04ï\x04í\x8a\x8a\x00\x01\x00\x11ì\x04Àt\x13oµI¾%Ö{\x95\x03\x13$ì%\x99öv7\x05.Ø\x0bWµ\x13ºjP-\x9fYC\x11×s\x8cq\x1dCµ<t\x14A\x04S'\x8c{\x12\x82j\x8d\x8d\x11--ù¹O+¢aõCZÆ\x1f\x99\\\x12wé\x85X\x08;%\x9az¬æG¬¼À¥Ò(¿²º9WSuØºf`W\x8a¸\x98X÷-{`Æ\x90q \x9e1\x9e¿â\x07,Öf§Ø\x90k\x92j\x99Àg§Å\x1bH`\x813[°\x0fËjøü\x9am1\x04ôu\x08\x19\x18\x1e\x10\x93£Ï¶8~ \x85Si\x9cSã[\x8eÀH>\x09!l6r\x9cô¥~{O¥[0m" 400 -
+2026-01-07 14:56:40,171 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:40] code 400, message Bad request version ('lbþ¾LMÐon"Æ¡=¤\x01jD>\x08ÈäÝâ=¯Ø$\x9djW]Ûûk\x86my\x95\x02}ÑÎ\x1aÚ¢Q<°Nþ»&VÔ!TX\'-èn\x00l£Á\x8eÎ\x03Ý\x00')
+2026-01-07 14:56:40,172 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:40] "[31m[1m\x16\x03\x01\x06²\x01\x00\x06®\x03\x03-v\x89\x92µ\x97u\x0bMÍ\x0cüN"óUú@Í¢¨p\x06@Ö,\x80g6¨ùø ·Þ\x14X\x8a1\x11ÆÞÅ¾6\x11#9Ü?/\x95 n£!<!"íáOz\x15E\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06Eªª\x00\x00þ\x0d\x00º\x00\x00\x01\x00\x01M\x00  \x12E\x04q\x9c¨¬)\x82Íhúý\x8cï%É\x86»*\x0bqY¢1B\x01\x19\x012Q\x00\x90n©_[\x19\x98|\x17¯\x14oØ©°úH\x9e\x8f\x93à\x1e\\îÙ4¼Âl§w,®¦\x18t³\x98õÀ&,V7\x07Ô\x89«gØÍÃi\x9f×òoå×\x1e¼½\x04Qö\x85^C\x83j\x9b\x7f\x89hÜ\x85lbþ¾LMÐon"Æ¡=¤\x01jD>\x08ÈäÝâ=¯Ø$\x9djW]Ûûk\x86my\x95\x02}ÑÎ\x1aÚ¢Q<°Nþ»&VÔ!TX'-èn\x00l£Á\x8eÎ\x03Ý\x00[0m" 400 -
+2026-01-07 14:56:40,173 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:40] code 400, message Bad request version ("çø5\x9e*\x15É\x91\x16¡AÅôâ¤£¢®\x80ãKèüÙõ\x17l'\x15)MíÏ")
+2026-01-07 14:56:40,173 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:40] "[31m[1m\x16\x03\x01\x06ò\x01\x00\x06î\x03\x03ùÏ\x88â3~z6º\x83\x07\x0càe»Mù\x8ebª8 ZW\x93\x93º8\x0f\x1bGù aµ¶Í\x1bl¿zÚo\x88C¹\x92\x03ïÚcñï\x15\x9fÍÿ]\x10{OÕ3Tõ\x00 \x1a\x1a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x85JJ\x00\x00\x00\x12\x00\x00\x00\x00\x00\x0e\x00\x0c\x00\x00\x09localhost\x00#\x00\x00\x00\x05\x00\x05\x01\x00\x00\x00\x00þ\x0d\x00ú\x00\x00\x01\x00\x01Ê\x00 M"m\x96¹0\x04ºjñ\x0b©i}Èp_\x80Ä³±ùáñ(·¶:ëvç'\x00Ð"U\x1e\x9bç\x10\x8bçA¢\x15ë²\x95ÒÕL\x1c\x14Å¿ý\x11«\x1dçø5\x9e*\x15É\x91\x16¡AÅôâ¤£¢®\x80ãKèüÙõ\x17l'\x15)MíÏ[0m" 400 -
+2026-01-07 14:56:40,173 ERROR: 127.0.0.1 - - [07/Jan/2026 14:56:40] code 400, message Bad request version ('**\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06ezz\x00\x00\x00#\x00\x00\x00\x12\x00\x00\x00\x1b\x00\x03\x02\x00\x02\x00')
+2026-01-07 14:56:40,173 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:40] "[31m[1m\x16\x03\x01\x06Ò\x01\x00\x06Î\x03\x03\x86±\x0c\x9b2gÕ\x9b!è\x18NCUtã$\x82\x1e/ÅÒ[±]ßÒ\x1fâ\x14\x1cä ¹Ui\x8c\x9cNn\x88\x8a_X³\x82Úf\x1d=ÏÕLóêØ_ß\x01^îeÞV\x18\x00 **\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06ezz\x00\x00\x00#\x00\x00\x00\x12\x00\x00\x00\x1b\x00\x03\x02\x00\x02\x00[0m" 400 -
+2026-01-07 14:56:48,760 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:48] "GET / HTTP/1.1" 200 -
+2026-01-07 14:56:50,136 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:50] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 14:56:51,918 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:51] "GET /admin HTTP/1.1" 200 -
+2026-01-07 14:56:53,336 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:56:57,842 INFO: 127.0.0.1 - - [07/Jan/2026 14:56:57] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:57:25,330 INFO: Delivery log added for order ORD1767712718
+2026-01-07 14:57:26,584 WARNING: LINE token not configured, skipping push message
+2026-01-07 14:57:26,585 INFO: 127.0.0.1 - - [07/Jan/2026 14:57:26] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 14:57:29,074 INFO: 127.0.0.1 - - [07/Jan/2026 14:57:29] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 14:57:30,989 INFO: 127.0.0.1 - - [07/Jan/2026 14:57:30] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 14:58:18,968 INFO: 127.0.0.1 - - [07/Jan/2026 14:58:18] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 15:00:13,726 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:13] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:00:15,183 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:15] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:00:17,419 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:17] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 15:00:32,882 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:32] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 15:00:54,448 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:54] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:00:55,922 INFO: 127.0.0.1 - - [07/Jan/2026 15:00:55] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:01:58,311 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 15:01:58,449 INFO:  * Restarting with stat
+2026-01-07 15:02:02,753 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:02:02,753 INFO: Application initialized successfully
+2026-01-07 15:02:02,793 WARNING:  * Debugger is active!
+2026-01-07 15:02:02,808 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 15:02:07,013 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 15:02:07,136 INFO:  * Restarting with stat
+2026-01-07 15:02:08,218 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:02:08,219 INFO: Application initialized successfully
+2026-01-07 15:02:08,252 WARNING:  * Debugger is active!
+2026-01-07 15:02:08,265 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 15:02:10,385 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 15:02:10,501 INFO:  * Restarting with stat
+2026-01-07 15:02:11,495 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:02:11,495 INFO: Application initialized successfully
+2026-01-07 15:02:11,535 WARNING:  * Debugger is active!
+2026-01-07 15:02:11,549 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 15:03:52,490 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 15:03:52,626 INFO:  * Restarting with stat
+2026-01-07 15:03:54,103 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:03:54,103 INFO: Application initialized successfully
+2026-01-07 15:03:54,137 WARNING:  * Debugger is active!
+2026-01-07 15:03:54,150 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 15:05:39,264 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:05:39,265 INFO: Application initialized successfully
+2026-01-07 15:05:39,304 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.137.70:5005
+2026-01-07 15:05:39,304 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 15:05:39,304 INFO:  * Restarting with stat
+2026-01-07 15:05:40,457 INFO: Google Sheets connection initialized successfully
+2026-01-07 15:05:40,457 INFO: Application initialized successfully
+2026-01-07 15:05:40,494 WARNING:  * Debugger is active!
+2026-01-07 15:05:40,510 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 15:05:40,559 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:40] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:05:41,500 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:41] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:05:41,928 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:41] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:05:44,591 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:44] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:05:44,944 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 15:05:44,945 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:44] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 15:05:44,953 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:44] "GET /login HTTP/1.1" 200 -
+2026-01-07 15:05:46,207 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:46] "GET /login HTTP/1.1" 200 -
+2026-01-07 15:05:54,160 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 15:05:54,161 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:54] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 15:05:54,163 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:54] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:05:55,754 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:55] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:05:59,848 INFO: 127.0.0.1 - - [07/Jan/2026 15:05:59] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 15:06:15,309 INFO: Delivery log added for order ORD1767712718
+2026-01-07 15:06:16,796 WARNING: LINE token not configured, skipping push message
+2026-01-07 15:06:16,797 INFO: 127.0.0.1 - - [07/Jan/2026 15:06:16] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 15:06:23,398 INFO: 127.0.0.1 - - [07/Jan/2026 15:06:23] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:06:23,471 INFO: 127.0.0.1 - - [07/Jan/2026 15:06:23] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 15:06:28,709 INFO: 127.0.0.1 - - [07/Jan/2026 15:06:28] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:06:30,159 INFO: 127.0.0.1 - - [07/Jan/2026 15:06:30] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:09:18,916 INFO: 127.0.0.1 - - [07/Jan/2026 15:09:18] "GET /api/admin/order/delivery_audit/ORD1767706704 HTTP/1.1" 200 -
+2026-01-07 15:10:29,876 INFO: Delivery log added for order ORD1767706704
+2026-01-07 15:10:31,207 WARNING: LINE token not configured, skipping push message
+2026-01-07 15:10:31,207 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:31] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 15:10:34,076 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:34] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:10:40,734 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:40] "GET /api/admin/order/delivery_audit/ORD1767706380 HTTP/1.1" 200 -
+2026-01-07 15:10:46,761 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:46] "GET /api/admin/order/delivery_audit/ORD1767707872 HTTP/1.1" 200 -
+2026-01-07 15:10:51,559 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:51] "GET /admin HTTP/1.1" 200 -
+2026-01-07 15:10:53,124 INFO: 127.0.0.1 - - [07/Jan/2026 15:10:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:11:18,926 INFO: 127.0.0.1 - - [07/Jan/2026 15:11:18] "GET /api/admin/order/delivery_audit/ORD1767706380 HTTP/1.1" 200 -
+2026-01-07 15:11:29,972 INFO: Delivery log added for order ORD1767706380
+2026-01-07 15:11:31,420 WARNING: LINE token not configured, skipping push message
+2026-01-07 15:11:31,421 INFO: 127.0.0.1 - - [07/Jan/2026 15:11:31] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 15:11:34,049 INFO: 127.0.0.1 - - [07/Jan/2026 15:11:34] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:11:41,661 INFO: 127.0.0.1 - - [07/Jan/2026 15:11:41] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:11:48,221 INFO: 127.0.0.1 - - [07/Jan/2026 15:11:48] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:12:01,642 INFO: 127.0.0.1 - - [07/Jan/2026 15:12:01] "GET /api/admin/order/delivery_audit/ORD1767706380 HTTP/1.1" 200 -
+2026-01-07 15:12:24,743 INFO: 127.0.0.1 - - [07/Jan/2026 15:12:24] "GET /api/admin/order/delivery_audit/ORD1767706260 HTTP/1.1" 200 -
+2026-01-07 15:12:49,739 INFO: 127.0.0.1 - - [07/Jan/2026 15:12:49] "GET /api/admin/order/delivery_audit/ORD1767706380 HTTP/1.1" 200 -
+2026-01-07 15:13:11,177 INFO: Delivery log added for order ORD1767706380
+2026-01-07 15:13:12,364 WARNING: LINE token not configured, skipping push message
+2026-01-07 15:13:12,365 INFO: 127.0.0.1 - - [07/Jan/2026 15:13:12] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 15:13:14,947 INFO: 127.0.0.1 - - [07/Jan/2026 15:13:14] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 15:13:20,155 INFO: 127.0.0.1 - - [07/Jan/2026 15:13:20] "GET /api/admin/order/delivery_audit/ORD1767706380 HTTP/1.1" 200 -
+2026-01-07 19:55:36,140 INFO: 127.0.0.1 - - [07/Jan/2026 19:55:36] "GET /admin HTTP/1.1" 200 -
+2026-01-07 19:55:37,293 INFO: 127.0.0.1 - - [07/Jan/2026 19:55:37] "GET /admin HTTP/1.1" 200 -
+2026-01-07 19:55:38,282 INFO: 127.0.0.1 - - [07/Jan/2026 19:55:38] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 19:55:42,368 INFO: 127.0.0.1 - - [07/Jan/2026 19:55:42] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 19:56:28,418 INFO: 127.0.0.1 - - [07/Jan/2026 19:56:28] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-01-07 20:01:25,371 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:25] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:01:25,390 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:25] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-01-07 20:01:28,666 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:28] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:01:28,689 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 20:01:28,689 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:28] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 20:01:28,694 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:28] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:01:28,715 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:28] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-01-07 20:01:45,172 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 20:01:45,173 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:45] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 20:01:45,176 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:45] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:01:45,201 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:45] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-01-07 20:01:46,624 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:46] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:01:50,399 INFO: 127.0.0.1 - - [07/Jan/2026 20:01:50] "GET /api/admin/order/delivery_audit/ORD1767707872 HTTP/1.1" 200 -
+2026-01-07 20:10:48,976 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 20:10:49,109 INFO:  * Restarting with stat
+2026-01-07 20:10:51,088 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:10:51,088 INFO: Application initialized successfully
+2026-01-07 20:10:51,131 WARNING:  * Debugger is active!
+2026-01-07 20:10:51,148 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:10:56,400 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/admin.py', reloading
+2026-01-07 20:10:56,521 INFO:  * Restarting with stat
+2026-01-07 20:10:58,335 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:10:58,336 INFO: Application initialized successfully
+2026-01-07 20:10:58,384 WARNING:  * Debugger is active!
+2026-01-07 20:10:58,397 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:11:05,743 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 20:11:05,866 INFO:  * Restarting with stat
+2026-01-07 20:11:06,936 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:11:06,937 INFO: Application initialized successfully
+2026-01-07 20:11:06,973 WARNING:  * Debugger is active!
+2026-01-07 20:11:06,986 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:11:36,101 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 20:11:36,219 INFO:  * Restarting with stat
+2026-01-07 20:11:37,564 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:11:37,564 INFO: Application initialized successfully
+2026-01-07 20:11:37,596 WARNING:  * Debugger is active!
+2026-01-07 20:11:37,610 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:11:49,401 INFO: 127.0.0.1 - - [07/Jan/2026 20:11:49] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:11:50,880 INFO: 127.0.0.1 - - [07/Jan/2026 20:11:50] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:11:58,605 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 20:11:58,606 INFO: 127.0.0.1 - - [07/Jan/2026 20:11:58] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 20:11:58,614 INFO: 127.0.0.1 - - [07/Jan/2026 20:11:58] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:11:59,120 INFO: 127.0.0.1 - - [07/Jan/2026 20:11:59] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:12:00,047 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:00] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:12:09,174 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 20:12:09,175 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:09] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 20:12:09,178 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:09] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:12:10,673 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:10] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:12:17,018 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:17] "GET /api/admin/order/delivery_audit/ORD1767707887 HTTP/1.1" 200 -
+2026-01-07 20:12:43,652 INFO: Member updated: U265b0293cb6e03241498a4e24d642f53
+2026-01-07 20:12:43,653 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:43] "POST /api/admin/member/update HTTP/1.1" 200 -
+2026-01-07 20:12:45,544 INFO: 127.0.0.1 - - [07/Jan/2026 20:12:45] "GET /api/admin/order/delivery_audit/ORD1767707887 HTTP/1.1" 200 -
+2026-01-07 20:13:01,774 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:01] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:13:03,284 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:03] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:10,632 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:10] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:14,296 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:14] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:17,043 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:17] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:13:20,787 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:20] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:34,080 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:13:34,080 INFO: Application initialized successfully
+2026-01-07 20:13:34,114 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-07 20:13:34,114 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 20:13:34,114 INFO:  * Restarting with stat
+2026-01-07 20:13:35,441 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:13:35,441 INFO: Application initialized successfully
+2026-01-07 20:13:35,482 WARNING:  * Debugger is active!
+2026-01-07 20:13:35,492 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:13:35,518 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:35] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:13:36,847 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:36] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:39,485 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 20:13:39,487 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:39] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 20:13:39,494 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:39] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:13:41,698 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:41] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:13:50,916 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 20:13:50,917 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:50] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 20:13:50,920 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:50] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:13:52,314 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:52] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:13:57,531 INFO: 127.0.0.1 - - [07/Jan/2026 20:13:57] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 20:14:16,065 INFO: Member updated: U265b0293cb6e03241498a4e24d642f53
+2026-01-07 20:14:16,066 INFO: 127.0.0.1 - - [07/Jan/2026 20:14:16] "POST /api/admin/member/update HTTP/1.1" 200 -
+2026-01-07 20:14:18,088 INFO: 127.0.0.1 - - [07/Jan/2026 20:14:18] "GET /api/admin/order/delivery_audit/ORD1767712718 HTTP/1.1" 200 -
+2026-01-07 20:15:02,962 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:02] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:15:04,309 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:04] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:15:11,600 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:11] "GET /api/admin/order/delivery_audit/ORD1767706260 HTTP/1.1" 200 -
+2026-01-07 20:15:23,149 INFO: Member updated: U03416464ead903da59e3387597b1dc4b
+2026-01-07 20:15:23,151 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:23] "POST /api/admin/member/update HTTP/1.1" 200 -
+2026-01-07 20:15:25,153 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:25] "GET /api/admin/order/delivery_audit/ORD1767706260 HTTP/1.1" 200 -
+2026-01-07 20:15:32,687 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:32] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:15:34,005 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:34] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:15:46,725 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:46] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:15:48,278 INFO: 127.0.0.1 - - [07/Jan/2026 20:15:48] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:16:04,115 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:04] "GET /api/admin/order/delivery_audit/ORD1767708198 HTTP/1.1" 200 -
+2026-01-07 20:16:28,075 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:28] "GET /api/admin/order/delivery_audit/ORD1767708198 HTTP/1.1" 200 -
+2026-01-07 20:16:31,801 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:31] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:16:33,537 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:33] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:16:38,243 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:38] "GET /api/admin/order/delivery_audit/ORD1767707887 HTTP/1.1" 200 -
+2026-01-07 20:16:41,375 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:41] "GET /api/admin/order/delivery_audit/ORD1767707140 HTTP/1.1" 200 -
+2026-01-07 20:16:55,359 INFO: Member updated: U265b0293cb6e03241498a4e24d642f53
+2026-01-07 20:16:55,359 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:55] "POST /api/admin/member/update HTTP/1.1" 200 -
+2026-01-07 20:16:57,249 INFO: 127.0.0.1 - - [07/Jan/2026 20:16:57] "GET /api/admin/order/delivery_audit/ORD1767707140 HTTP/1.1" 200 -
+2026-01-07 20:18:33,114 INFO: 127.0.0.1 - - [07/Jan/2026 20:18:33] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:18:34,490 INFO: 127.0.0.1 - - [07/Jan/2026 20:18:34] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:18:43,584 INFO: 127.0.0.1 - - [07/Jan/2026 20:18:43] "GET /api/admin/order/delivery_audit/ORD1767707872 HTTP/1.1" 200 -
+2026-01-07 20:18:54,839 INFO: Member updated: U9f61c8a57ed36bee95a8ae003245ee33
+2026-01-07 20:18:54,840 INFO: 127.0.0.1 - - [07/Jan/2026 20:18:54] "POST /api/admin/member/update HTTP/1.1" 200 -
+2026-01-07 20:19:02,487 INFO: 127.0.0.1 - - [07/Jan/2026 20:19:02] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:19:36,073 INFO: 127.0.0.1 - - [07/Jan/2026 20:19:36] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:19:37,427 INFO: 127.0.0.1 - - [07/Jan/2026 20:19:37] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:25:52,820 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/member.py', reloading
+2026-01-07 20:25:52,954 INFO:  * Restarting with stat
+2026-01-07 20:25:54,319 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:25:54,319 INFO: Application initialized successfully
+2026-01-07 20:25:54,362 WARNING:  * Debugger is active!
+2026-01-07 20:25:54,378 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:25:55,460 INFO:  * Detected change in '/Users/peter/ai_eggs/routes/member.py', reloading
+2026-01-07 20:25:55,582 INFO:  * Restarting with stat
+2026-01-07 20:25:57,556 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:25:57,556 INFO: Application initialized successfully
+2026-01-07 20:25:57,591 WARNING:  * Debugger is active!
+2026-01-07 20:25:57,605 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:32:29,561 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:29] "GET / HTTP/1.1" 200 -
+2026-01-07 20:32:31,468 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:31] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:32:38,971 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:38] "GET / HTTP/1.1" 200 -
+2026-01-07 20:32:40,654 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:40] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:32:47,192 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:47] "GET / HTTP/1.1" 200 -
+2026-01-07 20:32:48,346 INFO: 127.0.0.1 - - [07/Jan/2026 20:32:48] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:33:22,437 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:22] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:33:23,900 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:23] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:33:25,909 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 20:33:25,910 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:25] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 20:33:26,026 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:26] "GET /login HTTP/1.1" 200 -
+2026-01-07 20:33:31,150 WARNING: Failed login attempt for user 'peter' from IP 127.0.0.1
+2026-01-07 20:33:31,151 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:31] "POST /login HTTP/1.1" 200 -
+2026-01-07 20:33:40,580 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 20:33:40,581 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:40] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 20:33:40,675 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:40] "GET /admin HTTP/1.1" 200 -
+2026-01-07 20:33:42,372 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:42] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:33:50,553 INFO: 127.0.0.1 - - [07/Jan/2026 20:33:50] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 20:34:37,578 INFO: 127.0.0.1 - - [07/Jan/2026 20:34:37] "GET / HTTP/1.1" 200 -
+2026-01-07 20:34:39,601 INFO: 127.0.0.1 - - [07/Jan/2026 20:34:39] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:37:09,817 INFO: 127.0.0.1 - - [07/Jan/2026 20:37:09] "GET / HTTP/1.1" 200 -
+2026-01-07 20:37:11,060 INFO: 127.0.0.1 - - [07/Jan/2026 20:37:11] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:45:22,576 INFO: 127.0.0.1 - - [07/Jan/2026 20:45:22] "GET / HTTP/1.1" 200 -
+2026-01-07 20:45:31,104 INFO: 127.0.0.1 - - [07/Jan/2026 20:45:31] "GET / HTTP/1.1" 200 -
+2026-01-07 20:45:38,880 INFO: 127.0.0.1 - - [07/Jan/2026 20:45:38] "GET / HTTP/1.1" 200 -
+2026-01-07 20:45:39,629 INFO: 127.0.0.1 - - [07/Jan/2026 20:45:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:45:40,856 INFO: 127.0.0.1 - - [07/Jan/2026 20:45:40] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:46:17,581 INFO: Member added: TEST_USER_001
+2026-01-07 20:46:17,582 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:17] "POST /api/register HTTP/1.1" 200 -
+2026-01-07 20:46:26,647 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:26] "GET / HTTP/1.1" 200 -
+2026-01-07 20:46:29,663 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:29] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:46:35,165 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:35] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:46:35,378 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:46:52,090 INFO: Order added: ORD1767790011
+2026-01-07 20:46:52,090 WARNING: LINE token not configured, skipping push message
+2026-01-07 20:46:52,091 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:52] "POST /api/order HTTP/1.1" 200 -
+2026-01-07 20:46:53,833 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:53] "GET /?page=history HTTP/1.1" 200 -
+2026-01-07 20:46:54,064 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:54] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:46:54,767 INFO: 127.0.0.1 - - [07/Jan/2026 20:46:54] "POST /api/history HTTP/1.1" 200 -
+2026-01-07 20:47:02,321 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:02] "GET / HTTP/1.1" 200 -
+2026-01-07 20:47:02,679 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:02] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:47:03,867 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:03] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:47:06,633 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:06] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:47:07,649 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:47:11,678 INFO: 127.0.0.1 - - [07/Jan/2026 20:47:11] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:48:45,312 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:45] "GET / HTTP/1.1" 200 -
+2026-01-07 20:48:45,657 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:48:46,947 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:46] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:48:48,830 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:48] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:48:49,240 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:48:50,174 INFO: 127.0.0.1 - - [07/Jan/2026 20:48:50] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:49:17,192 INFO: Member updated: TEST_USER_001
+2026-01-07 20:49:17,193 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:17] "POST /api/edit_member HTTP/1.1" 200 -
+2026-01-07 20:49:19,545 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:19] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:49:20,072 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:49:43,315 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:43] "GET / HTTP/1.1" 200 -
+2026-01-07 20:49:43,571 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:49:45,045 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:45] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:49:46,481 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:46] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:49:46,962 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:49:48,055 INFO: 127.0.0.1 - - [07/Jan/2026 20:49:48] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:50:00,195 INFO: Member updated: TEST_USER_001
+2026-01-07 20:50:00,196 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:00] "POST /api/edit_member HTTP/1.1" 200 -
+2026-01-07 20:50:01,580 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:01] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:50:02,021 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:02] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:50:57,245 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:57] "GET / HTTP/1.1" 200 -
+2026-01-07 20:50:58,133 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:50:59,147 INFO: 127.0.0.1 - - [07/Jan/2026 20:50:59] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:51:04,497 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:04] "GET / HTTP/1.1" 200 -
+2026-01-07 20:51:04,678 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:04] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:51:05,734 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:05] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:51:07,854 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:07] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:51:08,679 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:51:11,356 INFO: 127.0.0.1 - - [07/Jan/2026 20:51:11] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:52:17,573 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 20:52:17,699 INFO:  * Restarting with stat
+2026-01-07 20:52:18,838 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:52:18,838 INFO: Application initialized successfully
+2026-01-07 20:52:18,871 WARNING:  * Debugger is active!
+2026-01-07 20:52:18,886 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:52:20,991 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 20:52:21,108 INFO:  * Restarting with stat
+2026-01-07 20:52:22,011 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:52:22,011 INFO: Application initialized successfully
+2026-01-07 20:52:22,040 WARNING:  * Debugger is active!
+2026-01-07 20:52:22,052 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:52:23,119 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 20:52:23,234 INFO:  * Restarting with stat
+2026-01-07 20:52:24,201 INFO: Google Sheets connection initialized successfully
+2026-01-07 20:52:24,201 INFO: Application initialized successfully
+2026-01-07 20:52:24,229 WARNING:  * Debugger is active!
+2026-01-07 20:52:24,241 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 20:54:20,428 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:20] "GET / HTTP/1.1" 200 -
+2026-01-07 20:54:21,233 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:54:22,536 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:22] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:54:25,002 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:25] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:54:25,427 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:25] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:54:26,446 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:26] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:54:34,127 INFO: Member updated: TEST_USER_001
+2026-01-07 20:54:34,128 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:34] "POST /api/edit_member HTTP/1.1" 200 -
+2026-01-07 20:54:35,353 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:35] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:54:36,891 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:54:43,083 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:43] "GET / HTTP/1.1" 200 -
+2026-01-07 20:54:43,452 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:54:44,570 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:44] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:54:53,973 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:53] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:54:54,344 INFO: 127.0.0.1 - - [07/Jan/2026 20:54:54] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:56:21,863 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:21] "GET / HTTP/1.1" 200 -
+2026-01-07 20:56:22,396 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:56:23,759 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:23] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:56:26,868 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:26] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 20:56:28,788 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:56:29,624 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:29] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 20:56:42,764 INFO: Member updated: TEST_USER_001
+2026-01-07 20:56:42,765 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:42] "POST /api/edit_member HTTP/1.1" 200 -
+2026-01-07 20:56:44,358 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:44] "GET /?page=welcome HTTP/1.1" 200 -
+2026-01-07 20:56:44,598 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 20:56:48,274 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:48] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 20:56:48,475 INFO: 127.0.0.1 - - [07/Jan/2026 20:56:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 21:35:29,546 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:29] "GET / HTTP/1.1" 200 -
+2026-01-07 21:35:30,420 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 21:35:32,157 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:32] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 21:35:34,436 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:34] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 21:35:34,830 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 21:35:58,450 INFO: Order added: ORD1767792957
+2026-01-07 21:35:58,450 WARNING: LINE token not configured, skipping push message
+2026-01-07 21:35:58,451 INFO: 127.0.0.1 - - [07/Jan/2026 21:35:58] "POST /api/order HTTP/1.1" 200 -
+2026-01-07 21:39:56,620 INFO: ECPay Callback Received: {'CustomField1': '', 'CustomField2': '', 'CustomField3': '', 'CustomField4': '', 'MerchantID': '2000132', 'MerchantTradeNo': 'ORD1767792957', 'PaymentDate': '2026/01/07 21:39:55', 'PaymentType': 'Credit_CreditCard', 'PaymentTypeChargeFee': '101', 'RtnCode': '1', 'RtnMsg': '交易成功', 'SimulatePaid': '0', 'StoreID': '', 'TradeAmt': '5000', 'TradeDate': '2026/01/07 21:35:58', 'TradeNo': '2601072135580121', 'CheckMacValue': '63B80CF5390536EC0E579DF11C21884A61AA4D8DF3D7B0D342861D5574FB7117'}
+2026-01-07 21:39:56,621 INFO: Payment Success for Order: ORD1767792957
+2026-01-07 21:39:58,043 INFO: Order ORD1767792957 payment status updated to 已付款
+2026-01-07 21:39:59,175 WARNING: LINE token not configured, skipping push message
+2026-01-07 21:39:59,175 INFO: Order ORD1767792957 marked as paid
+2026-01-07 21:39:59,176 INFO: 127.0.0.1 - - [07/Jan/2026 21:39:59] "POST /api/ecpay/callback HTTP/1.1" 200 -
+2026-01-07 21:41:10,955 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:10] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 21:41:11,085 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:11] "GET /login HTTP/1.1" 200 -
+2026-01-07 21:41:21,301 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 21:41:21,303 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:21] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 21:41:21,437 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:21] "GET /admin HTTP/1.1" 200 -
+2026-01-07 21:41:23,034 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:23] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 21:41:38,490 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:38] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 21:41:43,508 INFO: 127.0.0.1 - - [07/Jan/2026 21:41:43] "GET /api/admin/order/delivery_audit/ORD1767790011 HTTP/1.1" 200 -
+2026-01-07 21:56:26,376 INFO: Order ORD1767790011 payment status updated to 已付款
+2026-01-07 21:56:26,379 INFO: 127.0.0.1 - - [07/Jan/2026 21:56:26] "POST /api/admin/order/update_payment HTTP/1.1" 200 -
+2026-01-07 21:56:30,279 INFO: 127.0.0.1 - - [07/Jan/2026 21:56:30] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 21:56:35,130 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 21:56:35,132 INFO: 127.0.0.1 - - [07/Jan/2026 21:56:35] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 21:56:35,243 INFO: 127.0.0.1 - - [07/Jan/2026 21:56:35] "GET /login HTTP/1.1" 200 -
+2026-01-07 21:57:47,211 INFO:  * Detected change in '/Users/peter/ai_eggs/config.py', reloading
+2026-01-07 21:57:47,347 INFO:  * Restarting with stat
+2026-01-07 21:57:48,713 INFO: Google Sheets connection initialized successfully
+2026-01-07 21:57:48,714 INFO: Application initialized successfully
+2026-01-07 21:57:48,739 WARNING:  * Debugger is active!
+2026-01-07 21:57:48,753 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 21:57:51,913 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-07 21:57:52,043 INFO:  * Restarting with stat
+2026-01-07 21:57:52,945 INFO: Google Sheets connection initialized successfully
+2026-01-07 21:57:52,945 INFO: Application initialized successfully
+2026-01-07 21:57:52,981 WARNING:  * Debugger is active!
+2026-01-07 21:57:52,995 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 21:57:54,070 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-07 21:57:54,195 INFO:  * Restarting with stat
+2026-01-07 21:57:55,132 INFO: Google Sheets connection initialized successfully
+2026-01-07 21:57:55,132 INFO: Application initialized successfully
+2026-01-07 21:57:55,167 WARNING:  * Debugger is active!
+2026-01-07 21:57:55,180 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 21:57:56,262 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-07 21:57:56,385 INFO:  * Restarting with stat
+2026-01-07 21:57:57,355 INFO: Google Sheets connection initialized successfully
+2026-01-07 21:57:57,356 INFO: Application initialized successfully
+2026-01-07 21:57:57,386 WARNING:  * Debugger is active!
+2026-01-07 21:57:57,399 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 21:57:58,473 INFO:  * Detected change in '/Users/peter/ai_eggs/app.py', reloading
+2026-01-07 21:57:58,599 INFO:  * Restarting with stat
+2026-01-07 21:57:59,539 INFO: Google Sheets connection initialized successfully
+2026-01-07 21:57:59,540 INFO: Application initialized successfully
+2026-01-07 21:57:59,576 WARNING:  * Debugger is active!
+2026-01-07 21:57:59,588 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 21:58:38,604 INFO: 127.0.0.1 - - [07/Jan/2026 21:58:38] "GET /login HTTP/1.1" 200 -
+2026-01-07 21:58:49,387 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 21:58:49,389 INFO: 127.0.0.1 - - [07/Jan/2026 21:58:49] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 21:58:49,531 INFO: 127.0.0.1 - - [07/Jan/2026 21:58:49] "GET /admin HTTP/1.1" 200 -
+2026-01-07 21:58:51,015 INFO: 127.0.0.1 - - [07/Jan/2026 21:58:51] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:04:02,038 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 22:04:02,039 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:02] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 22:04:02,172 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:02] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:04:11,110 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:11] "GET / HTTP/1.1" 200 -
+2026-01-07 22:04:11,645 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:04:13,383 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:13] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:04:16,248 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:16] "GET /?page=history HTTP/1.1" 200 -
+2026-01-07 22:04:17,574 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:17] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:04:18,353 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:18] "POST /api/history HTTP/1.1" 200 -
+2026-01-07 22:04:50,249 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:04:51,966 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:51] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-07 22:04:52,229 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:52] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:04:53,243 INFO: 127.0.0.1 - - [07/Jan/2026 22:04:53] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:05:15,619 INFO: Member updated: TEST_USER_001
+2026-01-07 22:05:15,621 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:15] "POST /api/edit_member HTTP/1.1" 200 -
+2026-01-07 22:05:17,178 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:17] "GET /?page=welcome HTTP/1.1" 200 -
+2026-01-07 22:05:17,417 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:17] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:05:51,796 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:05:51,798 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:51] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:05:51,936 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:51] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:05:53,538 INFO: 127.0.0.1 - - [07/Jan/2026 22:05:53] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:08:40,521 INFO: 127.0.0.1 - - [07/Jan/2026 22:08:40] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:08:41,674 INFO: 127.0.0.1 - - [07/Jan/2026 22:08:41] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:08:42,801 INFO: 127.0.0.1 - - [07/Jan/2026 22:08:42] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:08:44,540 INFO: 127.0.0.1 - - [07/Jan/2026 22:08:44] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:08:49,555 INFO: 127.0.0.1 - - [07/Jan/2026 22:08:49] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:09:14,145 INFO: 127.0.0.1 - - [07/Jan/2026 22:09:14] "[31m[1mPOST /api/admin/order/add_delivery HTTP/1.1[0m" 401 -
+2026-01-07 22:09:43,732 INFO: 127.0.0.1 - - [07/Jan/2026 22:09:43] "[31m[1mPOST /api/admin/order/add_delivery HTTP/1.1[0m" 401 -
+2026-01-07 22:09:51,309 INFO: 127.0.0.1 - - [07/Jan/2026 22:09:51] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 22:09:51,425 INFO: 127.0.0.1 - - [07/Jan/2026 22:09:51] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:09:56,131 INFO: 127.0.0.1 - - [07/Jan/2026 22:09:56] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:10:07,994 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:10:07,996 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:07] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:10:08,112 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:08] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:10:10,094 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:10] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:10:11,876 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:11] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:10:22,232 INFO: Delivery log added for order ORD1767792957
+2026-01-07 22:10:23,361 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:10:23,361 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:23] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 22:10:27,153 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:27] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:10:32,266 INFO: 127.0.0.1 - - [07/Jan/2026 22:10:32] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:11:15,693 INFO: Audit log added: correct on ORD1767792957
+2026-01-07 22:11:16,336 INFO: Delivery log corrected for order ORD1767792957: 10 -> 15 by admin
+2026-01-07 22:11:17,776 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:11:17,777 INFO: 127.0.0.1 - - [07/Jan/2026 22:11:17] "POST /api/admin/order/correct_delivery HTTP/1.1" 200 -
+2026-01-07 22:11:20,940 INFO: 127.0.0.1 - - [07/Jan/2026 22:11:20] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:11:33,693 INFO: 127.0.0.1 - - [07/Jan/2026 22:11:33] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:14:10,269 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:10] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 22:14:10,378 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:10] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:14:36,383 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:14:36,384 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:36] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:14:36,576 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:36] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:14:38,955 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:38] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:14:43,023 INFO: 127.0.0.1 - - [07/Jan/2026 22:14:43] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:15:14,182 INFO: Delivery log added for order ORD1767792957
+2026-01-07 22:15:15,265 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:15:15,265 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:15] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 22:15:18,997 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:18] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:29,032 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:29] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:38,494 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:38] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:39,636 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:44,492 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:44] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:44,645 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:44] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:15:47,726 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:47] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:15:56,067 INFO: 127.0.0.1 - - [07/Jan/2026 22:15:56] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:16:28,634 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:28] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:16:40,506 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:16:40,507 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:40] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:16:40,606 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:40] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:16:42,646 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:42] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:16:47,472 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:47] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:16:50,951 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:50] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:16:59,097 INFO: 127.0.0.1 - - [07/Jan/2026 22:16:59] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:17:02,802 INFO: 127.0.0.1 - - [07/Jan/2026 22:17:02] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:19:52,436 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:19:52,574 INFO:  * Restarting with stat
+2026-01-07 22:19:53,749 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:19:53,749 INFO: Application initialized successfully
+2026-01-07 22:19:53,792 WARNING:  * Debugger is active!
+2026-01-07 22:19:53,808 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:01,108 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:01,236 INFO:  * Restarting with stat
+2026-01-07 22:20:02,404 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:02,404 INFO: Application initialized successfully
+2026-01-07 22:20:02,441 WARNING:  * Debugger is active!
+2026-01-07 22:20:02,455 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:09,794 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:09,925 INFO:  * Restarting with stat
+2026-01-07 22:20:11,155 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:11,155 INFO: Application initialized successfully
+2026-01-07 22:20:11,182 WARNING:  * Debugger is active!
+2026-01-07 22:20:11,194 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:12,267 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:12,380 INFO:  * Restarting with stat
+2026-01-07 22:20:13,304 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:13,304 INFO: Application initialized successfully
+2026-01-07 22:20:13,344 WARNING:  * Debugger is active!
+2026-01-07 22:20:13,358 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:20,706 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:20,829 INFO:  * Restarting with stat
+2026-01-07 22:20:21,864 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:21,864 INFO: Application initialized successfully
+2026-01-07 22:20:21,896 WARNING:  * Debugger is active!
+2026-01-07 22:20:21,909 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:24,027 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:24,159 INFO:  * Restarting with stat
+2026-01-07 22:20:25,183 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:25,184 INFO: Application initialized successfully
+2026-01-07 22:20:25,218 WARNING:  * Debugger is active!
+2026-01-07 22:20:25,230 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:32,577 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:32,699 INFO:  * Restarting with stat
+2026-01-07 22:20:33,782 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:33,783 INFO: Application initialized successfully
+2026-01-07 22:20:33,822 WARNING:  * Debugger is active!
+2026-01-07 22:20:33,836 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:20:34,917 INFO:  * Detected change in '/Users/peter/ai_eggs/services/google_sheets.py', reloading
+2026-01-07 22:20:35,039 INFO:  * Restarting with stat
+2026-01-07 22:20:35,976 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:20:35,976 INFO: Application initialized successfully
+2026-01-07 22:20:35,993 WARNING:  * Debugger is active!
+2026-01-07 22:20:36,002 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:21:01,446 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:21:01,446 INFO: Application initialized successfully
+2026-01-07 22:21:01,492 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-07 22:21:01,492 INFO: [33mPress CTRL+C to quit[0m
+2026-01-07 22:21:01,492 INFO:  * Restarting with stat
+2026-01-07 22:21:02,426 INFO: Google Sheets connection initialized successfully
+2026-01-07 22:21:02,426 INFO: Application initialized successfully
+2026-01-07 22:21:02,456 WARNING:  * Debugger is active!
+2026-01-07 22:21:02,472 INFO:  * Debugger PIN: 359-575-910
+2026-01-07 22:21:53,108 INFO: 127.0.0.1 - - [07/Jan/2026 22:21:53] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 22:21:53,242 INFO: 127.0.0.1 - - [07/Jan/2026 22:21:53] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:22:02,751 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:22:02,753 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:02] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:22:02,862 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:02] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:22:04,606 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:04] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:22:10,518 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:10] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:22:19,971 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:19] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:22:21,809 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:21] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:22:23,852 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:23] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:22:25,004 INFO: 127.0.0.1 - - [07/Jan/2026 22:22:25] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:23:06,666 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:06] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-07 22:23:06,776 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:06] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:23:16,498 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:23:16,500 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:16] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:23:16,604 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:16] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:23:18,132 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:18] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:23:23,671 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:23] "GET /api/admin/order/delivery_audit/ORD1767790011 HTTP/1.1" 200 -
+2026-01-07 22:23:35,145 INFO: Delivery log added for order ORD1767790011
+2026-01-07 22:23:36,360 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:23:36,361 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:36] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-07 22:23:39,433 INFO: 127.0.0.1 - - [07/Jan/2026 22:23:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:24:38,247 INFO: 127.0.0.1 - - [07/Jan/2026 22:24:38] "GET /api/admin/order/delivery_audit/ORD1767792957 HTTP/1.1" 200 -
+2026-01-07 22:26:23,784 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 22:26:23,786 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:23] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 22:26:23,893 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:23] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:26:39,572 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:39] "GET / HTTP/1.1" 200 -
+2026-01-07 22:26:40,179 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:26:41,812 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:41] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:26:44,279 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:44] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 22:26:44,474 INFO: 127.0.0.1 - - [07/Jan/2026 22:26:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:27:09,989 INFO: Order added: ORD1767796029
+2026-01-07 22:27:09,989 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:27:09,990 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:09] "POST /api/order HTTP/1.1" 200 -
+2026-01-07 22:27:12,263 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:12] "GET /?page=history HTTP/1.1" 200 -
+2026-01-07 22:27:12,739 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:12] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:27:13,462 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:13] "POST /api/history HTTP/1.1" 200 -
+2026-01-07 22:27:42,763 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:42] "GET / HTTP/1.1" 200 -
+2026-01-07 22:27:43,113 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:27:44,173 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:44] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:27:46,501 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:46] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 22:27:46,719 INFO: 127.0.0.1 - - [07/Jan/2026 22:27:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:29:04,252 INFO: Order added: ORD1767796143
+2026-01-07 22:29:04,254 WARNING: LINE token not configured, skipping push message
+2026-01-07 22:29:04,255 INFO: 127.0.0.1 - - [07/Jan/2026 22:29:04] "POST /api/order HTTP/1.1" 200 -
+2026-01-07 22:31:07,878 INFO: 127.0.0.1 - - [07/Jan/2026 22:31:07] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:31:19,846 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:31:19,847 INFO: 127.0.0.1 - - [07/Jan/2026 22:31:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:31:20,253 INFO: 127.0.0.1 - - [07/Jan/2026 22:31:20] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:31:22,314 INFO: 127.0.0.1 - - [07/Jan/2026 22:31:22] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:31:43,886 INFO: 127.0.0.1 - - [07/Jan/2026 22:31:43] "GET /api/admin/order/delivery_audit/ORD1767796143 HTTP/1.1" 200 -
+2026-01-07 22:32:10,938 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:10] "GET / HTTP/1.1" 200 -
+2026-01-07 22:32:11,365 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:32:12,774 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:12] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:32:15,239 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:15] "GET /?page=order HTTP/1.1" 200 -
+2026-01-07 22:32:15,408 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:32:18,309 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:18] "GET / HTTP/1.1" 200 -
+2026-01-07 22:32:18,553 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:32:19,614 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:19] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-07 22:32:22,814 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:22] "GET /?page=history HTTP/1.1" 200 -
+2026-01-07 22:32:23,017 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-07 22:32:23,834 INFO: 127.0.0.1 - - [07/Jan/2026 22:32:23] "POST /api/history HTTP/1.1" 200 -
+2026-01-07 22:35:28,211 INFO: Admin logged out from IP 127.0.0.1
+2026-01-07 22:35:28,213 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:28] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-01-07 22:35:28,316 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:28] "GET /login HTTP/1.1" 200 -
+2026-01-07 22:35:37,935 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-07 22:35:37,936 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:37] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-07 22:35:38,049 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:38] "GET /admin HTTP/1.1" 200 -
+2026-01-07 22:35:39,527 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:35:51,404 INFO: 127.0.0.1 - - [07/Jan/2026 22:35:51] "GET /api/admin/order/delivery_audit/ORD1767796143 HTTP/1.1" 200 -
+2026-01-07 22:36:08,710 INFO: Order ORD1767796143 payment status updated to 已付款
+2026-01-07 22:36:08,711 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:08] "POST /api/admin/order/update_payment HTTP/1.1" 200 -
+2026-01-07 22:36:11,887 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:11] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:36:21,842 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:21] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-07 22:36:32,670 INFO: 127.0.0.1 - - [07/Jan/2026 22:36:32] "GET /api/admin/order/delivery_audit/ORD1767796143 HTTP/1.1" 200 -
