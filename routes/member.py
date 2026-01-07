@@ -283,8 +283,8 @@ def retry_payment():
             return jsonify({"status": "error", "msg": "訂單已付款，無需重新付款"}), 400
         
         # 為 ECPay 生成新的交易編號（含重試次數）
-        # 格式：ORDxxxxxxxx_R1, ORDxxxxxxxx_R2 ... (控制在20字元以內)
-        ecpay_trade_no = f"{order_id}_R{retry_count}"
+        # 格式：ORDxxxxxxxxR1, ORDxxxxxxxxR2 ... (只包含英文和數字，無底線)
+        ecpay_trade_no = f"{order_id}R{retry_count}"
         amount = int(order['amount'])
         
         base_url = os.getenv('APP_BASE_URL')

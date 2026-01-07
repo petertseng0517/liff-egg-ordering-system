@@ -1150,3 +1150,17 @@
 2026-01-08 02:20:25,685 INFO: Admin login successful: admin from IP 127.0.0.1
 2026-01-08 02:20:25,685 INFO: Admin logged out from IP 127.0.0.1
 2026-01-08 02:20:26,333 INFO: Order added: ORD67810025
+2026-01-08 02:28:00,919 INFO: Google Sheets connection initialized successfully
+2026-01-08 02:28:00,921 INFO: Application initialized successfully
+2026-01-08 02:28:00,941 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-08 02:28:00,950 WARNING: Failed login attempt for user 'admin' from IP 127.0.0.1
+2026-01-08 02:28:00,953 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-08 02:28:00,953 INFO: Admin logged out from IP 127.0.0.1
+2026-01-08 02:28:01,556 INFO: Order added: ORD67810480
+2026-01-08 02:28:07,064 INFO: Google Sheets connection initialized successfully
+2026-01-08 02:28:07,065 INFO: Application initialized successfully
+2026-01-08 02:28:07,078 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-08 02:28:07,085 WARNING: Failed login attempt for user 'admin' from IP 127.0.0.1
+2026-01-08 02:28:07,087 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-08 02:28:07,087 INFO: Admin logged out from IP 127.0.0.1
+2026-01-08 02:28:07,808 INFO: Order added: ORD67810487

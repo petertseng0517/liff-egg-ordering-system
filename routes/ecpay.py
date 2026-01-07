@@ -45,10 +45,12 @@ def ecpay_callback():
         if rtn_code == '1':
             merchant_trade_no = data.get('MerchantTradeNo')
             
-            # 提取原訂單號（處理 "ORDxxxxxx_RN" 格式）
-            # 如果是重試付款，交易編號會是 "ORDxxxxxx_R1" 或 "ORDxxxxxx_R2" 等
-            if '_R' in merchant_trade_no:
-                order_id = merchant_trade_no.split('_R')[0]
+            # 提取原訂單號（處理 "ORDxxxxxxxxRN" 格式）
+            # 如果是重試付款，交易編號會是 "ORDxxxxxxxxR1" 或 "ORDxxxxxxxxR2" 等
+            # 原訂單號長度為 11 字元 (ORD + 8位時間戳)，重試時會多一個 R 和數字
+            if len(merchant_trade_no) > 11 and merchant_trade_no[-2] == 'R':
+                # 格式：ORDxxxxxxxxRN
+                order_id = merchant_trade_no[:-2]  # 移除最後的 R 和數字
                 logger.info(f"Payment Success for Retry Order: {order_id} (ECPay Trade No: {merchant_trade_no}, length: {len(merchant_trade_no)})")
             else:
                 order_id = merchant_trade_no
