@@ -265,6 +265,7 @@ def retry_payment():
     try:
         data = request.json
         order_id = data.get('orderId')
+        retry_count = data.get('retryCount', 1)  # 第幾次重試
         
         if not order_id:
             return jsonify({"status": "error", "msg": "訂單 ID 不存在"}), 400
@@ -280,9 +281,10 @@ def retry_payment():
         if order['paymentStatus'] not in ['未付款', '待付款']:
             return jsonify({"status": "error", "msg": "訂單已付款，無需重新付款"}), 400
         
-        # 重新初始化 ECPay 付款
+        # 為 ECPay 生成新的交易編號（含重試次數）
+        # 格式：ORD1234567890_retry_1, ORD1234567890_retry_2 ...
+        ecpay_trade_no = f"{order_id}_retry_{retry_count}"
         amount = int(order['amount'])
-        trade_no = order_id
         
         base_url = os.getenv('APP_BASE_URL')
         if not base_url:
@@ -303,7 +305,7 @@ def retry_payment():
         )
         
         ecpay_params = ecpay_service.create_order(
-            order_id=trade_no,
+            order_id=ecpay_trade_no,  # ⭐ 使用新的交易編號（含 _retry_ 後綴）
             total_amount=amount,
             item_name=order['items'],
             return_url=return_url,
@@ -311,7 +313,7 @@ def retry_payment():
             order_result_url=""
         )
         
-        logger.info(f"Retry payment for order {order_id}")
+        logger.info(f"Retry payment for order {order_id}, ECPay Trade No: {ecpay_trade_no}")
         return jsonify({
             "status": "ecpay_init",
             "actionUrl": 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',

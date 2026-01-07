@@ -628,10 +628,14 @@
     function retryPayment(orderId) {
         if (!confirm("確認要重新進行線上付款？")) return;
         
+        // 計算重試次數：根據前面的重試按鈕點擊次數
+        // 簡單方案：發送時預設為 1，服務端可根據綠界返回的錯誤動態遞增
+        let retryCount = 1;
+        
         fetch('/api/retry_payment', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({orderId: orderId})
+            body: JSON.stringify({orderId: orderId, retryCount: retryCount})
         })
         .then(res => res.json())
         .then(data => {
