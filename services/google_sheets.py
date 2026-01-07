@@ -5,8 +5,15 @@ import gspread
 from google.oauth2.service_account import Credentials
 import logging
 from config import Config
+from datetime import datetime
+import pytz
+import re
+import json
 
 logger = logging.getLogger(__name__)
+
+# 台灣時區
+TW_TZ = pytz.timezone(Config.TIMEZONE)
 
 
 class GoogleSheetsService:
@@ -47,11 +54,36 @@ class GoogleSheetsService:
         """新增會員記錄"""
         try:
             sheet = cls.get_sheet("Members")
-            sheet.append_row([user_id, name, phone, address, birth_date or "", address2 or ""])
+            # 電話號碼前加單引號確保以文本存儲，避免丟失前導零
+            phone_str = f"'{phone}" if phone else ""
+            sheet.append_row([user_id, name, phone_str, address, birth_date or "", address2 or ""])
             logger.info(f"Member added: {user_id}")
             return True
         except Exception as e:
             logger.error(f"Error adding member: {e}")
+            return False
+    
+    @classmethod
+    def update_member(cls, user_id, name, phone, address, address2=""):
+        """更新會員資料"""
+        try:
+            sheet = cls.get_sheet("Members")
+            cell = sheet.find(user_id)
+            if not cell:
+                return False
+            
+            # 更新對應欄位
+            sheet.update_cell(cell.row, 2, name)      # B欄：姓名
+            # 電話號碼前加單引號確保以文本存儲，避免丟失前導零
+            phone_str = f"'{phone}" if phone else ""
+            sheet.update_cell(cell.row, 3, phone_str) # C欄：電話
+            sheet.update_cell(cell.row, 4, address)   # D欄：地址1
+            sheet.update_cell(cell.row, 6, address2)  # F欄：地址2
+            
+            logger.info(f"Member updated: {user_id}")
+            return True
+        except Exception as e:
+            logger.error(f"Error updating member: {e}")
             return False
     
     @classmethod
@@ -79,14 +111,13 @@ class GoogleSheetsService:
     def add_order(cls, order_id, user_id, item_str, amount, status, payment_status, payment_method):
         """新增訂單"""
         try:
-            from datetime import datetime
             sheet = cls.get_sheet("Orders")
             sheet.append_row([
                 order_id,
                 user_id,
                 item_str,
                 amount,
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M:%S"),
                 status,
                 "",  # DeliveryLogs (JSON)
                 payment_status,
@@ -154,7 +185,6 @@ class GoogleSheetsService:
                 customer = member_map.get(uid, {})
                 
                 # 解析出貨日誌
-                import json
                 logs = []
                 if len(row) > 6 and row[6]:
                     try:
@@ -196,12 +226,9 @@ class GoogleSheetsService:
             return False
     
     @classmethod
-    def add_delivery_log(cls, order_id, qty):
+    def add_delivery_log(cls, order_id, qty, address=""):
         """新增出貨紀錄"""
         try:
-            import json
-            from datetime import datetime
-            
             sheet = cls.get_sheet("Orders")
             cell = sheet.find(order_id)
             if not cell:
@@ -220,8 +247,9 @@ class GoogleSheetsService:
             
             # 新增日誌
             new_log = {
-                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                "qty": qty
+                "date": datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M"),
+                "qty": qty,
+                "address": address
             }
             logs.append(new_log)
             
@@ -245,6 +273,114 @@ class GoogleSheetsService:
             return False, str(e)
     
     @classmethod
+    def correct_delivery_log(cls, order_id, log_index, new_qty, new_address, admin_name, reason):
+        """修正出貨紀錄（不刪除，而是記錄修正）"""
+        try:
+            sheet = cls.get_sheet("Orders")
+            cell = sheet.find(order_id)
+            if not cell:
+                return False, "訂單不存在"
+            
+            # 取得現有日誌
+            row_values = sheet.row_values(cell.row)
+            current_logs_str = row_values[6] if len(row_values) > 6 else "[]"
+            
+            try:
+                logs = json.loads(current_logs_str)
+                if not isinstance(logs, list):
+                    logs = []
+            except:
+                logs = []
+            
+            if log_index < 0 or log_index >= len(logs):
+                return False, "出貨紀錄索引無效"
+            
+            # 記錄修改前的數值
+            old_log = logs[log_index]
+            old_qty = int(old_log.get('qty', 0))
+            old_address = old_log.get('address', '')
+            
+            # 更新日誌
+            old_log['corrected'] = True
+            old_log['correction_time'] = datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M")
+            old_log['correction_admin'] = admin_name
+            old_log['correction_reason'] = reason
+            old_log['original_qty'] = old_qty
+            old_log['corrected_qty'] = new_qty
+            old_log['original_address'] = old_address
+            old_log['address'] = new_address
+            
+            # 新增修正記錄到審計日誌
+            cls._add_audit_log(order_id, "correct", admin_name, old_qty, new_qty, reason)
+            
+            # 計算新狀態（基於修正後的總數）
+            total_delivered = sum(int(l.get('corrected_qty') or l.get('qty', 0)) for l in logs)
+            items_str = row_values[2] if len(row_values) > 2 else ""
+            match = re.search(r'x(\d+)', items_str)
+            total_ordered = int(match.group(1)) if match else 1
+            
+            new_status = "已完成" if total_delivered >= total_ordered else "部分配送"
+            
+            # 更新工作表
+            sheet.update_cell(cell.row, 6, new_status)  # 狀態欄
+            sheet.update_cell(cell.row, 7, json.dumps(logs, ensure_ascii=False))  # 日誌欄
+            
+            logger.info(f"Delivery log corrected for order {order_id}: {old_qty} -> {new_qty} by {admin_name}")
+            return True, {"old_qty": old_qty, "new_qty": new_qty, "status": new_status}
+            
+        except Exception as e:
+            logger.error(f"Error correcting delivery log: {e}")
+            return False, str(e)
+    
+    @classmethod
+    def _add_audit_log(cls, order_id, operation, admin_name, before_value, after_value, reason):
+        """新增審計日誌"""
+        try:
+            import json
+            
+            sheet = cls.get_sheet("DeliveryAuditLog")
+            if not sheet:
+                logger.warning("DeliveryAuditLog sheet not found, creating one...")
+                # 如果工作表不存在，會在下方建立
+                return False
+            
+            timestamp = datetime.now(TW_TZ).strftime("%Y-%m-%d %H:%M:%S")
+            sheet.append_row([
+                timestamp,
+                order_id,
+                operation,
+                admin_name,
+                before_value,
+                after_value,
+                reason,
+                ""
+            ])
+            logger.info(f"Audit log added: {operation} on {order_id}")
+            return True
+        except Exception as e:
+            logger.error(f"Error adding audit log: {e}")
+            return False
+    
+    @classmethod
+    def get_delivery_audit_logs(cls, order_id):
+        """取得特定訂單的審計日誌"""
+        try:
+            import json
+            
+            sheet = cls.get_sheet("DeliveryAuditLog")
+            if not sheet:
+                return []
+            
+            # 查詢所有該訂單的記錄
+            all_records = sheet.get_all_records()
+            order_logs = [r for r in all_records if r.get('訂單編號') == order_id or r.get('B') == order_id]
+            
+            return order_logs
+        except Exception as e:
+            logger.error(f"Error getting audit logs: {e}")
+            return []
+    
+    @classmethod
     def update_order_status(cls, order_id, status):
         """更新訂單狀態"""
         try:
@@ -258,6 +394,7 @@ class GoogleSheetsService:
         except Exception as e:
             logger.error(f"Error updating order status: {e}")
             return False
+
 
 
 import re
