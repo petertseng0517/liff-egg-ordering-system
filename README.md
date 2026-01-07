@@ -2,17 +2,7 @@
 介紹影片：https://www.youtube.com/watch?v=t_SznU7OYNU
 這是一個專為農產品銷售設計的完整解決方案，結合了 LINE LIFF 的便捷性、Python Flask 的強大後端邏輯、Google Sheets 作為輕量級資料庫的靈活性，以及 **綠界 (ECPay) 金流服務**。系統包含**客戶端訂購介面**與**管理員專屬後台**，支援分批出貨管理、自動化 LINE 通知與線上金流整合。
 
-## 系統畫面
-### 土雞蛋LINE官方號
-![土雞蛋LINE官方號](images/egg-LINE.PNG)
-### 管理後台
-![管理後台](images/admin.PNG)
-### 訂單列表
-![訂單列表](images/orderList.PNG)
-### 出貨紀錄
-![出貨紀錄](images/sendeggs.PNG)
-### 會員資料管理
-![會員資料管理](images/updateMemberData.PNG)
+
 
 ## ✨ 核心功能
 
@@ -210,4 +200,24 @@ A：在管理後台訂單詳情中，點擊「修正」按鈕，可修改出貨�
 A：確認已出貨的總數 ≥ 訂購數量，且系統已重新啟動（必要時）。檢查出貨紀錄中的數字是否正確輸入。
 
 ---
+
+## 系統畫面
+### 土雞蛋LINE官方號
+<img src="images/egg-LINE.PNG" width="500" alt="土雞蛋LINE官方號">
+
+### 管理後台
+<img src="images/admin.PNG" width="500" alt="管理後台">
+
+### 訂單列表
+<img src="images/orderList.PNG" width="500" alt="訂單列表">
+
+### 出貨紀錄
+<img src="images/sendeggs.PNG" width="500" alt="出貨紀錄">
+
+### 會員資料管理
+<img src="images/updateMemberData.PNG" width="500" alt="會員資料管理">
+
+
+---
+
 由 Gemini Agent 協助開發
