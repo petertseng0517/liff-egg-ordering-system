@@ -571,6 +571,9 @@
             if(!orders || orders.length === 0) html="<p class='text-center mt-3'>無訂單資料</p>";
             else orders.forEach(o => {
                 const payStatus = o.paymentStatus || '未付款';
+                // 判斷是否顯示「重新付款」按鈕：未付款 + 綠界支付
+                const showRetryBtn = (payStatus === '未付款' || payStatus === '待付款') && o.paymentMethod === 'ecpay';
+                
                 html += `<div class="card mb-3 p-3">
                     <div class="d-flex justify-content-between">
                         <small class="text-muted">${o.date}</small>
@@ -584,6 +587,7 @@
                         </div>
                         <p class="text-end mb-0 price-tag">$${o.amount}</p>
                     </div>
+                    ${showRetryBtn ? `<button class="btn btn-sm btn-warning mt-2" onclick="retryPayment('${o.orderId}')">🔄 重新付款</button>` : ''}
                 </div>`;
             });
             document.getElementById('history-list').innerHTML = html;
@@ -615,9 +619,48 @@
             case '已付款': return 'bg-success';
             case '退款中': return 'bg-warning text-dark';
             case '已退款': return 'bg-dark';
+            case '待付款': return 'bg-warning text-dark';
             case '未付款': return 'bg-danger';
             default: return 'bg-danger';
         }
+    }
+
+    function retryPayment(orderId) {
+        if (!confirm("確認要重新進行線上付款？")) return;
+        
+        fetch('/api/retry_payment', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({orderId: orderId})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'ecpay_init') {
+                // 提交 ECPay 表單
+                var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", data.actionUrl);
+                
+                var params = data.ecpayParams;
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+                        form.appendChild(hiddenField);
+                    }
+                }
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                alert("❌ 重新付款失敗: " + data.msg);
+            }
+        })
+        .catch(err => {
+            console.error("Retry payment error:", err);
+            alert("❌ 系統錯誤，請稍後重試");
+        });
     }
   </script>
 </body>

@@ -257,3 +257,67 @@ def get_history():
     except Exception as e:
         logger.error(f"Error in get_history: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@member_bp.route('/retry_payment', methods=['POST'])
+def retry_payment():
+    """重新初始化 ECPay 付款流程"""
+    try:
+        data = request.json
+        order_id = data.get('orderId')
+        
+        if not order_id:
+            return jsonify({"status": "error", "msg": "訂單 ID 不存在"}), 400
+        
+        # 取得訂單信息
+        orders = GoogleSheetsService.get_all_orders_with_members()
+        order = next((o for o in orders if o['orderId'] == order_id), None)
+        
+        if not order:
+            return jsonify({"status": "error", "msg": "訂單不存在"}), 404
+        
+        # 確認是未付款狀態
+        if order['paymentStatus'] not in ['未付款', '待付款']:
+            return jsonify({"status": "error", "msg": "訂單已付款，無需重新付款"}), 400
+        
+        # 重新初始化 ECPay 付款
+        amount = int(order['amount'])
+        trade_no = order_id
+        
+        base_url = os.getenv('APP_BASE_URL')
+        if not base_url:
+            base_url = request.url_root.rstrip('/')
+            if 'onrender.com' in base_url or 'herokuapp.com' in base_url:
+                base_url = base_url.replace('http://', 'https://')
+        else:
+            base_url = base_url.rstrip('/')
+        
+        return_url = f"{base_url}/api/ecpay/callback"
+        client_back_url = f"{base_url}/api/ecpay/client_return"
+        
+        ecpay_service = ECPaySDK(
+            os.getenv('ECPAY_MERCHANT_ID', '2000132'),
+            os.getenv('ECPAY_HASH_KEY', '5294y06JbISpM5x9'),
+            os.getenv('ECPAY_HASH_IV', 'v77hoKGq4kWxNNIS'),
+            'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+        )
+        
+        ecpay_params = ecpay_service.create_order(
+            order_id=trade_no,
+            total_amount=amount,
+            item_name=order['items'],
+            return_url=return_url,
+            client_back_url=client_back_url,
+            order_result_url=""
+        )
+        
+        logger.info(f"Retry payment for order {order_id}")
+        return jsonify({
+            "status": "ecpay_init",
+            "actionUrl": 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
+            "ecpayParams": ecpay_params
+        })
+    
+    except Exception as e:
+        logger.error(f"Error in retry_payment: {e}")
+        return jsonify({"status": "error", "msg": "系統錯誤"}), 500
