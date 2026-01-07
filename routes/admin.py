@@ -114,14 +114,13 @@ def add_delivery_log():
         success, result = GoogleSheetsService.add_delivery_log(order_id, qty, address)
         
         if success:
-            # 計算已配送數量
-            orders = GoogleSheetsService.get_all_orders_with_members()
-            current_order = next((o for o in orders if o['orderId'] == order_id), None)
-            
-            if current_order:
-                total_delivered = sum(int(log['qty']) for log in current_order['deliveryLogs'])
-                # 發送 LINE 出貨通知
-                LINEService.send_delivery_notification(user_id, qty, total_delivered, total_ordered, result)
+            # result 已包含最新的狀態和總配送數量，無需再查詢
+            # 發送 LINE 出貨通知
+            if isinstance(result, dict) and 'total_delivered' in result:
+                LINEService.send_delivery_notification(user_id, qty, result['total_delivered'], total_ordered, order_id)
+            else:
+                # 向後相容性：如果是舊格式，則發送基本通知
+                LINEService.send_delivery_notification(user_id, qty, qty, total_ordered, order_id)
             
             return jsonify({"status": "success"})
         else:

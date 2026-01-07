@@ -267,7 +267,12 @@ class GoogleSheetsService:
             sheet.update_cell(cell.row, 7, json.dumps(logs, ensure_ascii=False))
             
             logger.info(f"Delivery log added for order {order_id}")
-            return True, new_status
+            # 返回包含更多信息的結果，避免需要重新查詢
+            return True, {
+                "status": new_status,
+                "total_delivered": total_delivered,
+                "total_ordered": total_ordered
+            }
         except Exception as e:
             logger.error(f"Error adding delivery log: {e}")
             return False, str(e)
