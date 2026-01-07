@@ -2,6 +2,18 @@
 介紹影片：https://www.youtube.com/watch?v=t_SznU7OYNU
 這是一個專為農產品銷售設計的完整解決方案，結合了 LINE LIFF 的便捷性、Python Flask 的強大後端邏輯、Google Sheets 作為輕量級資料庫的靈活性，以及 **綠界 (ECPay) 金流服務**。系統包含**客戶端訂購介面**與**管理員專屬後台**，支援分批出貨管理、自動化 LINE 通知與線上金流整合。
 
+## 系統畫面
+### 土雞蛋LINE官方號
+![土雞蛋LINE官方號](images/egg-LINE.PNG)
+### 管理後台
+![管理後台](images/admin.PNG)
+### 訂單列表
+![訂單列表](images/orderList.PNG)
+### 出貨紀錄
+![出貨紀錄](images/sendeggs.PNG)
+### 會員資料管理
+![會員資料管理](images/updateMemberData.PNG)
+
 ## ✨ 核心功能
 
 ### 📱 客戶端 (LINE LIFF)
