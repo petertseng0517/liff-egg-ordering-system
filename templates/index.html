@@ -22,6 +22,20 @@
     <h4 class="mt-3 text-muted">系統啟動中...</h4>
   </div>
 
+  <div id="p-register" class="page">
+    <div class="card p-4">
+      <h3 class="mb-4 text-center">🐣 新會員註冊</h3>
+      <form id="form-register">
+        <div class="mb-3"><label>您的姓名</label><input type="text" class="form-control" id="reg-name" required></div>
+        <div class="mb-3"><label>聯絡電話</label><input type="tel" class="form-control" id="reg-phone" inputmode="tel" required></div>
+        <div class="mb-3"><label>配送地址</label><input type="text" class="form-control" id="reg-address" required></div>
+        <div class="mb-3"><label>第二配送地址 (選填)</label><input type="text" class="form-control" id="reg-address2"></div>
+        <div class="mb-3"><label>生日 (選填)</label><input type="date" class="form-control" id="reg-birthdate"></div>
+        <button type="button" class="btn btn-main w-100 btn-lg py-3" onclick="submitRegister()">註冊帳號</button>
+      </form>
+    </div>
+  </div>
+
   <div id="p-welcome" class="page text-center">
     <div class="card p-5">
         <h3 class="mb-3">歡迎回來！</h3>
@@ -30,20 +44,21 @@
         <div class="d-grid gap-2">
             <button class="btn btn-main btn-lg" onclick="location.href='/?page=order'">我要訂蛋</button>
             <button class="btn btn-outline-secondary" onclick="location.href='/?page=history'">查看紀錄</button>
+            <button class="btn btn-outline-primary" onclick="location.href='/?page=edit'">更新會員資料</button>
         </div>
     </div>
   </div>
 
-  <div id="p-register" class="page">
+  <div id="p-edit-member" class="page">
     <div class="card p-4">
-      <h3 class="mb-4 text-center">🐣 會員資料填寫</h3>
-      <form id="form-register">
-        <div class="mb-3"><label>您的姓名</label><input type="text" class="form-control" id="reg-name" required></div>
-        <div class="mb-3"><label>出生日期</label><input type="date" class="form-control" id="reg-birthdate"></div>
-        <div class="mb-3"><label>聯絡電話</label><input type="tel" class="form-control" id="reg-phone" inputmode="tel" required></div>
-        <div class="mb-3"><label>配送地址</label><input type="text" class="form-control" id="reg-address" required></div>
-        <div class="mb-3"><label>第二配送地址 (選填)</label><input type="text" class="form-control" id="reg-address2"></div>
-        <button type="button" class="btn btn-main w-100 btn-lg py-3" onclick="submitRegister()">確認註冊</button>
+      <h3 class="mb-4 text-center">🐣 更新會員資料</h3>
+      <form id="form-edit-member">
+        <div class="mb-3"><label>您的姓名</label><input type="text" class="form-control" id="edit-mem-name" required></div>
+        <div class="mb-3"><label>聯絡電話</label><input type="tel" class="form-control" id="edit-mem-phone" inputmode="tel" required></div>
+        <div class="mb-3"><label>配送地址</label><input type="text" class="form-control" id="edit-mem-address" required></div>
+        <div class="mb-3"><label>第二配送地址 (選填)</label><input type="text" class="form-control" id="edit-mem-address2"></div>
+        <button type="button" class="btn btn-main w-100 btn-lg py-3" onclick="submitEditMember()">保存變更</button>
+        <button type="button" class="btn btn-outline-secondary w-100 mt-2" onclick="location.href='/?page=order'">返回</button>
       </form>
     </div>
   </div>
@@ -218,11 +233,18 @@
     function resolveRoute() {
       const urlParams = new URLSearchParams(window.location.search);
       const page = urlParams.get('page') || 'register';
+      
       document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
       
       if (page === 'register') {
         document.getElementById('p-register').classList.add('active');
-        // if(document.getElementById('reg-name')) document.getElementById('reg-name').value = userName; // 移除預設值
+      } else if (page === 'welcome') {
+        document.getElementById('p-welcome').classList.add('active');
+      } else if (page === 'edit') {
+        // 先載入會員資料，再顯示頁面
+        loadMemberDataForEdit().then(() => {
+          document.getElementById('p-edit-member').classList.add('active');
+        });
       } else if (page === 'order') {
         document.getElementById('p-order').classList.add('active');
       } else if (page === 'history') {
@@ -364,6 +386,99 @@
         })
         .catch(err => {
             console.error("Registration error:", err);
+            alert("❌ 系統錯誤，請稍後重試");
+        });
+    }
+
+    function loadMemberDataForEdit() {
+        // 從後端載入會員資料填入編輯表單
+        return fetch('/api/check_member', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({userId: userId})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.registered && data.data) {
+                document.getElementById('edit-mem-name').value = data.data.name || '';
+                document.getElementById('edit-mem-phone').value = data.data.phone || '';
+                document.getElementById('edit-mem-address').value = data.data.address || '';
+                document.getElementById('edit-mem-address2').value = data.data.address2 || '';
+            }
+            return data;
+        })
+        .catch(err => {
+            console.error("Load member error:", err);
+            alert("❌ 載入會員資料失敗");
+            return null;
+        });
+    }
+
+    function submitEditMember() {
+        // 表單驗證
+        const name = document.getElementById('edit-mem-name').value.trim();
+        const phone = document.getElementById('edit-mem-phone').value.trim();
+        const address = document.getElementById('edit-mem-address').value.trim();
+        const address2 = document.getElementById('edit-mem-address2').value.trim();
+        
+        if (!name) {
+            alert("❌ 姓名不能為空");
+            return;
+        }
+        if (name.length > 50) {
+            alert("❌ 姓名長度不能超過 50 個字元");
+            return;
+        }
+        
+        if (!phone) {
+            alert("❌ 聯絡電話不能為空");
+            return;
+        }
+        const phonePattern = /^\d{10}$|^09\d{8}$/;
+        if (!phonePattern.test(phone.replace('-', ''))) {
+            alert("❌ 電話格式不正確，請輸入 10 位數字 (例：0912345678)");
+            return;
+        }
+        
+        if (!address) {
+            alert("❌ 配送地址不能為空");
+            return;
+        }
+        if (address.length > 200) {
+            alert("❌ 地址長度不能超過 200 個字元");
+            return;
+        }
+        
+        if (address2 && address2.length > 200) {
+            alert("❌ 第二地址長度不能超過 200 個字元");
+            return;
+        }
+        
+        if (!confirm("確認要保存會員資料嗎？")) return;
+
+        fetch('/api/edit_member', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: userId,
+                name: name,
+                phone: phone,
+                address: address,
+                address2: address2
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert("✅ 會員資料已更新");
+                document.getElementById('welcome-name').innerText = name;
+                location.href = '/?page=welcome';
+            } else {
+                alert("❌ 更新失敗: " + data.msg);
+            }
+        })
+        .catch(err => {
+            console.error("Edit member error:", err);
             alert("❌ 系統錯誤，請稍後重試");
         });
     }
