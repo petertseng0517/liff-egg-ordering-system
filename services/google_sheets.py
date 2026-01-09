@@ -271,7 +271,8 @@ class GoogleSheetsService:
             return True, {
                 "status": new_status,
                 "total_delivered": total_delivered,
-                "total_ordered": total_ordered
+                "total_ordered": total_ordered,
+                "delivery_date": new_log["date"]
             }
         except Exception as e:
             logger.error(f"Error adding delivery log: {e}")
@@ -336,7 +337,8 @@ class GoogleSheetsService:
                 "new_qty": new_qty,
                 "status": new_status,
                 "total_delivered": total_delivered,
-                "total_ordered": total_ordered
+                "total_ordered": total_ordered,
+                "delivery_date": old_log.get('date', '')
             }
             
         except Exception as e:

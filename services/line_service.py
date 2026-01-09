@@ -64,33 +64,27 @@ class LINEService:
         return LINEService.send_push_message(user_id, msg)
     
     @staticmethod
-    def send_delivery_notification(user_id, qty, total_delivered, total_ordered, status):
+    def send_delivery_notification(user_id, order_id, delivery_date, qty, remaining_qty):
         """發送出貨通知訊息"""
-        msg = f"📦 出貨通知\n您好，我們已為您出貨 {qty} 盤土雞蛋。\n目前進度: {total_delivered}/{total_ordered} 盤。"
-        
-        if status == "已完成":
-            msg += "\n🎉 您的訂單已全數出貨完畢，感謝您的訂購！"
-        else:
-            msg += "\n其餘商品將盡快安排配送。"
-        
+        msg = (
+            f"📦 出貨通知\n\n"
+            f"訂單編號：{order_id}\n"
+            f"本次出貨日期：{delivery_date}\n"
+            f"本次出貨數量：{qty}盤\n"
+            f"本訂單剩餘：{remaining_qty}盤"
+        )
         return LINEService.send_push_message(user_id, msg)
     
     @staticmethod
-    def send_delivery_correction_notification(user_id, old_qty, new_qty, reason, total_delivered, total_ordered, status):
+    def send_delivery_correction_notification(user_id, order_id, delivery_date, old_qty, new_qty):
         """發送出貨紀錄修正通知訊息"""
         msg = (
-            f"🔄 出貨紀錄修正通知\n"
-            f"親愛的顧客，我們發現出貨紀錄有誤，已予以修正：\n"
-            f"原記錄: {old_qty} 盤 → 修正為: {new_qty} 盤\n"
-            f"修正原因: {reason}\n"
-            f"\n目前進度: {total_delivered}/{total_ordered} 盤"
+            f"🔄 出貨紀錄修正通知\n\n"
+            f"訂單編號：{order_id}\n"
+            f"出貨日期：{delivery_date}\n\n"
+            f"依實際需求修改出貨紀錄\n"
+            f"原紀錄：{old_qty}盤 → 修正為：{new_qty}盤"
         )
-        
-        if status == "已完成":
-            msg += "\n🎉 您的訂單已全數出貨完畢，感謝您的耐心！"
-        else:
-            msg += "\n其餘商品將盡快安排配送。"
-        
         return LINEService.send_push_message(user_id, msg)
     
     @staticmethod

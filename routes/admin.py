@@ -114,13 +114,14 @@ def add_delivery_log():
         success, result = GoogleSheetsService.add_delivery_log(order_id, qty, address)
         
         if success:
-            # result 已包含最新的狀態和總配送數量，無需再查詢
+            # result 已包含最新的狀態、總配送數量和出貨日期
+            # 計算剩餘數量
+            remaining_qty = total_ordered - result['total_delivered']
+            
             # 發送 LINE 出貨通知
-            if isinstance(result, dict) and 'total_delivered' in result:
-                LINEService.send_delivery_notification(user_id, qty, result['total_delivered'], total_ordered, order_id)
-            else:
-                # 向後相容性：如果是舊格式，則發送基本通知
-                LINEService.send_delivery_notification(user_id, qty, qty, total_ordered, order_id)
+            LINEService.send_delivery_notification(
+                user_id, order_id, result['delivery_date'], qty, remaining_qty
+            )
             
             return jsonify({"status": "success"})
         else:
@@ -168,15 +169,13 @@ def correct_delivery_log():
         )
         
         if success:
-            # 結果已包含修正後的 total_delivered 和 total_ordered
+            # 結果已包含修正後的資訊和出貨日期
             LINEService.send_delivery_correction_notification(
-                user_id, 
+                user_id,
+                order_id,
+                result.get('delivery_date', ''),
                 result['old_qty'],
-                result['new_qty'],
-                reason,
-                result.get('total_delivered', 0),
-                result.get('total_ordered', 1),
-                result['status']
+                result['new_qty']
             )
             
             return jsonify({
