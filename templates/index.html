@@ -70,8 +70,8 @@
         <div class="mb-3">
           <label>選擇商品</label>
           <select class="form-select form-select-lg" id="order-items" onchange="calcPrice()">
-            <option value="土雞蛋11盤" data-price="2500">土雞蛋 11盤 ($2500)</option>
-            <option value="土雞蛋1盤" data-price="250">土雞蛋 1盤 ($250)</option>
+            <option value="土雞蛋優惠組" data-price="2500" data-qty="11">土雞蛋 11盤優惠組 ($2500)</option>
+            <option value="土雞蛋單盤" data-price="250" data-qty="1">土雞蛋 單盤 ($250)</option>
           </select>
           <div id="price-tip" class="form-text text-danger mt-2" style="display:none;"></div>
         </div>
@@ -268,7 +268,7 @@
       var price = 0;
       var tipDiv = document.getElementById('price-tip');
 
-      if (itemName === "土雞蛋1盤") {
+      if (itemName === "土雞蛋單盤") {
           // 顯示優惠提示
           tipDiv.style.display = 'block';
           tipDiv.innerHTML = "💡 優惠提示：買10盤以上每盤$240，20盤以上每盤$230！";
@@ -574,10 +574,18 @@
                 // 判斷是否顯示「重新付款」按鈕：未付款 + 綠界支付
                 const showRetryBtn = (payStatus === '未付款' || payStatus === '待付款') && o.paymentMethod === 'ecpay';
                 
+                // 部分配送時顯示剩餘數量
+                const remainingDisplay = o.status === '部分配送' && o.remainingQty !== undefined 
+                    ? `<span class="ms-2 text-danger"><strong>剩餘：${o.remainingQty}盤</strong></span>` 
+                    : '';
+                
                 html += `<div class="card mb-3 p-3">
                     <div class="d-flex justify-content-between">
                         <small class="text-muted">${o.date}</small>
-                        <span class="badge ${getStatusBadge(o.status)}">${o.status}</span>
+                        <div>
+                            <span class="badge ${getStatusBadge(o.status)}">${o.status}</span>
+                            ${remainingDisplay}
+                        </div>
                     </div>
                     <h5 class="mt-2">${o.items}</h5>
                     <div class="d-flex justify-content-between align-items-center mt-2">

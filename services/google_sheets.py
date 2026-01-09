@@ -139,7 +139,7 @@ class GoogleSheetsService:
             orders = []
             for row in all_records[1:]:  # Skip header
                 if len(row) > 1 and row[1] == user_id:
-                    orders.append({
+                    order_data = {
                         "orderId": row[0],
                         "items": row[2],
                         "amount": row[3],
@@ -147,7 +147,31 @@ class GoogleSheetsService:
                         "status": row[5],
                         "paymentStatus": row[7] if len(row) > 7 else "未付款",
                         "paymentMethod": row[8] if len(row) > 8 else "未指定"
-                    })
+                    }
+                    
+                    # 如果狀態是「部分配送」，計算剩餘數量
+                    if row[5] == "部分配送":
+                        # 提取訂單總數
+                        items_str = row[2]
+                        match = re.search(r'x(\d+)', items_str)
+                        total_qty = int(match.group(1)) if match else 0
+                        
+                        # 計算已配送數量
+                        current_logs_str = row[6] if len(row) > 6 else "[]"
+                        try:
+                            logs = json.loads(current_logs_str)
+                            if not isinstance(logs, list):
+                                logs = []
+                        except:
+                            logs = []
+                        
+                        # 計算已配送總數（使用 corrected_qty 或 qty）
+                        total_delivered = sum(int(l.get('corrected_qty') or l.get('qty', 0)) for l in logs)
+                        remaining_qty = total_qty - total_delivered
+                        
+                        order_data["remainingQty"] = remaining_qty
+                    
+                    orders.append(order_data)
             return orders
         except Exception as e:
             logger.error(f"Error getting user orders: {e}")
