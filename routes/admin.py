@@ -168,25 +168,16 @@ def correct_delivery_log():
         )
         
         if success:
-            # 重新獲取訂單數據
-            orders = GoogleSheetsService.get_all_orders_with_members()
-            current_order = next((o for o in orders if o['orderId'] == order_id), None)
-            
-            if current_order:
-                total_delivered = sum(int(log.get('corrected_qty') or log.get('qty', 0)) 
-                                     for log in current_order['deliveryLogs'])
-                total_ordered = result.get('status') or 1  # 從返回數據獲取
-                
-                # 發送 LINE 修正通知
-                LINEService.send_delivery_correction_notification(
-                    user_id, 
-                    result['old_qty'],
-                    result['new_qty'],
-                    reason,
-                    total_delivered,
-                    total_ordered,
-                    result['status']
-                )
+            # 結果已包含修正後的 total_delivered 和 total_ordered
+            LINEService.send_delivery_correction_notification(
+                user_id, 
+                result['old_qty'],
+                result['new_qty'],
+                reason,
+                result.get('total_delivered', 0),
+                result.get('total_ordered', 1),
+                result['status']
+            )
             
             return jsonify({
                 "status": "success",

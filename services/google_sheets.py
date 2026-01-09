@@ -331,7 +331,13 @@ class GoogleSheetsService:
             sheet.update_cell(cell.row, 7, json.dumps(logs, ensure_ascii=False))  # 日誌欄
             
             logger.info(f"Delivery log corrected for order {order_id}: {old_qty} -> {new_qty} by {admin_name}")
-            return True, {"old_qty": old_qty, "new_qty": new_qty, "status": new_status}
+            return True, {
+                "old_qty": old_qty,
+                "new_qty": new_qty,
+                "status": new_status,
+                "total_delivered": total_delivered,
+                "total_ordered": total_ordered
+            }
             
         except Exception as e:
             logger.error(f"Error correcting delivery log: {e}")
