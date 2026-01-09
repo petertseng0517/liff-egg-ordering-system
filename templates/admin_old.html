@@ -388,9 +388,12 @@
         }
 
         // Calculate current total delivered and remaining
+        // ✅ 使用修正後的數量 (corrected_qty) 或原始數量 (qty)
         let currentDeliveredTotal = 0;
         if (currentOrder.deliveryLogs) {
-            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => sum + parseInt(log.qty), 0);
+            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => {
+                return sum + parseInt(log.corrected_qty || log.qty);
+            }, 0);
         }
         const remainingQty = totalOrderedQty - currentDeliveredTotal;
 
@@ -769,9 +772,12 @@
         }
 
         // Calculate current total delivered and remaining
+        // ✅ 使用修正後的數量 (corrected_qty) 或原始數量 (qty)
         let currentDeliveredTotal = 0;
         if (currentOrder.deliveryLogs) {
-            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => sum + parseInt(log.qty), 0);
+            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => {
+                return sum + parseInt(log.corrected_qty || log.qty);
+            }, 0);
         }
         const remainingQty = totalOrderedQty - currentDeliveredTotal;
 

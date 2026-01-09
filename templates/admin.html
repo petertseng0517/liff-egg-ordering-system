@@ -636,6 +636,26 @@
         }
         
         const oldQty = parseInt(document.getElementById('correct-old-qty').value);
+        
+        // ✅ 新增驗證：修正後的總數是否超過訂購數量
+        let currentDeliveredTotal = 0;
+        if (currentOrder.deliveryLogs) {
+            currentOrder.deliveryLogs.forEach((log, index) => {
+                if (index === logIndex) {
+                    // 使用新的修正數量
+                    currentDeliveredTotal += newQty;
+                } else {
+                    // 其他紀錄使用已修正的數量或原始數量
+                    currentDeliveredTotal += parseInt(log.corrected_qty || log.qty);
+                }
+            });
+        }
+        
+        if (currentDeliveredTotal > totalOrderedQty) {
+            alert(`修正後的總出貨數量 (${currentDeliveredTotal} 盤) 將超過訂購數量 (${totalOrderedQty} 盤)。\n請調整數量。`);
+            return;
+        }
+        
         let confirmMsg = `確認修正出貨紀錄？原數量: ${oldQty} 盤 → 新數量: ${newQty} 盤`;
         if (newAddress && newAddress !== oldAddress) {
             confirmMsg += `\n原地點: ${oldAddress} → 新地點: ${newAddress}`;
@@ -727,9 +747,12 @@
         }
 
         // Calculate current total delivered and remaining
+        // ✅ 使用修正後的數量 (corrected_qty) 或原始數量 (qty)
         let currentDeliveredTotal = 0;
         if (currentOrder.deliveryLogs) {
-            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => sum + parseInt(log.qty), 0);
+            currentDeliveredTotal = currentOrder.deliveryLogs.reduce((sum, log) => {
+                return sum + parseInt(log.corrected_qty || log.qty);
+            }, 0);
         }
         const remainingQty = totalOrderedQty - currentDeliveredTotal;
 
