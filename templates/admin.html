@@ -377,9 +377,10 @@
         orders.forEach(o => {
             // 電腦版：表格行
             const tr = document.createElement('tr');
+            const dateStr = o.date && typeof o.date === 'string' ? o.date.split(' ')[0] : (o.date || '未知');
             tr.innerHTML = `
                 <td>${o.orderId}</td>
-                <td>${o.date.split(' ')[0]}</td>
+                <td>${dateStr}</td>
                 <td>${o.customer.name || '未知'} <br> <small class="text-muted">${o.customer.phone || ''}</small></td>
                 <td>${o.items}</td>
                 <td>$${o.amount}</td>

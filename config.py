@@ -41,6 +41,13 @@ class Config:
         'https://www.googleapis.com/auth/drive'
     ]
     
+    # Firebase Firestore 配置
+    USE_FIRESTORE = os.getenv('USE_FIRESTORE', 'false').lower() == 'true'
+    FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID')
+    FIREBASE_PRIVATE_KEY = os.getenv('FIREBASE_PRIVATE_KEY')
+    FIREBASE_CLIENT_EMAIL = os.getenv('FIREBASE_CLIENT_EMAIL')
+    FIREBASE_CLIENT_ID = os.getenv('FIREBASE_CLIENT_ID')
+    
     # LINE Bot 配置
     LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
     

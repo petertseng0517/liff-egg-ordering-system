@@ -1549,3 +1549,198 @@
 2026-01-09 23:22:24,127 INFO: 127.0.0.1 - - [09/Jan/2026 23:22:24] "GET /?page=history HTTP/1.1" 200 -
 2026-01-09 23:22:24,455 INFO: 127.0.0.1 - - [09/Jan/2026 23:22:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
 2026-01-09 23:22:25,305 INFO: 127.0.0.1 - - [09/Jan/2026 23:22:25] "POST /api/history HTTP/1.1" 200 -
+2026-01-17 19:49:30,141 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:49:30,142 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:49:30,142 INFO: Application initialized successfully
+2026-01-17 19:49:30,178 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 19:49:30,178 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 19:49:30,179 INFO:  * Restarting with stat
+2026-01-17 19:49:30,855 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:49:30,855 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:49:30,855 INFO: Application initialized successfully
+2026-01-17 19:49:30,873 WARNING:  * Debugger is active!
+2026-01-17 19:49:30,885 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 19:50:10,030 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:10,030 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:10,030 INFO: Application initialized successfully
+2026-01-17 19:50:23,729 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:23,729 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:23,729 INFO: Application initialized successfully
+2026-01-17 19:50:45,039 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:45,039 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:45,039 INFO: Application initialized successfully
+2026-01-17 19:50:45,064 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 19:50:45,064 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 19:50:45,064 INFO:  * Restarting with stat
+2026-01-17 19:50:45,723 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:45,723 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:50:45,723 INFO: Application initialized successfully
+2026-01-17 19:50:45,740 WARNING:  * Debugger is active!
+2026-01-17 19:50:45,749 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 19:51:26,483 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:26,483 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:26,483 INFO: Application initialized successfully
+2026-01-17 19:51:26,508 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 19:51:26,508 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 19:51:26,508 INFO:  * Restarting with stat
+2026-01-17 19:51:27,178 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:27,178 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:27,178 INFO: Application initialized successfully
+2026-01-17 19:51:27,195 WARNING:  * Debugger is active!
+2026-01-17 19:51:27,204 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 19:51:45,996 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:45,996 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:45,996 INFO: Application initialized successfully
+2026-01-17 19:51:51,254 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:51,254 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:51,254 INFO: Application initialized successfully
+2026-01-17 19:51:51,278 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 19:51:51,278 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 19:51:51,278 INFO:  * Restarting with stat
+2026-01-17 19:51:51,940 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:51,940 INFO: Firebase Firestore initialized successfully
+2026-01-17 19:51:51,940 INFO: Application initialized successfully
+2026-01-17 19:51:51,956 WARNING:  * Debugger is active!
+2026-01-17 19:51:51,965 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:06:51,279 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:06:51,279 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:06:51,279 INFO: Application initialized successfully
+2026-01-17 20:06:51,306 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 20:06:51,306 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 20:06:51,307 INFO:  * Restarting with stat
+2026-01-17 20:06:51,982 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:06:51,982 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:06:51,982 INFO: Application initialized successfully
+2026-01-17 20:06:51,999 WARNING:  * Debugger is active!
+2026-01-17 20:06:52,010 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:06:57,818 INFO: 127.0.0.1 - - [17/Jan/2026 20:06:57] "GET / HTTP/1.1" 200 -
+2026-01-17 20:07:16,772 INFO: 127.0.0.1 - - [17/Jan/2026 20:07:16] "GET / HTTP/1.1" 200 -
+2026-01-17 20:07:16,958 INFO: 127.0.0.1 - - [17/Jan/2026 20:07:16] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-17 20:07:17,899 INFO: 127.0.0.1 - - [17/Jan/2026 20:07:17] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-17 20:08:11,659 INFO: Member added: TEST_USER_001
+2026-01-17 20:08:11,660 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:11] "POST /api/register HTTP/1.1" 200 -
+2026-01-17 20:08:13,666 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:13] "GET /?page=order HTTP/1.1" 200 -
+2026-01-17 20:08:31,319 INFO: Order added: ORD68651711
+2026-01-17 20:08:31,320 WARNING: LINE token not configured, skipping push message
+2026-01-17 20:08:31,321 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:31] "POST /api/order HTTP/1.1" 200 -
+2026-01-17 20:08:33,975 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:33] "GET /?page=history HTTP/1.1" 200 -
+2026-01-17 20:08:34,379 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:34] "POST /api/history HTTP/1.1" 200 -
+2026-01-17 20:08:47,967 INFO: 127.0.0.1 - - [17/Jan/2026 20:08:47] "GET /login HTTP/1.1" 200 -
+2026-01-17 20:09:01,966 WARNING: Failed login attempt for user 'peter' from IP 127.0.0.1
+2026-01-17 20:09:01,967 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:01] "POST /login HTTP/1.1" 200 -
+2026-01-17 20:09:14,960 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-17 20:09:14,961 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-17 20:09:14,973 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:14] "GET /admin HTTP/1.1" 200 -
+2026-01-17 20:09:16,254 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:16] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:09:24,162 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:24] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:09:30,918 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:30] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:09:31,535 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:31] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:09:47,996 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:47] "GET /admin HTTP/1.1" 200 -
+2026-01-17 20:09:49,195 INFO: 127.0.0.1 - - [17/Jan/2026 20:09:49] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:10:33,700 INFO:  * Detected change in '/Users/peter/ai_eggs/services/firestore_service.py', reloading
+2026-01-17 20:10:35,860 INFO:  * Restarting with stat
+2026-01-17 20:10:36,764 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:10:36,765 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:10:36,765 INFO: Application initialized successfully
+2026-01-17 20:10:36,784 WARNING:  * Debugger is active!
+2026-01-17 20:10:36,794 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:10:55,529 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:10:55,529 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:10:55,529 INFO: Application initialized successfully
+2026-01-17 20:14:55,852 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:14:55,852 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:14:55,852 INFO: Application initialized successfully
+2026-01-17 20:14:55,881 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 20:14:55,881 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 20:14:55,882 INFO:  * Restarting with stat
+2026-01-17 20:14:56,530 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:14:56,530 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:14:56,530 INFO: Application initialized successfully
+2026-01-17 20:14:56,546 WARNING:  * Debugger is active!
+2026-01-17 20:14:56,555 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:14:58,450 INFO: 127.0.0.1 - - [17/Jan/2026 20:14:58] "GET / HTTP/1.1" 200 -
+2026-01-17 20:14:59,427 INFO: 127.0.0.1 - - [17/Jan/2026 20:14:59] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-17 20:15:11,953 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:11] "GET /?page=history HTTP/1.1" 200 -
+2026-01-17 20:15:12,408 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:12] "POST /api/history HTTP/1.1" 200 -
+2026-01-17 20:15:15,478 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:15] "GET /?page=edit HTTP/1.1" 200 -
+2026-01-17 20:15:15,923 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:15] "POST /api/check_member HTTP/1.1" 200 -
+2026-01-17 20:15:18,284 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:18] "GET /?page=order HTTP/1.1" 200 -
+2026-01-17 20:15:29,177 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:29] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-17 20:15:29,183 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:29] "GET /login HTTP/1.1" 200 -
+2026-01-17 20:15:36,747 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-17 20:15:36,748 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:36] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-17 20:15:36,760 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:36] "GET /admin HTTP/1.1" 200 -
+2026-01-17 20:15:37,837 INFO: 127.0.0.1 - - [17/Jan/2026 20:15:37] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:15:59,110 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:15:59,110 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:15:59,110 INFO: Application initialized successfully
+2026-01-17 20:15:59,141 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 20:15:59,141 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 20:15:59,141 INFO:  * Restarting with stat
+2026-01-17 20:15:59,815 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:15:59,815 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:15:59,815 INFO: Application initialized successfully
+2026-01-17 20:15:59,832 WARNING:  * Debugger is active!
+2026-01-17 20:15:59,842 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:17:29,564 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:29] "GET /api/admin/order/delivery_audit/ORD68651711 HTTP/1.1" 200 -
+2026-01-17 20:17:37,772 INFO: Order ORD68651711 payment status updated to 已付款
+2026-01-17 20:17:37,773 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:37] "POST /api/admin/order/update_payment HTTP/1.1" 200 -
+2026-01-17 20:17:39,596 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:39] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:17:43,050 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:43] "GET /api/admin/order/delivery_audit/ORD68651711 HTTP/1.1" 200 -
+2026-01-17 20:17:51,563 INFO: Delivery log added for order ORD68651711
+2026-01-17 20:17:51,564 WARNING: LINE token not configured, skipping push message
+2026-01-17 20:17:51,564 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:51] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-17 20:17:54,533 INFO: 127.0.0.1 - - [17/Jan/2026 20:17:54] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:18:23,346 INFO: 127.0.0.1 - - [17/Jan/2026 20:18:23] "GET /api/admin/order/delivery_audit/ORD68651711 HTTP/1.1" 200 -
+2026-01-17 20:18:32,627 INFO: Delivery log added for order ORD68651711
+2026-01-17 20:18:32,628 WARNING: LINE token not configured, skipping push message
+2026-01-17 20:18:32,628 INFO: 127.0.0.1 - - [17/Jan/2026 20:18:32] "POST /api/admin/order/add_delivery HTTP/1.1" 200 -
+2026-01-17 20:18:34,720 INFO: 127.0.0.1 - - [17/Jan/2026 20:18:34] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:18:36,438 INFO: 127.0.0.1 - - [17/Jan/2026 20:18:36] "GET /api/admin/order/delivery_audit/ORD68651711 HTTP/1.1" 200 -
+2026-01-17 20:21:44,858 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:44] "[31m[1mPOST /api/admin/order/correct_delivery HTTP/1.1[0m" 401 -
+2026-01-17 20:21:49,753 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:49] "[32mGET /admin HTTP/1.1[0m" 302 -
+2026-01-17 20:21:49,762 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:49] "GET /login HTTP/1.1" 200 -
+2026-01-17 20:21:58,637 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-01-17 20:21:58,638 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:58] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-01-17 20:21:58,651 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:58] "GET /admin HTTP/1.1" 200 -
+2026-01-17 20:21:59,783 INFO: 127.0.0.1 - - [17/Jan/2026 20:21:59] "GET /api/admin/orders HTTP/1.1" 200 -
+2026-01-17 20:22:01,578 INFO: 127.0.0.1 - - [17/Jan/2026 20:22:01] "GET /api/admin/order/delivery_audit/ORD68651711 HTTP/1.1" 200 -
+2026-01-17 20:22:23,436 INFO: Audit log added: update_delivery on ORD68651711
+2026-01-17 20:22:23,437 ERROR: Error in correct_delivery_log: cannot unpack non-iterable bool object
+2026-01-17 20:22:23,438 INFO: 127.0.0.1 - - [17/Jan/2026 20:22:23] "[35m[1mPOST /api/admin/order/correct_delivery HTTP/1.1[0m" 500 -
+2026-01-17 20:23:17,263 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:23:17,264 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:23:17,264 INFO: Application initialized successfully
+2026-01-17 20:23:17,295 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.1.127:5005
+2026-01-17 20:23:17,295 INFO: [33mPress CTRL+C to quit[0m
+2026-01-17 20:23:17,296 INFO:  * Restarting with stat
+2026-01-17 20:23:17,942 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:23:17,942 INFO: Firebase Firestore initialized successfully
+2026-01-17 20:23:17,942 INFO: Application initialized successfully
+2026-01-17 20:23:17,958 WARNING:  * Debugger is active!
+2026-01-17 20:23:17,968 INFO:  * Debugger PIN: 202-083-086
+2026-01-17 20:23:20,459 INFO: 127.0.0.1 - - [17/Jan/2026 20:23:20] "GET / HTTP/1.1" 200 -

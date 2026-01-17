@@ -3,7 +3,7 @@
 """
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from services.google_sheets import GoogleSheetsService
+from services.database_adapter import DatabaseAdapter
 from services.line_service import LINEService
 from validation import FormValidator
 from config import ProductConfig
@@ -27,7 +27,7 @@ def check_member():
         if not user_id:
             return jsonify({"error": "userId required"}), 400
         
-        member = GoogleSheetsService.check_member_exists(user_id)
+        member = DatabaseAdapter.check_member_exists(user_id)
         
         if member:
             return jsonify({
@@ -58,7 +58,7 @@ def register():
             }), 400
         
         # 新增會員
-        success = GoogleSheetsService.add_member(
+        success = DatabaseAdapter.add_member(
             user_id=data.get('userId'),
             name=data.get('name').strip(),
             phone=data.get('phone').strip(),
@@ -98,7 +98,7 @@ def edit_member():
             }), 400
         
         # 更新會員資料
-        success = GoogleSheetsService.update_member(
+        success = DatabaseAdapter.update_member(
             user_id=user_id,
             name=name,
             phone=phone,
@@ -190,7 +190,7 @@ def create_order():
         initial_payment_status = "待付款" if payment_method == 'ecpay' else "未付款"
         
         # 新增訂單
-        success = GoogleSheetsService.add_order(
+        success = DatabaseAdapter.add_order(
             order_id=order_id,
             user_id=user_id,
             item_str=item_str,
@@ -269,7 +269,7 @@ def get_history():
         if not user_id:
             return jsonify({"error": "userId required"}), 400
         
-        orders = GoogleSheetsService.get_user_orders(user_id)
+        orders = DatabaseAdapter.get_user_orders(user_id)
         return jsonify(orders)
     except Exception as e:
         logger.error(f"Error in get_history: {e}")
@@ -288,7 +288,7 @@ def retry_payment():
             return jsonify({"status": "error", "msg": "訂單 ID 不存在"}), 400
         
         # 取得訂單信息
-        orders = GoogleSheetsService.get_all_orders_with_members()
+        orders = DatabaseAdapter.get_all_orders_with_members()
         order = next((o for o in orders if o['orderId'] == order_id), None)
         
         if not order:

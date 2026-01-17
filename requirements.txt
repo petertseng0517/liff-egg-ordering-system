@@ -23,6 +23,7 @@ gunicorn
 line-bot-sdk
 python-dotenv
 pytz
+firebase-admin==6.2.0
 # 測試與開發依賴
 pytest==7.4.3
 pytest-cov==4.1.0

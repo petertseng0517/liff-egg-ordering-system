@@ -3,7 +3,7 @@
 """
 from flask import Blueprint, request, jsonify, session
 from auth import require_admin_login_api
-from services.google_sheets import GoogleSheetsService
+from services.database_adapter import DatabaseAdapter
 from services.line_service import LINEService
 import logging
 
@@ -17,7 +17,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 def get_all_orders():
     """取得所有訂單 (含會員資訊)"""
     try:
-        orders = GoogleSheetsService.get_all_orders_with_members()
+        orders = DatabaseAdapter.get_all_orders_with_members()
         return jsonify(orders)
     except Exception as e:
         logger.error(f"Error in get_all_orders: {e}")
@@ -40,7 +40,7 @@ def update_order_status():
                 "msg": "缺少必要參數"
             }), 400
         
-        success = GoogleSheetsService.update_order_status(order_id, new_status)
+        success = DatabaseAdapter.update_order_status(order_id, new_status)
         
         if success:
             # 發送 LINE 通知
@@ -76,7 +76,7 @@ def update_payment_status():
                 "msg": "缺少必要參數"
             }), 400
         
-        success = GoogleSheetsService.update_order_payment_status(order_id, payment_status)
+        success = DatabaseAdapter.update_order_payment_status(order_id, payment_status)
         
         if success:
             return jsonify({"status": "success"})
@@ -111,7 +111,7 @@ def add_delivery_log():
                 "msg": "無效的參數"
             }), 400
         
-        success, result = GoogleSheetsService.add_delivery_log(order_id, qty, address)
+        success, result = DatabaseAdapter.add_delivery_log(order_id, qty, address)
         
         if success:
             # result 已包含最新的狀態、總配送數量和出貨日期
@@ -164,8 +164,11 @@ def correct_delivery_log():
                 "msg": "必須提供修正原因"
             }), 400
         
-        success, result = GoogleSheetsService.correct_delivery_log(
-            order_id, log_index, new_qty, new_address, admin_name, reason
+        success, result = DatabaseAdapter.add_audit_log(
+            order_id, "update_delivery", admin_name, 
+            f"qty:{data.get('oldQty', '')} addr:{data.get('oldAddress', '')}",
+            f"qty:{new_qty} addr:{new_address}",
+            reason
         )
         
         if success:
@@ -173,9 +176,9 @@ def correct_delivery_log():
             LINEService.send_delivery_correction_notification(
                 user_id,
                 order_id,
-                result.get('delivery_date', ''),
-                result['old_qty'],
-                result['new_qty']
+                '',
+                data.get('oldQty', 0),
+                new_qty
             )
             
             return jsonify({
@@ -200,7 +203,7 @@ def correct_delivery_log():
 def get_delivery_audit(order_id):
     """獲取出貨修正審計日誌"""
     try:
-        audit_logs = GoogleSheetsService.get_delivery_audit_logs(order_id)
+        audit_logs = DatabaseAdapter.get_delivery_audit_logs(order_id)
         return jsonify(audit_logs)
     except Exception as e:
         logger.error(f"Error in get_delivery_audit: {e}")
@@ -228,7 +231,7 @@ def update_member():
                 "msg": "缺少必要資訊"
             }), 400
         
-        success = GoogleSheetsService.update_member(
+        success = DatabaseAdapter.update_member(
             user_id, name, phone, address, address2
         )
         

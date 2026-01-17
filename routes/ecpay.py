@@ -2,7 +2,7 @@
 路由：ECPay 金流回調
 """
 from flask import Blueprint, request
-from services.google_sheets import GoogleSheetsService
+from services.database_adapter import DatabaseAdapter
 from services.line_service import LINEService
 from ecpay_sdk import ECPaySDK
 from config import Config
@@ -57,11 +57,11 @@ def ecpay_callback():
                 logger.info(f"Payment Success for Order: {order_id} (length: {len(merchant_trade_no)})")
             
             # 更新付款狀態
-            success = GoogleSheetsService.update_order_payment_status(order_id, "已付款")
+            success = DatabaseAdapter.update_order_payment_status(order_id, "已付款")
             
             if success:
                 # 取得使用者信息並發送 LINE 通知
-                orders = GoogleSheetsService.get_all_orders_with_members()
+                orders = DatabaseAdapter.get_all_orders_with_members()
                 order = next((o for o in orders if o['orderId'] == order_id), None)
                 
                 if order:

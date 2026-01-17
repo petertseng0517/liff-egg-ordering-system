@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 允許認證用戶讀寫自己的會員資料
+    match /members/{userId} {
+      allow read, write: if request.auth.uid == userId || isAdmin();
+    }
+    
+    // 訂單：用戶可讀寫自己的，管理員全部
+    match /orders/{orderId} {
+      allow read, write: if isUserOrder(orderId) || isAdmin();
+    }
+    
+    // 出貨日誌：管理員可讀寫
+    match /deliveryLogs/{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // 審計日誌：管理員可讀寫
+    match /auditLogs/{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    function isAdmin() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    function isUserOrder(orderId) {
+      return get(/databases/$(database)/documents/orders/$(orderId)).data.userId == request.auth.uid;
+    }
+  }
+}
