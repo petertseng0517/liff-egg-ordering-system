@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統設定 - 蛋商品管理系統</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Microsoft YaHei", Segoe UI, Roboto, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: #2c3e50 !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .container-main {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .tab-btn {
+            background-color: #e9ecef;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .tab-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .content-tab {
+            display: none;
+        }
+        
+        .content-tab.active {
+            display: block;
+        }
+        
+        .table {
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .table thead {
+            background-color: #ecf0f1;
+        }
+        
+        .table th {
+            color: #2c3e50;
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+        }
+        
+        .table td {
+            padding: 15px;
+            border: none;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: middle;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .btn-sm {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+        }
+        
+        .badge-status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .badge-active {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .badge-inactive {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .modal-header {
+            background-color: #3498db;
+            color: white;
+            border-bottom: none;
+        }
+        
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .alert {
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box {
+            margin-bottom: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .discount-badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .discount-percentage {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .discount-fixed {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        
+        .alert-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .alert-critical {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .alert-low {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .alert-high {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+        
+        .text-muted {
+            color: #6c757d !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">🥚 土雞蛋管理後台</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">📋 訂單管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">📦 商品管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/reports">📊 報表管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/admin/members">👥 會員管理</a>
+        </li>
+      </ul>
+    </div>
+    <a href="/logout" class="btn btn-outline-light btn-sm">登出</a>
+  </div>
+</nav>
+
+    <!-- 主容器 -->
+    <div class="container-main">
+        <div class="container">
+            <!-- 標籤導航 -->
+            <div style="margin-bottom: 20px;">
+                <button class="tab-btn active" data-tab="categories">📂 分類管理</button>
+                <button class="tab-btn" data-tab="discounts">🏷️ 折扣管理</button>
+                <button class="tab-btn" data-tab="alerts">⚠️ 庫存警告</button>
+            </div>
+
+            <!-- 分類管理標籤 -->
+            <div id="categories" class="content-tab active">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>分類管理</span>
+                            <button class="btn btn-success btn-sm" onclick="openAddCategoryModal()">+ 新增分類</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-box">
+                            <input type="text" class="form-control" id="categorySearch" placeholder="搜尋分類名稱..." onkeyup="filterCategories()">
+                        </div>
+                        <table class="table" id="categoriesTable">
+                            <thead>
+                                <tr>
+                                    <th>分類名稱</th>
+                                    <th>說明</th>
+                                    <th>顏色</th>
+                                    <th>狀態</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 折扣管理標籤 -->
+            <div id="discounts" class="content-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>折扣管理</span>
+                            <button class="btn btn-success btn-sm" onclick="openAddDiscountModal()">+ 新增折扣</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-box">
+                            <input type="text" class="form-control" id="discountSearch" placeholder="搜尋折扣名稱..." onkeyup="filterDiscounts()">
+                        </div>
+                        <table class="table" id="discountsTable">
+                            <thead>
+                                <tr>
+                                    <th>折扣名稱</th>
+                                    <th>類型</th>
+                                    <th>折扣值</th>
+                                    <th>適用對象</th>
+                                    <th>時間範圍</th>
+                                    <th>狀態</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 庫存警告標籤 -->
+            <div id="alerts" class="content-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>庫存警告中心</span>
+                            <div>
+                                <select class="form-select form-select-sm d-inline" style="width: auto;" onchange="filterAlerts(this.value)">
+                                    <option value="active">未確認</option>
+                                    <option value="acknowledged">已確認</option>
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="alertsContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分類模態框 -->
+    <div class="modal fade" id="categoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalTitle">新增分類</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="categoryForm">
+                        <input type="hidden" id="categoryId">
+                        <div class="mb-3">
+                            <label class="form-label">分類名稱 <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="categoryName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">說明</label>
+                            <textarea class="form-control" id="categoryDescription" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">顏色</label>
+                            <input type="color" class="form-control color-picker" id="categoryColor" value="#3498db">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">圖標 (可選)</label>
+                            <input type="text" class="form-control" id="categoryIcon" placeholder="例如：🍗 或 icon-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveCategory()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 折扣模態框 -->
+    <div class="modal fade" id="discountModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="discountModalTitle">新增折扣</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="discountForm">
+                        <input type="hidden" id="discountId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">折扣名稱 <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="discountName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">折扣類型 <span style="color: red;">*</span></label>
+                                <select class="form-select" id="discountType" required>
+                                    <option value="percentage">百分比折扣 (%)</option>
+                                    <option value="fixed">固定金額折扣 (元)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">折扣值 <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" id="discountValue" min="0" step="0.01" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">適用對象 <span style="color: red;">*</span></label>
+                                <select class="form-select" id="targetType" required onchange="updateTargetOptions()">
+                                    <option value="product">商品</option>
+                                    <option value="category">分類</option>
+                                    <option value="member_level">會員等級</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" id="targetLabel">選擇商品 <span style="color: red;">*</span></label>
+                                <select class="form-select" id="targetId" required></select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">說明</label>
+                                <input type="text" class="form-control" id="discountDescription" placeholder="例如：春節優惠">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">開始日期</label>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">結束日期</label>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDiscount()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 全局變數
+        let categoryModal = null;
+        let discountModal = null;
+        let allCategories = [];
+        let allDiscounts = [];
+        let allAlerts = [];
+        let allProducts = [];
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            categoryModal = new bootstrap.Modal('#categoryModal');
+            discountModal = new bootstrap.Modal('#discountModal');
+            
+            setupTabsNavigation();
+            loadCategories();
+            loadDiscounts();
+            loadAlerts();
+            loadProducts();
+        });
+
+        // 標籤頁導航
+        function setupTabsNavigation() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabName = this.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.content-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        // ===== 分類管理 =====
+        function loadCategories() {
+            fetch('/api/admin/categories')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        allCategories = data.data || [];
+                        displayCategories(allCategories);
+                    } else {
+                        alert('加載分類失敗: ' + data.message);
+                    }
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function displayCategories(categories) {
+            const tbody = document.querySelector('#categoriesTable tbody');
+            tbody.innerHTML = '';
+            
+            if (categories.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">暫無分類</td></tr>';
+                return;
+            }
+            
+            categories.forEach(cat => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${cat.name}</td>
+                    <td>${cat.description || '-'}</td>
+                    <td>
+                        <div style="width: 30px; height: 30px; background-color: ${cat.color}; border: 1px solid #ddd; border-radius: 4px;"></div>
+                    </td>
+                    <td>
+                        <span class="badge-status badge-${cat.status}">${cat.status === 'active' ? '活動' : '停用'}</span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary btn-sm" onclick="editCategory('${cat.id}')">編輯</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCategory('${cat.id}')">刪除</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterCategories() {
+            const search = document.getElementById('categorySearch').value.toLowerCase();
+            const filtered = allCategories.filter(cat => 
+                cat.name.toLowerCase().includes(search)
+            );
+            displayCategories(filtered);
+        }
+
+        function openAddCategoryModal() {
+            document.getElementById('categoryForm').reset();
+            document.getElementById('categoryId').value = '';
+            document.getElementById('categoryModalTitle').textContent = '新增分類';
+            categoryModal.show();
+        }
+
+        function editCategory(categoryId) {
+            const category = allCategories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            document.getElementById('categoryId').value = category.id;
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('categoryDescription').value = category.description || '';
+            document.getElementById('categoryColor').value = category.color || '#3498db';
+            document.getElementById('categoryIcon').value = category.icon || '';
+            document.getElementById('categoryModalTitle').textContent = '編輯分類';
+            categoryModal.show();
+        }
+
+        function saveCategory() {
+            const categoryId = document.getElementById('categoryId').value;
+            const name = document.getElementById('categoryName').value.trim();
+            const description = document.getElementById('categoryDescription').value.trim();
+            const color = document.getElementById('categoryColor').value;
+            const icon = document.getElementById('categoryIcon').value.trim();
+            
+            if (!name) {
+                alert('請輸入分類名稱');
+                return;
+            }
+            
+            const method = categoryId ? 'POST' : 'POST';
+            const url = categoryId 
+                ? `/api/admin/category/${categoryId}/update`
+                : '/api/admin/category/add';
+            
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, description, color, icon })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('已保存');
+                    categoryModal.hide();
+                    loadCategories();
+                } else {
+                    alert('保存失敗: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        function deleteCategory(categoryId) {
+            if (!confirm('確定要刪除此分類嗎?')) return;
+            
+            fetch(`/api/admin/category/${categoryId}/delete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('已刪除');
+                    loadCategories();
+                } else {
+                    alert('刪除失敗: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        // ===== 折扣管理 =====
+        function loadDiscounts() {
+            fetch('/api/admin/discounts')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        allDiscounts = data.data || [];
+                        displayDiscounts(allDiscounts);
+                    } else {
+                        alert('加載折扣失敗: ' + data.message);
+                    }
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function displayDiscounts(discounts) {
+            const tbody = document.querySelector('#discountsTable tbody');
+            tbody.innerHTML = '';
+            
+            if (discounts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">暫無折扣</td></tr>';
+                return;
+            }
+            
+            discounts.forEach(disc => {
+                const typeLabel = disc.discountType === 'percentage' ? '百分比' : '固定金額';
+                const discountBadge = disc.discountType === 'percentage' 
+                    ? `<span class="discount-badge discount-percentage">${disc.discountValue}%</span>`
+                    : `<span class="discount-badge discount-fixed">-$${disc.discountValue}</span>`;
+                
+                let targetLabel = '';
+                if (disc.targetType === 'product') targetLabel = '商品';
+                else if (disc.targetType === 'category') targetLabel = '分類';
+                else if (disc.targetType === 'member_level') targetLabel = '會員等級';
+                
+                const dateRange = disc.startDate && disc.endDate 
+                    ? `${disc.startDate} ~ ${disc.endDate}`
+                    : '長期';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${disc.name}</td>
+                    <td>${typeLabel}</td>
+                    <td>${discountBadge}</td>
+                    <td>${targetLabel}</td>
+                    <td>${dateRange}</td>
+                    <td>
+                        <span class="badge-status badge-${disc.status}">${disc.status === 'active' ? '活動' : '停用'}</span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary btn-sm" onclick="editDiscount('${disc.id}')">編輯</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteDiscount('${disc.id}')">刪除</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterDiscounts() {
+            const search = document.getElementById('discountSearch').value.toLowerCase();
+            const filtered = allDiscounts.filter(disc => 
+                disc.name.toLowerCase().includes(search)
+            );
+            displayDiscounts(filtered);
+        }
+
+        function loadProducts() {
+            fetch('/api/admin/products')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        allProducts = data.data || [];
+                    }
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function updateTargetOptions() {
+            const targetType = document.getElementById('targetType').value;
+            const select = document.getElementById('targetId');
+            const label = document.getElementById('targetLabel');
+            
+            select.innerHTML = '';
+            
+            if (targetType === 'product') {
+                label.textContent = '選擇商品 *';
+                allProducts.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.textContent = product.name;
+                    select.appendChild(option);
+                });
+            } else if (targetType === 'category') {
+                label.textContent = '選擇分類 *';
+                allCategories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    select.appendChild(option);
+                });
+            } else if (targetType === 'member_level') {
+                label.textContent = '選擇會員等級 *';
+                ['一般會員', 'VIP會員', 'VIP+會員'].forEach(level => {
+                    const option = document.createElement('option');
+                    option.value = level;
+                    option.textContent = level;
+                    select.appendChild(option);
+                });
+            }
+        }
+
+        function openAddDiscountModal() {
+            document.getElementById('discountForm').reset();
+            document.getElementById('discountId').value = '';
+            document.getElementById('discountModalTitle').textContent = '新增折扣';
+            updateTargetOptions();
+            discountModal.show();
+        }
+
+        function editDiscount(discountId) {
+            const discount = allDiscounts.find(d => d.id === discountId);
+            if (!discount) return;
+            
+            document.getElementById('discountId').value = discount.id;
+            document.getElementById('discountName').value = discount.name;
+            document.getElementById('discountType').value = discount.discountType;
+            document.getElementById('discountValue').value = discount.discountValue;
+            document.getElementById('targetType').value = discount.targetType;
+            document.getElementById('discountDescription').value = discount.description || '';
+            document.getElementById('startDate').value = discount.startDate || '';
+            document.getElementById('endDate').value = discount.endDate || '';
+            document.getElementById('discountModalTitle').textContent = '編輯折扣';
+            updateTargetOptions();
+            document.getElementById('targetId').value = discount.targetId || '';
+            discountModal.show();
+        }
+
+        function saveDiscount() {
+            const discountId = document.getElementById('discountId').value;
+            const name = document.getElementById('discountName').value.trim();
+            const discountType = document.getElementById('discountType').value;
+            const discountValue = parseFloat(document.getElementById('discountValue').value);
+            const targetType = document.getElementById('targetType').value;
+            const targetId = document.getElementById('targetId').value;
+            const description = document.getElementById('discountDescription').value.trim();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (!name || !discountValue || !targetId) {
+                alert('請填寫必填欄位');
+                return;
+            }
+            
+            const url = discountId 
+                ? `/api/admin/discount/${discountId}/update`
+                : '/api/admin/discount/add';
+            
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name, discountType, discountValue, targetType, targetId, 
+                    description, startDate, endDate
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('已保存');
+                    discountModal.hide();
+                    loadDiscounts();
+                } else {
+                    alert('保存失敗: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        function deleteDiscount(discountId) {
+            if (!confirm('確定要刪除此折扣嗎?')) return;
+            
+            fetch(`/api/admin/discount/${discountId}/delete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('已刪除');
+                    loadDiscounts();
+                } else {
+                    alert('刪除失敗: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        // ===== 庫存警告 =====
+        function loadAlerts() {
+            fetch('/api/admin/stock-alerts')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        allAlerts = data.data || [];
+                        displayAlerts(allAlerts);
+                    } else {
+                        console.error('加載警告失敗: ' + data.message);
+                    }
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function displayAlerts(alerts) {
+            const container = document.getElementById('alertsContainer');
+            container.innerHTML = '';
+            
+            if (alerts.length === 0) {
+                container.innerHTML = '<div class="alert alert-success">暫無庫存警告</div>';
+                return;
+            }
+            
+            alerts.forEach(alert => {
+                let alertClass = 'alert-critical';
+                let alertTypeLabel = '超低庫存';
+                if (alert.alertType === 'low') {
+                    alertClass = 'alert-low';
+                    alertTypeLabel = '低庫存';
+                } else if (alert.alertType === 'high') {
+                    alertClass = 'alert-high';
+                    alertTypeLabel = '超過上限';
+                }
+                
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-warning';
+                alertDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="alert-badge ${alertClass}">${alertTypeLabel}</span>
+                            <strong>${alert.productId}</strong>
+                            <br>
+                            <small class="text-muted">
+                                閾值: ${alert.threshold} | 
+                                時間: ${new Date(alert.createdAt).toLocaleString('zh-TW')} |
+                                操作者: ${alert.operator}
+                            </small>
+                        </div>
+                        <div>
+                            ${alert.status === 'active' ? `
+                                <button class="btn btn-primary btn-sm" onclick="acknowledgeAlert('${alert.id}')">確認</button>
+                            ` : `
+                                <span class="badge bg-success">已確認</span>
+                            `}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(alertDiv);
+            });
+        }
+
+        function filterAlerts(status) {
+            let filtered = allAlerts;
+            if (status) {
+                filtered = allAlerts.filter(alert => alert.status === status);
+            }
+            displayAlerts(filtered);
+        }
+
+        function acknowledgeAlert(alertId) {
+            fetch(`/api/admin/stock-alert/${alertId}/acknowledge`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('警告已確認');
+                    loadAlerts();
+                } else {
+                    alert('確認失敗: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        // 自動刷新警告 (每60秒)
+        setInterval(loadAlerts, 60000);
+    </script>
+</body>
+</html>

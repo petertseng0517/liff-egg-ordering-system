@@ -134,55 +134,37 @@ def create_order():
             }), 400
         
         user_id = data.get('userId')
+        product_id = data.get('productId')
         item_name = data.get('itemName')
         qty = int(data.get('qty', 1))
         remarks = data.get('remarks', '').strip()
         payment_method = data.get('paymentMethod', 'transfer')
         
-        # 驗證商品
-        valid_items = ["土雞蛋優惠組", "土雞蛋單盤"]
-        if item_name not in valid_items:
+        # 驗證商品存在性並獲取商品信息
+        success, product = DatabaseAdapter.get_product(product_id)
+        if not success or not product:
             return jsonify({
                 "status": "error",
                 "msg": "商品不存在"
             }), 400
         
-        # 計算價格
-        if item_name == "土雞蛋優惠組":
-            unit_price = 2500
-            total_amount = unit_price * qty
-        elif item_name == "土雞蛋單盤":
-            # 依數量計算優惠：1-9盤 $250, 10-19盤 $240, 20盤以上 $230
-            if qty >= 20:
-                unit_price = 230
-            elif qty >= 10:
-                unit_price = 240
-            else:
-                unit_price = 250
-            total_amount = unit_price * qty
-        else:
+        # 驗證商品是否上架
+        if product.get('status') != 'active':
             return jsonify({
                 "status": "error",
-                "msg": "商品計價失敗"
+                "msg": "該商品已下架"
             }), 400
+        
+        # 計算總金額：使用商品的實際價格
+        unit_price = product.get('price', 0)
+        total_amount = int(unit_price * qty)
         
         # 生成訂單編號：ORD + 時間戳後8位（保持綠界20字元限制）
         timestamp_str = str(int(datetime.now(pytz.timezone('Asia/Taipei')).timestamp()))
         order_id = "ORD" + timestamp_str[-8:]  # 取最後8位時間戳
         
-        # 正規化商品名稱與數量
-        actual_item_name = item_name
-        actual_qty = qty
-        
-        if item_name == "土雞蛋優惠組":
-            actual_item_name = "土雞蛋"
-            actual_qty = qty * 11  # 客戶選擇N組，實際是N*11盤
-        elif item_name == "土雞蛋單盤":
-            actual_item_name = "土雞蛋"
-            actual_qty = qty  # 客戶選擇N盤，就是N盤
-        
         # 組合商品字串
-        item_str = f"{actual_item_name} x{actual_qty}"
+        item_str = f"{item_name} x{qty}"
         if remarks:
             item_str += f" ({remarks})"
         

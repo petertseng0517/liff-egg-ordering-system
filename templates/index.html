@@ -70,8 +70,7 @@
         <div class="mb-3">
           <label>選擇商品</label>
           <select class="form-select form-select-lg" id="order-items" onchange="calcPrice()">
-            <option value="土雞蛋優惠組" data-price="2500" data-qty="11">土雞蛋 11盤優惠組 ($2500)</option>
-            <option value="土雞蛋單盤" data-price="250" data-qty="1">土雞蛋 單盤 ($250)</option>
+            <option value="">-- 加載中... --</option>
           </select>
           <div id="price-tip" class="form-text text-danger mt-2" style="display:none;"></div>
         </div>
@@ -247,6 +246,7 @@
         });
       } else if (page === 'order') {
         document.getElementById('p-order').classList.add('active');
+        loadOrderProducts(); // 加載商品列表
       } else if (page === 'history') {
         document.getElementById('p-history').classList.add('active');
         loadHistory();
@@ -263,33 +263,53 @@
     }
     function calcPrice() {
       var selectedOption = document.getElementById('order-items').selectedOptions[0];
-      var itemName = selectedOption.value;
-      var qty = parseInt(document.getElementById('order-qty').value);
-      var price = 0;
-      var tipDiv = document.getElementById('price-tip');
-
-      if (itemName === "土雞蛋單盤") {
-          // 顯示優惠提示
-          tipDiv.style.display = 'block';
-          tipDiv.innerHTML = "💡 優惠提示：買10盤以上每盤$240，20盤以上每盤$230！";
-
-          // 特殊計價: 1-9盤 250, 10-19盤 240, 20盤以上 230
-          if (qty >= 20) {
-              price = 230;
-          } else if (qty >= 10) {
-              price = 240;
-          } else {
-              price = 250;
-          }
-      } else {
-          // 隱藏優惠提示
-          tipDiv.style.display = 'none';
-          
-          // 其他商品依照 data-price
-          price = parseInt(selectedOption.dataset.price);
+      if (!selectedOption || !selectedOption.value) {
+          document.getElementById('total-price').innerText = 0;
+          return;
       }
+
+      var qty = parseInt(document.getElementById('order-qty').value);
+      var price = parseFloat(selectedOption.dataset.price) || 0;
+      var tipDiv = document.getElementById('price-tip');
       
-      document.getElementById('total-price').innerText = price * qty;
+      // 隱藏優惠提示（商品管理中的價格已經是最終價格）
+      tipDiv.style.display = 'none';
+      
+      document.getElementById('total-price').innerText = (price * qty).toFixed(0);
+    }
+
+    // 加載訂購頁面可用的商品列表
+    function loadOrderProducts() {
+      fetch('/api/admin/products')
+        .then(res => res.json())
+        .then(data => {
+          if (data.code === 0 && data.data) {
+            const activeProducts = data.data.filter(p => p.status === 'active');
+            const select = document.getElementById('order-items');
+            
+            if (activeProducts.length === 0) {
+              select.innerHTML = '<option value="">-- 暫無上架商品 --</option>';
+              return;
+            }
+            
+            select.innerHTML = '<option value="">-- 請選擇商品 --</option>' +
+              activeProducts.map(product => 
+                `<option value="${product.productId}" data-price="${product.price}" data-name="${product.name}">
+                  ${product.name} (${product.unit}) - 每${product.unit}$${product.price.toFixed(0)}
+                </option>`
+              ).join('');
+            
+            // 選擇第一個商品並計算價格
+            if (activeProducts.length > 0) {
+              select.value = activeProducts[0].productId;
+              calcPrice();
+            }
+          }
+        })
+        .catch(err => {
+          console.error('加載商品列表失敗:', err);
+          document.getElementById('order-items').innerHTML = '<option value="">-- 加載失敗 --</option>';
+        });
     }
 
     // === 新版：使用 fetch 呼叫 Python API ===
@@ -484,13 +504,15 @@
     }
 
     function submitOrder() {
-       const itemName = document.getElementById('order-items').value;
+       const productId = document.getElementById('order-items').value;
+       const selectedOption = document.getElementById('order-items').selectedOptions[0];
+       const itemName = selectedOption ? selectedOption.dataset.name : '';
        const qty = parseInt(document.getElementById('order-qty').value);
        const remarks = document.getElementById('order-remarks').value.trim();
        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
        // 驗證邏輯
-       if (!itemName) {
+       if (!productId) {
            alert("❌ 請選擇商品");
            return;
        }
@@ -508,6 +530,7 @@
        const payload = {
            userId: userId,
            itemName: itemName,
+           productId: productId,
            qty: qty,
            remarks: remarks,
            paymentMethod: paymentMethod
@@ -574,8 +597,8 @@
                 // 判斷是否顯示「重新付款」按鈕：未付款 + 綠界支付
                 const showRetryBtn = (payStatus === '未付款' || payStatus === '待付款') && o.paymentMethod === 'ecpay';
                 
-                // 部分配送時顯示剩餘數量
-                const remainingDisplay = o.status === '部分配送' && o.remainingQty !== undefined 
+                // 部分配送且已付款時顯示剩餘數量
+                const remainingDisplay = o.status === '部分配送' && payStatus === '已付款' && o.remainingQty !== undefined && o.remainingQty > 0
                     ? `<span class="ms-2 text-danger"><strong>剩餘：${o.remainingQty}盤</strong></span>` 
                     : '';
                 

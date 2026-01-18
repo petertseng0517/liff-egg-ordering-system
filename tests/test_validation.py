@@ -74,7 +74,8 @@ class TestFormValidator(unittest.TestCase):
     def test_validate_order_form_valid(self):
         """測試有效的訂單表單"""
         data = {
-            'itemName': '土雞蛋1盤',
+            'productId': 'prod_test123',
+            'itemName': '土雞蛋',
             'qty': '5',
             'remarks': '下午配送',
             'paymentMethod': 'transfer'
@@ -85,7 +86,8 @@ class TestFormValidator(unittest.TestCase):
     def test_validate_order_form_invalid_qty(self):
         """測試無效數量"""
         data = {
-            'itemName': '土雞蛋1盤',
+            'productId': 'prod_test123',
+            'itemName': '土雞蛋',
             'qty': '0',  # 小於 1
             'paymentMethod': 'transfer'
         }
@@ -96,7 +98,8 @@ class TestFormValidator(unittest.TestCase):
     def test_validate_order_form_qty_too_large(self):
         """測試數量過大"""
         data = {
-            'itemName': '土雞蛋1盤',
+            'productId': 'prod_test123',
+            'itemName': '土雞蛋',
             'qty': '1001',
             'paymentMethod': 'transfer'
         }
@@ -107,7 +110,8 @@ class TestFormValidator(unittest.TestCase):
     def test_validate_order_form_invalid_payment_method(self):
         """測試無效付款方式"""
         data = {
-            'itemName': '土雞蛋1盤',
+            'productId': 'prod_test123',
+            'itemName': '土雞蛋',
             'qty': '5',
             'paymentMethod': 'invalid'
         }

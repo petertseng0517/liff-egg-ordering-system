@@ -30,6 +30,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">🥚 土雞蛋管理後台</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/admin">📋 訂單管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">📦 商品管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/reports">📊 報表管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/members">👥 會員管理</a>
+        </li>
+      </ul>
+    </div>
     <a href="/logout" class="btn btn-outline-light btn-sm">登出</a>
   </div>
 </nav>
@@ -207,6 +226,7 @@
                             <label class="text-nowrap">新增出貨:</label>
                             <input type="number" class="form-control form-control-sm" id="new-delivery-qty" placeholder="數量" style="width: 80px;" min="1">
                             <input type="text" class="form-control form-control-sm" id="new-delivery-address" placeholder="配送地點" style="flex: 1; min-width: 200px;">
+                            <input type="date" class="form-control form-control-sm" id="new-delivery-date" placeholder="出貨日期">
                             <button class="btn btn-sm btn-success" onclick="addDeliveryLog()">確認出貨</button>
                         </div>
                     </div>
@@ -290,6 +310,14 @@
           <input type="text" class="form-control" id="correct-new-address" placeholder="若無修改保持不變">
         </div>
         <div class="mb-3">
+          <label class="form-label">原出貨日期</label>
+          <input type="text" class="form-control" id="correct-old-delivery-date" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">新出貨日期</label>
+          <input type="date" class="form-control" id="correct-new-delivery-date">
+        </div>
+        <div class="mb-3">
           <label class="form-label">修正原因 *</label>
           <textarea class="form-control" id="correct-reason" rows="3" placeholder="例：輸入錯誤、數量不符等..."></textarea>
         </div>
@@ -322,6 +350,34 @@
                 applyFilters();
             })
             .catch(err => alert('載入失敗: ' + err));
+    }
+
+    function loadOrderDetail(orderId) {
+        /**
+         * 重新載入特定訂單詳情並更新 UI
+         * 用於在修改出貨紀錄後實時刷新訂單頁面
+         */
+        fetch(`/api/admin/orders`)
+            .then(res => res.json())
+            .then(data => {
+                // 在返回的訂單列表中查找指定訂單
+                const order = data.find(o => o.orderId === orderId);
+                if (order) {
+                    // 更新本地訂單列表中的該訂單
+                    const index = allOrders.findIndex(o => o.orderId === orderId);
+                    if (index !== -1) {
+                        allOrders[index] = order;
+                    }
+                    // 更新當前正在顯示的訂單
+                    currentOrder = order;
+                    // 重新渲染訂單詳情
+                    renderDeliveryLogs();
+                    loadDeliveryAuditLogs(orderId);
+                } else {
+                    console.warn(`訂單 ${orderId} 不存在`);
+                }
+            })
+            .catch(err => console.error('載入訂單詳情失敗: ' + err));
     }
 
     function filterDate(type) {
@@ -564,20 +620,43 @@
     }
 
     function renderDeliveryLogs() {
-        const logs = currentOrder.deliveryLogs || []; // Expecting array of {date, qty}
+        const logs = currentOrder.deliveryLogs || []; // Expecting array of {stamp, delivery_date, qty, address}
         let deliveredTotal = 0;
         
         const tbody = document.getElementById('delivery-logs-body');
         tbody.innerHTML = '';
+        
+        const formatDate = (dateStr) => {
+            if (!dateStr) return '(未記錄)';
+            // 如果已是格式化格式 (YYYY-MM-DD HH:MM:SS 或 YYYY-MM-DD HH:MM)，直接返回
+            if (/^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
+                return dateStr;
+            }
+            // 如果是ISO格式，轉換為 YYYY-MM-DD HH:MM
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleString('zh-TW', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }).replace(/\//g, '-');
+            } catch (e) {
+                return dateStr;
+            }
+        };
         
         logs.forEach((log, index) => {
             const actualQty = log.corrected_qty || log.qty;
             deliveredTotal += parseInt(actualQty);
             const isCorrected = log.corrected ? '✏️ 已修正' : '';
             const address = log.address || '(未記錄)';
+            const deliveryDate = log.delivery_date || '(未指定)';
             tbody.innerHTML += `
                 <tr>
-                    <td>${log.date}</td>
+                    <td>${deliveryDate}</td>
                     <td>${actualQty}</td>
                     <td><small class="text-muted">${address}</small></td>
                     <td>${isCorrected}</td>
@@ -589,7 +668,7 @@
         });
 
         if(logs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">尚無出貨紀錄</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">尚無出貨紀錄</td></tr>';
         }
 
         // Update UI stats
@@ -609,11 +688,15 @@
         
         const oldQty = log.corrected_qty || log.qty;
         const oldAddress = log.address || '(未記錄)';
+        const oldDeliveryDate = log.delivery_date || '(未指定)';
+        
         document.getElementById('correct-log-index').value = logIndex;
         document.getElementById('correct-old-qty').value = oldQty;
         document.getElementById('correct-new-qty').value = oldQty;
         document.getElementById('correct-old-address').value = oldAddress;
         document.getElementById('correct-new-address').value = oldAddress;
+        document.getElementById('correct-old-delivery-date').value = oldDeliveryDate;
+        document.getElementById('correct-new-delivery-date').value = oldDeliveryDate !== '(未指定)' ? oldDeliveryDate : '';
         document.getElementById('correct-reason').value = '';
         
         new bootstrap.Modal(document.getElementById('correctModal')).show();
@@ -624,6 +707,8 @@
         const newQty = parseInt(document.getElementById('correct-new-qty').value);
         const oldAddress = document.getElementById('correct-old-address').value;
         const newAddress = document.getElementById('correct-new-address').value.trim();
+        const oldDeliveryDate = document.getElementById('correct-old-delivery-date').value;
+        const newDeliveryDate = document.getElementById('correct-new-delivery-date').value.trim();
         const reason = document.getElementById('correct-reason').value.trim();
         
         if (!reason) {
@@ -661,6 +746,9 @@
         if (newAddress && newAddress !== oldAddress) {
             confirmMsg += `\n原地點: ${oldAddress} → 新地點: ${newAddress}`;
         }
+        if (newDeliveryDate && newDeliveryDate !== oldDeliveryDate) {
+            confirmMsg += `\n原日期: ${oldDeliveryDate} → 新日期: ${newDeliveryDate}`;
+        }
         confirmMsg += '？';
         
         if (!confirm(confirmMsg)) {
@@ -674,8 +762,12 @@
                 orderId: currentOrder.orderId,
                 userId: currentOrder.userId,
                 logIndex: logIndex,
+                oldQty: oldQty,
+                oldAddress: oldAddress,
                 newQty: newQty,
                 newAddress: newAddress || oldAddress,
+                oldDeliveryDate: oldDeliveryDate,
+                newDeliveryDate: newDeliveryDate || oldDeliveryDate,
                 reason: reason
             })
         })
@@ -684,7 +776,12 @@
             if (data.status === 'success') {
                 alert('出貨紀錄已修正，客戶已收到通知。');
                 bootstrap.Modal.getInstance(document.getElementById('correctModal')).hide();
-                loadOrders();
+                // 實時刷新當前訂單詳情，而不是重新加載所有訂單
+                if (currentOrder && currentOrder.orderId) {
+                    loadOrderDetail(currentOrder.orderId);
+                } else {
+                    loadOrders();
+                }
             } else {
                 alert('修正失敗: ' + data.msg);
             }
@@ -704,19 +801,65 @@
                 
                 let html = '';
                 logs.forEach(log => {
-                    const timestamp = log.時間戳記 || log.timestamp || '';
-                    const admin = log.管理者帳號 || log.admin_name || '未知';
-                    const before = log.修改前數值 || log.before_value || '?';
-                    const after = log.修改後數值 || log.after_value || '?';
-                    const reason = log.原因 || log.reason || '';
+                    const timestamp = log.timestamp || '';
+                    const admin = log.adminName || log.admin_name || '未知';
+                    const beforeValue = log.beforeValue || log.before_value;
+                    const afterValue = log.afterValue || log.after_value;
+                    const reason = log.reason || '';
+                    
+                    // 提取盤數（支援結構化對象或字符串格式）
+                    const extractQty = (value) => {
+                        if (!value) return '?';
+                        
+                        // 如果是對象，直接取 qty 屬性
+                        if (typeof value === 'object' && value.qty !== undefined) {
+                            return value.qty;
+                        }
+                        
+                        // 如果是字符串，嘗試正則表達式提取
+                        if (typeof value === 'string') {
+                            const match = value.match(/qty:(\d+)/);
+                            return match ? match[1] : '?';
+                        }
+                        
+                        return '?';
+                    };
+                    
+                    // 提取地址
+                    const extractAddress = (value) => {
+                        if (!value) return '(未記錄)';
+                        
+                        if (typeof value === 'object' && value.address) {
+                            return value.address;
+                        }
+                        
+                        if (typeof value === 'string') {
+                            const match = value.match(/addr:(.+?)(?:\s*$|$)/);
+                            return match ? match[1] : '(未記錄)';
+                        }
+                        
+                        return '(未記錄)';
+                    };
+                    
+                    const beforeQty = extractQty(beforeValue);
+                    const afterQty = extractQty(afterValue);
+                    const beforeAddr = extractAddress(beforeValue);
+                    const afterAddr = extractAddress(afterValue);
+                    
+                    // 時間戳記格式化
+                    let formattedTime = timestamp;
+                    if (timestamp && timestamp.includes('T')) {
+                        const dt = new Date(timestamp);
+                        formattedTime = dt.toLocaleString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+                    }
                     
                     html += `
                         <div class="border-bottom pb-2 mb-2">
-                            <small class="text-muted">${timestamp}</small><br>
+                            <small class="text-muted">${formattedTime}</small><br>
                             <strong>${admin}</strong> 修正出貨紀錄<br>
-                            修改前: <span class="text-danger">${before}</span> 盤 
-                            → 修改後: <span class="text-success">${after}</span> 盤<br>
-                            原因: ${reason}
+                            修改前: <span class="text-danger">${beforeQty}</span> 盤 (${beforeAddr})
+                            → 修改後: <span class="text-success">${afterQty}</span> 盤 (${afterAddr})<br>
+                            <small>原因: ${reason}</small>
                         </div>
                     `;
                 });
@@ -728,8 +871,10 @@
     function addDeliveryLog() {
         const qtyInput = document.getElementById('new-delivery-qty');
         const addressInput = document.getElementById('new-delivery-address');
+        const dateInput = document.getElementById('new-delivery-date');
         const qty = parseInt(qtyInput.value);
         const address = addressInput.value.trim();
+        const delivery_date = dateInput.value.trim();
         
         if(!qty || qty <= 0) {
             alert('請輸入有效數量');
@@ -762,7 +907,7 @@
             return;
         }
 
-        if(!confirm(`確認新增出貨紀錄：${qty} 盤至「${finalAddress}」？`)) return;
+        if(!confirm(`確認新增出貨紀錄：${qty} 盤至「${finalAddress}」，出貨日期：${delivery_date || '(今日)'}？`)) return;
 
         fetch('/api/admin/order/add_delivery', {
             method: 'POST',
@@ -772,6 +917,7 @@
                 userId: currentOrder.userId,
                 qty: qty,
                 address: finalAddress,
+                delivery_date: delivery_date,
                 totalOrdered: totalOrderedQty
             })
         })
@@ -781,6 +927,7 @@
                 alert('出貨紀錄已新增，狀態已更新。');
                 qtyInput.value = '';
                 addressInput.value = '';
+                dateInput.value = '';
                 loadOrders();
                 bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
             } else {

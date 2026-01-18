@@ -36,6 +36,7 @@ def login():
         if username in admin_accounts and admin_accounts[username] == password:
             session['logged_in'] = True
             session['user_name'] = username  # 儲存帳號到 session
+            session.permanent = True  # 啟用持久會話，強制執行超時機制
             login_tracker.reset(client_ip)
             logger.info(f"Admin login successful: {username} from IP {client_ip}")
             return redirect(url_for('admin_page'))

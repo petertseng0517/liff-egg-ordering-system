@@ -1,9 +1,11 @@
 # 🐔 土雞蛋訂購與管理系統 
-## (LINE LIFF + Flask + Google Sheets + ECPay)
+## (LINE LIFF + Flask + Firestore + ECPay)
 
 **介紹影片**：[點擊觀看](https://www.youtube.com/watch?v=t_SznU7OYNU)
 
-這是一個**生產級農產品訂購系統**，專為田間直銷設計。整合 LINE 通訊便捷性、Python Flask 穩定後端、Google Sheets 靈活資料管理與綠界金流安全支付，提供**完整的線上訂購、金流整合、分批出貨與自動通知**的一站式解決方案。
+這是一個**生產級農產品訂購系統**，專為田間直銷設計。整合 LINE 通訊便捷性、Python Flask 穩定後端、Firebase Firestore 實時資料庫與綠界金流安全支付，提供**完整的線上訂購、金流整合、分批出貨、出貨修正、審計追蹤與報表系統**的一站式解決方案。
+
+---
 
 ## 📊 系統特色
 
@@ -11,12 +13,14 @@
 |------|------|
 | **LINE LIFF 整合** | 用戶無需下載 APP，直接透過 LINE 訂購，自動綁定會員 |
 | **完整金流支持** | 信用卡、ATM 轉帳、LINE Pay、銀行轉帳、貨到付款全覆蓋 |
-| **分批出貨管理** | 針對農產品特性，支援單筆訂單分多次出貨並自動狀態更新 |
-| **審計追蹤** | 完整記錄所有出貨修正操作，支援數據修復與復查 |
+| **分批出貨管理** | 針對農產品特性，支援單筆訂單分多次出貨，每次獨立設定出貨日期 |
+| **出貨修正機制** | 完整的修正功能，可修改出貨數量、地點、日期，系統自動記錄修正歷史 |
+| **審計追蹤系統** | 完整記錄所有修正操作（修改者、時間、前值、後值、原因），支援數據追溯 |
+| **報表系統** | 出貨單報表，按日期查詢所有出貨紀錄，支援 Excel 匯出 |
 | **實時通知系統** | 訂單、付款、出貨狀態自動推播 LINE 訊息通知 |
 | **響應式設計** | 後台支援桌面表格與手機卡片檢視 |
-| **企業級安全** | 180秒會話超時、多帳號管理、密碼限制與速率控制 |
-| **無伺服器資料庫** | Google Sheets API，易於備份與匯出，維護成本極低 |
+| **企業級安全** | 300 秒會話超時、多帳號管理、密碼限制、IP 追蹤與速率控制 |
+| **Firestore 資料庫** | 雲端無伺服器方案，實時同步，自動備份，支援複雜查詢 |
 
 ---
 
@@ -63,7 +67,7 @@
 #### 安全與權限
 - **多帳號管理**：支援多個管理員帳號在環境變數中設定
 - **會話安全**
-  - 無操作 180 秒自動登出
+  - 無操作 **300 秒** (5分鐘) 自動登出
   - 失敗登入次數限制（5 次後鎖定 5 分鐘）
   - IP 地址追蹤防暴力破解
 - **訪問控制**：非管理員自動導向登入頁
@@ -87,27 +91,40 @@
 #### 會員資料管理
 - 查看全部會員詳情（姓名、電話、地址）
 - 直接編輯會員資料
-- 修改即時同步至 Google Sheets
+- 修改即時同步至 Firestore
 
-#### 分批出貨管理（Partial Delivery）
+#### 分批出貨管理（Partial Delivery）✨
 - **適應農產品特性**：單筆訂單支援多次分批出貨
-- **出貨紀錄**：
+- **出貨紀錄（增強功能）**：
   - 記錄每次出貨日期、數量、配送地點
   - 視覺化進度條（已配送 / 訂購）
+  - **出貨日期欄位**：管理者可自行填寫與客戶約定的出貨日期
+  - **系統時間戳記**：自動記錄紀錄產生時間（不可編輯）
+  - 表格清晰顯示所有關鍵資訊
   
-- **修正機制**
-  - 支援修改歷史出貨數量與配送地點
-  - 一鍵快速修正，無需重新輸入
+- **修正機制（增強版）**
+  - 支援修改**出貨數量、配送地點、出貨日期**
+  - 修正時確認對話清晰顯示所有修改項目
+  - 修正後自動保留原始日期信息用於追蹤
+  - 自動檢驗修正後總數不超過訂購數量
   
 - **自動狀態更新**：已配送數量 ≥ 訂購數量時，自動標記訂單為「已完成」
 
 #### 審計追蹤系統（Audit Trail）
 - **完整操作記錄**：
   - 修正者帳號 + 時間戳記
-  - 修改內容詳情（前值 → 後值）
+  - 修改內容詳情（前值 → 後值），包含數量、地點、日期
   - 修正原因備註
   
 - **數據完整性**：支援歷史查看與數據復原追蹤
+
+#### 報表系統（新功能）✨
+- **出貨單報表**
+  - 按出貨日期查詢所有出貨紀錄
+  - 顯示欄位：訂單編號、出貨數量、出貨地點、客戶姓名、客戶電話
+  - 實時統計：出貨紀錄數、總出貨數量、出貨地點數
+  - **Excel 匯出**：一鍵下載格式化的 Excel 報表（含統計資訊）
+  - 擴展性設計，預留位置供後續報表類型（銷售報表、庫存報表等）
 
 #### 金流管理
 - **自動對帳**：綠界線上支付成功自動更新
@@ -123,34 +140,40 @@
 | **前端** | HTML5, CSS3, JavaScript | Bootstrap 5 響應式框架，原生 JS 無重型依賴 |
 | **LINE 整合** | LINE LIFF SDK, LINE Messaging API | 前端 LIFF UI + 後端推播通知 |
 | **後端** | Python 3.x, Flask | 輕量級框架，模組化藍圖結構 |
-| **資料庫** | Google Sheets + gspread API | 無伺服器方案，易於備份與權限管理 |
+| **資料庫** | Firebase Firestore | 實時雲端資料庫，自動同步，支援複雜查詢 |
 | **金流** | ECPay SDK (綠界) | 生產級支付整合，Server-to-Server 自動對帳 |
 | **驗證** | LINE Messaging API | 自動會員綁定與身份驗證 |
 | **部署** | Render, Heroku | 一鍵部署，自動 HTTPS 與環境變數管理 |
-| **測試** | pytest, unittest-xml-reporting | 52 項單元測試保證穩定性 |
+| **Excel 匯出** | XLSX.js | 客戶端 Excel 生成，無需伺服器依賴 |
+| **測試** | pytest, unittest-xml-reporting | 52+ 項單元測試保證穩定性 |
 
 ### 📁 程式結構
 ```
 ai_eggs/
 ├── app.py                          # 應用入口，路由註冊
-├── config.py                       # 全局配置管理
+├── config.py                       # 全局配置管理 (含 SESSION_TIMEOUT 設定)
 ├── auth.py                         # 登入速率限制與防暴力
 ├── validation.py                   # 資料驗證邏輯
 │
 ├── routes/                         # 藍圖模組
 │   ├── auth.py                    # 登入/登出
 │   ├── member.py                  # 會員註冊/編輯
-│   ├── admin.py                   # 後台核心邏輯
+│   ├── admin.py                   # 後台核心邏輯 + 報表 API
 │   └── ecpay.py                   # 金流回調處理
 │
 ├── services/                       # 業務邏輯層
-│   ├── google_sheets.py           # Google Sheets 操作
+│   ├── database_adapter.py        # 資料庫適配器
+│   ├── firestore_service.py       # Firestore 操作
+│   ├── google_sheets.py           # Google Sheets 操作 (備用)
 │   └── line_service.py            # LINE 推播通知
 │
 ├── templates/                      # 前端模板
 │   ├── index.html                 # 首頁（訂購界面）
 │   ├── login.html                 # 後台登入
-│   ├── admin.html                 # 後台主介面
+│   ├── admin.html                 # 後台訂單管理主介面
+│   ├── admin_reports.html         # 報表系統介面 ✨ 新增
+│   ├── admin_products.html        # 商品管理
+│   ├── admin_settings.html        # 系統設定（分類、折扣、警告）
 │   └── admin_old.html             # 舊版後台（保留）
 │
 ├── tests/                          # 單元測試
@@ -159,10 +182,13 @@ ai_eggs/
 │   ├── test_validation.py         # 驗證邏輯測試
 │   └── ...
 │
-└── requirements.txt                # 依賴清單
+├── requirements.txt                # 依賴清單
+└── README.md                       # 本檔案
 ```
 
-## � 預置環境變數
+---
+
+## 📋 預置環境變數
 
 建立 `.env` 檔案（已包含在 `.gitignore` 中，不會被提交）：
 
@@ -170,17 +196,20 @@ ai_eggs/
 # ========== 應用基礎設定 ==========
 DEBUG=False                                    # 生產環境設為 False
 TIMEZONE=Asia/Taipei                           # 時區設定
+USE_FIRESTORE=True                             # 使用 Firestore（True）或 Google Sheets（False）
 
 # ========== LINE 官方帳號配置 ==========
 LINE_CHANNEL_ACCESS_TOKEN=你的_CHANNEL_ACCESS_TOKEN
 APP_BASE_URL=https://your-domain.onrender.com  # 務必設定公開網址供金流回調使用
 
-# ========== Google Sheets 配置 ==========
-SPREADSHEET_ID=你的試算表ID
+# ========== Firebase Firestore 配置 ==========
+GOOGLE_APPLICATION_CREDENTIALS=/etc/secrets/service_account.json
 
 # ========== 系統安全 ==========
 FLASK_SECRET_KEY=請設定一個隨機亂碼（最少 32 字元）
-SESSION_TIMEOUT=180                            # 無操作自動登出秒數
+SESSION_TIMEOUT=300                            # 無操作自動登出秒數 (5分鐘)
+LOGIN_ATTEMPT_TIMEOUT=300                      # 登入失敗鎖定時間（秒）
+MAX_LOGIN_ATTEMPTS=5                           # 最大登入嘗試次數
 
 # ========== 管理員帳號（格式：帳號:密碼,帳號:密碼）==========
 ADMIN_ACCOUNTS=admin:admin123,manager:manager456
@@ -196,29 +225,79 @@ ECPAY_HASH_IV=v77hoKGq4kWxNNIS               # 測試 HashIV
 
 ---
 
-## 📊 Google Sheets 資料結構
+## 📊 Firestore 資料結構
 
-系統使用 Google Sheets 作為資料庫，請預先建立以下工作表與欄位：
+系統使用 Firebase Firestore 作為資料庫，包含以下集合與欄位：
 
-### `Members` 工作表（會員）
-| A | B | C | D | E | F |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| UserId | Name | Phone | Address | BirthDate | Address2 |
-| 12345 | 王小明 | 0912345678 | 台北市... | 1990-01-15 | 新竹市... |
+### Collections 結構
 
-### `Orders` 工作表（訂單）
-| A | B | C | D | E | F | G | H | I |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| OrderId | UserId | Item | Amount | Date | Status | DeliveryLogs | PaymentStatus | PaymentMethod |
-| ORD001 | 12345 | 土雞蛋 | 2 | 2026-01-10 | 已完成 | [配送紀錄] | 已付款 | 綠界 |
+#### `members` - 會員集合
+```javascript
+{
+  userId: "U1234567890...",        // LINE User ID
+  name: "范國紅",
+  phone: "0911351882",
+  address: "新竹市...",
+  address2: "台北市...",           // 備用地址
+  birthDate: "1990-01-15",
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+```
 
-### `DeliveryAuditLog` 工作表（審計日誌）
-| A | B | C | D | E | F | G | H |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 時間戳記 | 訂單編號 | 操作類型 | 管理者帳號 | 修改前數值 | 修改後數值 | 原因 | 備註 |
-| 2026-01-10 14:30 | ORD001 | 出貨修正 | admin | 2 | 3 | 補貨 | 客戶追加 |
+#### `orders` - 訂單集合
+```javascript
+{
+  orderId: "ORD20260118001",
+  userId: "U1234567890...",
+  items: "土雞蛋 x15",
+  amount: 3500,
+  status: "部分配送",              // 處理中/已確認/配送中/部分配送/已完成/已取消
+  paymentStatus: "已付款",         // 未付款/已付款
+  paymentMethod: "ECPay",          // 線上支付方式或傳統支付
+  deliveryLogs: [                  // 出貨紀錄陣列
+    {
+      stamp: "2026-01-18 11:52:00",        // 系統時間戳記（自動產生）
+      delivery_date: "2026-01-20",         // 與客戶約定的出貨日期（可編輯）
+      qty: 10,
+      corrected_qty: 10,                   // 修正後的數量（若有修正）
+      address: "新竹市...",
+      is_corrected: false
+    }
+  ],
+  date: Timestamp,
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+```
 
-> **新安裝提示**：`DeliveryAuditLog` 工作表需**手動在 Google Sheets 中建立**
+#### `auditLogs` - 審計日誌集合
+```javascript
+{
+  orderId: "ORD20260118001",
+  operation: "update_delivery",   // 操作類型
+  adminName: "admin",             // 修正者帳號
+  beforeValue: {                  // 修改前
+    qty: 9,
+    address: "新竹市舊地址",
+    delivery_date: "2026-01-19"
+  },
+  afterValue: {                   // 修改後
+    qty: 10,
+    address: "新竹市新地址",
+    delivery_date: "2026-01-20"
+  },
+  reason: "客戶要求修改地點",
+  timestamp: Timestamp
+}
+```
+
+#### 其他集合
+- `products` - 商品資訊
+- `stockLogs` - 庫存異動紀錄
+- `categories` - 商品分類
+- `discounts` - 折扣規則
+- `stockAlerts` - 庫存警告設定
 
 ---
 
@@ -226,22 +305,28 @@ ECPAY_HASH_IV=v77hoKGq4kWxNNIS               # 測試 HashIV
 
 ### 前置需求
 - Python 3.8+
-- Google 帳號（申請 OAuth 認證）
-- LINE 官方帳號（申請 Channel ID & Access Token）
-- 綠界帳號（取得測試商家資訊）
+- Google 帳號（Firebase 專案）
+- LINE 官方帳號（Channel ID & Access Token）
+- 綠界帳號（測試商家資訊）
 
 ### Step 1：複製環境設定檔
 ```bash
 cp .env.example .env
-# 編輯 .env 並填入您的 API Keys 與 Google Sheets ID
+# 編輯 .env 並填入您的 API Keys
 ```
 
-### Step 2：安裝依賴
+### Step 2：設定 Firebase
+```bash
+# 下載 service_account.json 從 Firebase Console
+# 放在專案根目錄或指定的路徑
+```
+
+### Step 3：安裝依賴
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 3：本地開發環境設定
+### Step 4：本地開發環境設定
 
 **終端機 1 - 啟動 Flask 應用**
 ```bash
@@ -259,171 +344,67 @@ ngrok http 5005
 ```bash
 # 在 .env 中設定
 APP_BASE_URL=https://xxxx.ngrok-free.dev
-
-# 或在啟動 Flask 時傳入
-APP_BASE_URL=https://xxxx.ngrok-free.dev python3 app.py
 ```
 
 **訪問應用**
 - 前台：`https://xxxx.ngrok-free.dev`
 - 後台：`https://xxxx.ngrok-free.dev/admin`
+- 報表：`https://xxxx.ngrok-free.dev/admin/reports` ✨ 新增
 
-### Step 4：執行測試
+### Step 5：執行測試
 ```bash
 # 運行所有測試
 pytest
 
 # 查看覆蓋率報告
 pytest --cov=routes --cov=services tests/
-
-# 輸出 XML 測試報告
-pytest --junit-xml=test-results.xml
 ```
 
 ---
 
-## 🌐 Render 雲端部署
+## 🌐 雲端部署 (Render)
 
-### 自動部署流程
+### 快速部署流程
 
-1. **將程式碼推送到 GitHub**
+1. **推送程式碼到 GitHub**
    ```bash
    git add .
    git commit -m "Ready for deployment"
    git push origin main
    ```
 
-2. **在 Render 建立新的 Web Service**
-   - 連接你的 GitHub 倉庫
+2. **在 Render 建立 Web Service**
+   - 連接 GitHub 倉庫
    - 選擇 main 分支
 
-3. **配置環境變數**（Render Dashboard → Settings → Environment）
+3. **配置環境變數**
    ```
    DEBUG=False
-   FLASK_SECRET_KEY=你的_隨機密鑰
-   LINE_CHANNEL_ACCESS_TOKEN=你的_TOKEN
-   SPREADSHEET_ID=你的_SHEETS_ID
-   ADMIN_ACCOUNTS=admin:密碼
+   FLASK_SECRET_KEY=隨機密鑰（32+ 字元）
+   SESSION_TIMEOUT=300
+   USE_FIRESTORE=True
+   LINE_CHANNEL_ACCESS_TOKEN=your_token
+   ADMIN_ACCOUNTS=admin:password
    ECPAY_MERCHANT_ID=2000132
    ECPAY_HASH_KEY=5294y06JbISpM5x9
    ECPAY_HASH_IV=v77hoKGq4kWxNNIS
    APP_BASE_URL=https://your-app.onrender.com
    ```
 
-4. **上傳祕密檔案**（Render 不支援環境變數上傳大檔案）
-   - Settings → Secret Files → 上傳 `service_account.json`
-   - 設定目標路徑為 `/etc/secrets/service_account.json`
-   - 在 `config.py` 中引用此路徑
+4. **上傳祕密檔案**
+   - Settings → Secret Files
+   - 上傳 `service_account.json`
+   - 目標路徑：`/etc/secrets/service_account.json`
 
 5. **設定啟動命令**
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn app:app --timeout 30 --workers 1`
+   - Build: `pip install -r requirements.txt`
+   - Start: `gunicorn app:app --timeout 30 --workers 1`
 
 6. **自動部署**
-   - Git 推送自動觸發部署
-   - Render 會自動重新啟動應用
+   - Git 推送自動觸發
+   - Render 自動重啟應用
 
-> 💡 **提示**：Render Starter Plan (約 $7/月) 確保應用不會進入睡眠狀態，用戶隨點隨用
-
----
-
-## � 常見問題 & 故障排除
-
-### ❓ 管理員與安全
-
-**Q1：如何新增/修改管理員帳號？**
-
-A：編輯環境變數 `ADMIN_ACCOUNTS`：
-```
-admin:admin123,manager:manager456,owner:owner789
-```
-修改後自動重新部署生效。Render 會自動重啟應用。
-
-**Q2：為什麼被鎖定 5 分鐘？**
-
-A：連續登入失敗 5 次後，系統自動鎖定該 IP 5 分鐘以防暴力攻擊。清除 Cookies 或更換網路可重試。
-
-**Q3：後台自動登出？**
-
-A：180 秒無操作自動登出是安全設計。請重新登入。
-
----
-
-### ❓ 會員與訂購
-
-**Q4：為什麼會員編輯資料後看不到變更？**
-
-A：
-1. 確認已點擊「保存變更」按鈕
-2. 重新整理頁面（Ctrl+F5 強制刷新）
-3. 檢查 Google Sheets 是否已同步
-4. 若仍無更新，聯絡系統管理員
-
-**Q5：訂單狀態為什麼一直是「待出貨」？**
-
-A：
-1. 檢查出貨紀錄中的數字是否正確輸入
-2. 確保「已配送」數量 ≥ 「訂購」數量時才會自動更新為「已完成」
-3. 若數字正確但狀態未更新，重啟應用或手動修改
-
-**Q6：訂購後沒有收到 LINE 通知？**
-
-A：
-1. 確認 LINE 官方帳號已正確設定
-2. 檢查 LINE 聊天室是否有訊息（可能在垃圾箱）
-3. 後台日誌檢查 LINE API 回應錯誤
-4. 確保 `LINE_CHANNEL_ACCESS_TOKEN` 有效
-
----
-
-### ❓ 出貨與金流
-
-**Q7：如何修正出貨紀錄？**
-
-A：
-1. 進入管理後台 → 找到訂單
-2. 點擊「修正」按鈕
-3. 修改出貨數量與配送地點
-4. 系統自動記錄修正操作到審計日誌
-
-**Q8：綠界線上支付為什麼無法完成？**
-
-A：
-1. 確認現在使用的是**測試環境商家資訊**（MERCHANT_ID=2000132）
-2. 測試環境信用卡號：4111111111111111（任意密碼與月年）
-3. 線上測試前清除瀏覽器 Cookies
-4. Render 部署時確保 `APP_BASE_URL` 設為正確的網址
-
-**Q9：綠界回調（Callback）沒有成功？**
-
-A：
-1. 檢查 `APP_BASE_URL` 環境變數是否為外部可訪問的 HTTPS 網址
-2. 本地開發務必使用 ngrok 提供的公開 URL
-3. 確保 `/ecpay/callback` 路由存在且無驗證限制
-4. 檢查 Render 日誌是否有 POST 請求錯誤
-
----
-
-### ❓ 技術與部署
-
-**Q10：本地開發時 ngrok URL 變更怎麼辦？**
-
-A：ngrok 每次重啟都會生成新 URL。請在 `.env` 中更新 `APP_BASE_URL`，或直接在啟動 Flask 時傳入環境變數。
-
-**Q11：Google Sheets API 達到配額限制？**
-
-A：
-1. 免費帳號每天請求數有限
-2. 考慮升級 Google Workspace
-3. 優化程式邏輯減少 API 呼叫（例如批次更新）
-4. 聯絡開發者討論最佳化方案
-
-**Q12：系統支援多少訂單？**
-
-A：
-- Google Sheets 單工作表上限 **5,000,000 行**
-- LINE Messaging API 免費方案支援 **500 則群發訊息/月**（約 150 訂單）
-- 超過需升級 LINE 官方帳號到中用量方案（NT$800/月）
+> 💡 **提示**：Render Starter Plan (~$7/月) 確保應用不進入睡眠狀態
 
 ---
 
@@ -433,46 +414,67 @@ A：
 - [ ] 更改 `FLASK_SECRET_KEY` 為強隨機亂碼（32+ 字元）
 - [ ] 修改預設管理員帳號密碼
 - [ ] 使用 HTTPS（生產環境自動強制）
-- [ ] 定期備份 Google Sheets 資料
-- [ ] 啟用 Google Sheets 的版本歷史功能
+- [ ] 定期備份 Firestore 資料
+- [ ] 監控異常登入嘗試
 
 ❌ **勿做項**
 - ❌ 在 GitHub 提交 `.env` 檔案
 - ❌ 在程式碼中硬編碼敏感資訊
 - ❌ 使用弱密碼作為管理員帳號
-- ❌ 在公網上暴露 Google Sheets 編輯權限
+- ❌ 在公網上暴露 Firebase 編輯權限
 
 ---
 
-## 📊 系統規格與效能
+## 📈 最近更新（v3.2 - 2026-01-18）
 
-| 指標 | 數值 | 備註 |
-|------|------|------|
-| **並發用戶** | ~50-100 | Render Starter Plan |
-| **請求延遲** | 200-500ms | Google Sheets API |
-| **資料庫容量** | 500MB+ | 單個 Google Sheets |
-| **月費成本** | ~NT$230-800 | Render + LINE 方案 |
-| **上線時間** | ~99% | 排除計畫維護 |
-| **自動備份** | ✅ | Google Sheets 版本控制 |
+### ✨ 新功能
+- 出貨紀錄新增 **Stamp**（系統時間戳記）和 **delivery_date**（可編輯出貨日期）欄位
+- **報表系統**上線 - 出貨單報表功能完整
+  - 按日期查詢出貨紀錄
+  - 實時統計（記錄數、總數量、地點數）
+  - Excel 匯出功能
+- 出貨修正功能支援修改 **出貨日期**
+- 審計日誌記錄更完整（包含日期修改）
 
----
+### 🔧 修改
+- **會話超時**從 180 秒調整為 **300 秒**（5 分鐘）
+- Firestore 資料結構優化，支援更複雜的查詢
+- 前端表格隱藏 Stamp 欄位，專注於業務相關資訊
 
-## 📜 版本歷史
-
-| 版本 | 日期 | 重要更新 |
-|------|------|--------|
-| **v3.1** (生產版) | 2026-01-07 | ✨ 會員自服務編輯、出貨地點追蹤、審計日誌、會話超時、多帳號管理 |
-| **v3.0** | 2025-11-15 | 🏦 ECPay 金流整合、自動對帳、響應式設計 |
-| **v2.0** | 2025-09-20 | 🔐 管理員驗證、分批出貨、付款狀態欄位 |
-| **v1.0** | 2025-07-01 | 📱 基礎訂購、LINE 會員、訂單紀錄 |
+### 🐛 修正
+- 修正出貨紀錄修正功能的參數傳遞問題
+- 後端資料一致性檢查
 
 ---
 
-## 📧 聯絡與支援
+## 💬 常見問題
+
+**Q：如何新增管理員帳號？**
+
+A：編輯環境變數 `ADMIN_ACCOUNTS`，格式為 `帳號:密碼,帳號:密碼`。
+
+**Q：後台多久沒操作會自動登出？**
+
+A：**300 秒（5 分鐘）**無操作自動登出。此值可在 `config.py` 的 `SESSION_TIMEOUT` 調整。
+
+**Q：如何使用報表功能？**
+
+A：登入後台 → 點擊導航欄「📊 報表管理」 → 選擇出貨日期 → 點擊「查詢」 → 檢視結果或「匯出 Excel」。
+
+**Q：出貨紀錄可以修改哪些欄位？**
+
+A：可修改 **出貨數量、配送地點、出貨日期**，並需填寫修正原因。系統自動記錄修正歷史。
+
+**Q：Firestore 資料如何備份？**
+
+A：Firebase Console 內建備份功能，或使用官方 `gcloud` 工具進行備份。
+
+---
+
+## 📞 聯絡支援
 
 - **開發者**：由 AI 協助開發完成
-- **問題回報**：請在 GitHub 上提交 Issue
-- **功能請求**：歡迎討論與建議改進
+- **問題回報**：GitHub Issues
 - **技術支援**：聯絡系統管理員
 
 ---
@@ -483,15 +485,4 @@ A：
 
 ---
 
-## 🙏 致謝
-
-感謝以下服務提供支持：
-- 🟢 **LINE** - 官方帳號與 LIFF SDK
-- 📊 **Google Sheets** - 輕量級資料管理
-- 🏦 **ECPay 綠界科技** - 安全金流整合
-- ☁️ **Render** - 穩定雲端部署
-- 🔵 **Flask** - 優雅的後端框架
-
----
-
-*最後更新：2026-01-10*
+*最後更新：2026-01-18*

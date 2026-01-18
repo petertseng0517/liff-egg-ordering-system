@@ -50,6 +50,11 @@ class FormValidator:
         """驗證訂單表單"""
         errors = []
         
+        # 驗證商品 ID
+        product_id = data.get('productId', '').strip()
+        if not product_id:
+            errors.append("商品 ID 不能為空")
+        
         # 驗證商品名稱
         item_name = data.get('itemName', '').strip()
         if not item_name:

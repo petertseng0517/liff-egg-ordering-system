@@ -134,7 +134,8 @@ class TestMemberAPI(unittest.TestCase):
         
         response = self.app.post('/api/order', json={
             'userId': 'U123',
-            'itemName': '土雞蛋1盤',
+            'productId': 'prod_test123',
+            'itemName': '土雞蛋',
             'qty': 5,
             'paymentMethod': 'transfer'
         }, content_type='application/json')
@@ -223,7 +224,8 @@ class TestOrderAPI(unittest.TestCase):
         response = self.client.post('/api/order',
             json={
                 'userId': 'U123',
-                'itemName': '土雞蛋1盤',
+                'productId': 'prod_test123',
+                'itemName': '土雞蛋',
                 'qty': '5',
                 'remarks': 'Test order',
                 'paymentMethod': 'transfer'
@@ -240,6 +242,7 @@ class TestOrderAPI(unittest.TestCase):
         response = self.client.post('/api/order',
             json={
                 'userId': 'U123',
+                'productId': 'prod_invalid',
                 'itemName': '不存在的商品',
                 'qty': '5',
                 'paymentMethod': 'transfer'

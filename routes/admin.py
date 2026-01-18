@@ -103,6 +103,7 @@ def add_delivery_log():
         user_id = data.get('userId')
         qty = int(data.get('qty', 0))
         address = data.get('address', '')
+        delivery_date = data.get('delivery_date', '')  # 客戶約定的出貨日期
         total_ordered = int(data.get('totalOrdered', 1))
         
         if not order_id or qty <= 0:
@@ -111,7 +112,7 @@ def add_delivery_log():
                 "msg": "無效的參數"
             }), 400
         
-        success, result = DatabaseAdapter.add_delivery_log(order_id, qty, address)
+        success, result = DatabaseAdapter.add_delivery_log(order_id, qty, address, delivery_date)
         
         if success:
             # result 已包含最新的狀態、總配送數量和出貨日期
@@ -147,7 +148,11 @@ def correct_delivery_log():
         log_index = int(data.get('logIndex', -1))
         new_qty = int(data.get('newQty', 0))
         new_address = data.get('newAddress', '')
+        new_delivery_date = data.get('newDeliveryDate', '')
         reason = data.get('reason', '')
+        old_qty = int(data.get('oldQty', 0))
+        old_address = data.get('oldAddress', '')
+        old_delivery_date = data.get('oldDeliveryDate', '')
         
         # 獲取管理者名稱
         admin_name = session.get('user_name', 'unknown')
@@ -164,31 +169,43 @@ def correct_delivery_log():
                 "msg": "必須提供修正原因"
             }), 400
         
-        success, result = DatabaseAdapter.add_audit_log(
+        # 先修正出貨記錄
+        success, delivery_result = DatabaseAdapter.correct_delivery_log(
+            order_id, log_index, new_qty, new_address, new_delivery_date
+        )
+        
+        if not success:
+            return jsonify({
+                "status": "error",
+                "msg": delivery_result
+            }), 400
+        
+        # 再添加審計日誌（以結構化的方式存儲）
+        audit_success, audit_result = DatabaseAdapter.add_audit_log(
             order_id, "update_delivery", admin_name, 
-            f"qty:{data.get('oldQty', '')} addr:{data.get('oldAddress', '')}",
-            f"qty:{new_qty} addr:{new_address}",
+            {"qty": old_qty, "address": old_address, "delivery_date": old_delivery_date},
+            {"qty": new_qty, "address": new_address, "delivery_date": new_delivery_date},
             reason
         )
         
-        if success:
-            # 結果已包含修正後的資訊和出貨日期
+        if audit_success:
+            # 發送 LINE 通知
             LINEService.send_delivery_correction_notification(
                 user_id,
                 order_id,
                 '',
-                data.get('oldQty', 0),
+                old_qty,
                 new_qty
             )
             
             return jsonify({
                 "status": "success",
-                "data": result
+                "data": delivery_result
             })
         else:
             return jsonify({
                 "status": "error",
-                "msg": result
+                "msg": "審計日誌添加失敗"
             }), 400
     except Exception as e:
         logger.error(f"Error in correct_delivery_log: {e}")
@@ -244,6 +261,146 @@ def update_member():
             }), 404
     except Exception as e:
         logger.error(f"Error in update_member: {e}")
+        return jsonify({
+            "status": "error",
+            "msg": str(e)
+        }), 500
+
+
+@admin_bp.route('/clear-all-data', methods=['POST'])
+@require_admin_login_api
+def clear_all_data():
+    """清空所有 Firebase 數據 (僅管理員可用)"""
+    try:
+        from services.firestore_service import FirestoreService
+        
+        # 要清空的集合列表
+        collections_to_clear = [
+            'orders',
+            'members',
+            'stockLogs',
+            'categories',
+            'discounts',
+            'stockAlerts',
+            'auditLogs',
+            'products',
+            'deliveryAppointments',
+            'appointmentSlots',
+        ]
+        
+        db = FirestoreService._db
+        total_deleted = 0
+        
+        for collection_name in collections_to_clear:
+            try:
+                docs = db.collection(collection_name).stream()
+                doc_list = list(docs)
+                
+                if doc_list:
+                    batch = db.batch()
+                    for doc in doc_list:
+                        batch.delete(doc.reference)
+                    batch.commit()
+                    total_deleted += len(doc_list)
+                    logger.info(f"Cleared {len(doc_list)} documents from {collection_name}")
+            except Exception as e:
+                logger.warning(f"Could not clear collection {collection_name}: {str(e)[:100]}")
+        
+        return jsonify({
+            "status": "success",
+            "msg": f"所有數據已清空，刪除 {total_deleted} 筆紀錄",
+            "total_deleted": total_deleted
+        })
+    except Exception as e:
+        logger.error(f"Error in clear_all_data: {e}")
+        return jsonify({
+            "status": "error",
+            "msg": str(e)
+        }), 500
+
+
+# ===== 報表相關 API =====
+
+@admin_bp.route('/reports/delivery-records', methods=['GET'])
+@require_admin_login_api
+def get_delivery_records_report():
+    """出貨單報表：根據出貨日期查詢所有出貨紀錄
+    
+    Query Parameters:
+        delivery_date: YYYY-MM-DD 格式的出貨日期
+    
+    Response:
+        {
+            "status": "success",
+            "delivery_date": "2026-01-20",
+            "total_records": 3,
+            "records": [
+                {
+                    "orderId": "ORD...",
+                    "delivery_qty": 10,
+                    "delivery_address": "新竹市...",
+                    "customer_name": "范國紅",
+                    "customer_phone": "0911351882"
+                },
+                ...
+            ]
+        }
+    """
+    try:
+        delivery_date = request.args.get('delivery_date', '')
+        
+        if not delivery_date:
+            return jsonify({
+                "status": "error",
+                "msg": "必須提供出貨日期 (delivery_date)"
+            }), 400
+        
+        # 驗證日期格式
+        try:
+            from datetime import datetime
+            datetime.strptime(delivery_date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({
+                "status": "error",
+                "msg": "日期格式錯誤，應為 YYYY-MM-DD"
+            }), 400
+        
+        # 取得所有訂單
+        orders = DatabaseAdapter.get_all_orders_with_members()
+        
+        # 篩選符合出貨日期的出貨紀錄
+        delivery_records = []
+        for order in orders:
+            if not order.get('deliveryLogs'):
+                continue
+            
+            for delivery_log in order['deliveryLogs']:
+                # 檢查該出貨紀錄的日期是否符合
+                log_delivery_date = delivery_log.get('delivery_date', '')
+                if log_delivery_date == delivery_date:
+                    # 取得客戶資訊
+                    customer = order.get('customer', {})
+                    
+                    # 計算實際出貨數量（使用修正後的數量或原始數量）
+                    actual_qty = delivery_log.get('corrected_qty') or delivery_log.get('qty', 0)
+                    
+                    record = {
+                        "orderId": order.get('orderId', ''),
+                        "delivery_qty": actual_qty,
+                        "delivery_address": delivery_log.get('address', ''),
+                        "customer_name": customer.get('name', ''),
+                        "customer_phone": customer.get('phone', '')
+                    }
+                    delivery_records.append(record)
+        
+        return jsonify({
+            "status": "success",
+            "delivery_date": delivery_date,
+            "total_records": len(delivery_records),
+            "records": delivery_records
+        })
+    except Exception as e:
+        logger.error(f"Error in get_delivery_records_report: {e}")
         return jsonify({
             "status": "error",
             "msg": str(e)

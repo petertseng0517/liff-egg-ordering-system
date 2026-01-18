@@ -29,7 +29,7 @@ class Config:
         return accounts
     MAX_LOGIN_ATTEMPTS = 5  # 最多嘗試次數
     LOGIN_ATTEMPT_TIMEOUT = 300  # 秒 (5分鐘)
-    SESSION_TIMEOUT = 180  # 秒 (3分鐘) - 管理後台超時時間
+    SESSION_TIMEOUT = 300  # 秒 (5分鐘) - 管理後台強制登出時間
     
     # 時區設置 - 台灣時區
     TIMEZONE = 'Asia/Taipei'

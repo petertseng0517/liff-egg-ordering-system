@@ -4,4 +4,22 @@ __pycache__/
 .DS_Store
 service_account.json
 .env
-service_account.json
+
+# 日誌文件
+*.log
+app.log
+app_output.log
+app_test.log
+ecpay_callback.log
+
+# 測試生成的文件
+.coverage
+htmlcov/
+.pytest_cache/
+*.xml
+
+# IDE 和編輯器
+.vscode/
+.idea/
+*.swp
+*.swo
