@@ -267,57 +267,6 @@ def update_member():
         }), 500
 
 
-@admin_bp.route('/clear-all-data', methods=['POST'])
-@require_admin_login_api
-def clear_all_data():
-    """清空所有 Firebase 數據 (僅管理員可用)"""
-    try:
-        from services.firestore_service import FirestoreService
-        
-        # 要清空的集合列表
-        collections_to_clear = [
-            'orders',
-            'members',
-            'stockLogs',
-            'categories',
-            'discounts',
-            'stockAlerts',
-            'auditLogs',
-            'products',
-            'deliveryAppointments',
-            'appointmentSlots',
-        ]
-        
-        db = FirestoreService._db
-        total_deleted = 0
-        
-        for collection_name in collections_to_clear:
-            try:
-                docs = db.collection(collection_name).stream()
-                doc_list = list(docs)
-                
-                if doc_list:
-                    batch = db.batch()
-                    for doc in doc_list:
-                        batch.delete(doc.reference)
-                    batch.commit()
-                    total_deleted += len(doc_list)
-                    logger.info(f"Cleared {len(doc_list)} documents from {collection_name}")
-            except Exception as e:
-                logger.warning(f"Could not clear collection {collection_name}: {str(e)[:100]}")
-        
-        return jsonify({
-            "status": "success",
-            "msg": f"所有數據已清空，刪除 {total_deleted} 筆紀錄",
-            "total_deleted": total_deleted
-        })
-    except Exception as e:
-        logger.error(f"Error in clear_all_data: {e}")
-        return jsonify({
-            "status": "error",
-            "msg": str(e)
-        }), 500
-
 
 # ===== 報表相關 API =====
 
