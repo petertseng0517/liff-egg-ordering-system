@@ -51,11 +51,11 @@ class Config:
     # LINE Bot 配置
     LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
     
-    # ECPay 配置 (測試環境)
-    ECPAY_MERCHANT_ID = os.getenv('ECPAY_MERCHANT_ID', '2000132')
-    ECPAY_HASH_KEY = os.getenv('ECPAY_HASH_KEY', '5294y06JbISpM5x9')
-    ECPAY_HASH_IV = os.getenv('ECPAY_HASH_IV', 'v77hoKGq4kWxNNIS')
-    ECPAY_ACTION_URL = 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+    # ECPay 配置 - 從 .env 檔案讀取 (不要在程式碼中硬編碼)
+    ECPAY_MERCHANT_ID = os.getenv('ECPAY_MERCHANT_ID')
+    ECPAY_HASH_KEY = os.getenv('ECPAY_HASH_KEY')
+    ECPAY_HASH_IV = os.getenv('ECPAY_HASH_IV')
+    ECPAY_ACTION_URL = 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5'
     
     # 應用程式基礎 URL
     APP_BASE_URL = os.getenv('APP_BASE_URL', None)
