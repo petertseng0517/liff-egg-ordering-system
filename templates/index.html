@@ -150,6 +150,8 @@
      * 3. 部署應用並在 LIFF 設定中配置 URL
      * 
      * LINE 官方文檔：https://developers.line.biz/en/docs/liff/
+     * 
+     * 註冊限制：只允許通過 LINE 應用內的 LIFF 建立完整的 LINE User ID 會員
      */
     
     var MY_LIFF_ID = "2008795367-LqjjCaaQ";  // 替換為你的 LIFF ID
@@ -160,40 +162,99 @@
     window.onload = function() {
       liff.init({ liffId: MY_LIFF_ID })
         .then(() => {
+          // 檢查是否在 LINE 客戶端內
+          if (!liff.isInClient()) {
+            // ❌ 不在 LINE 客戶端內 - 拒絕訪問
+            console.log("❌ 此應用只能在 LINE 應用內使用");
+            document.getElementById('loading').innerHTML = `
+              <div class="card p-5 mt-5">
+                <h3 class="text-danger mb-4 text-center">⚠️ 無法訪問</h3>
+                <p class="text-center mb-4">此應用只能在 <strong>LINE 應用內</strong>使用。</p>
+                <div class="alert alert-info" role="alert">
+                  <strong>如何使用：</strong>
+                  <ol class="mb-0">
+                    <li>打開 LINE 應用</li>
+                    <li>在聊天或官方帳號中點擊連結</li>
+                    <li>在 LINE 應用內開啟此頁面</li>
+                  </ol>
+                </div>
+                <p class="text-muted text-center mb-0">如有問題，請聯絡客服。</p>
+              </div>
+            `;
+            return;
+          }
+
+          // ✅ 在 LINE 客戶端內
           if (!liff.isLoggedIn()) {
-             // 開發模式：在電腦瀏覽器使用測試帳號
-             if(!liff.isInClient()) {
-                console.log("🖥️ 開發模式: 使用測試帳號");
-                userId = "TEST_USER_001";
-                checkMemberStatus();
-             } else {
-                // 在 LINE App 內需要登入
-                liff.login(); 
-             }
+            // 未登入 - 跳轉到 LINE 登入
+            console.log("🔐 需要登入 LINE");
+            liff.login();
           } else {
+            // ✅ 已登入 - 取得使用者資料
             liff.getProfile().then(profile => {
               userId = profile.userId;
               userName = profile.displayName;
+              console.log("✅ 已取得 LINE User ID:", userId);
               checkMemberStatus();
             }).catch(err => {
                 console.error("❌ 取得使用者資料失敗:", err);
-                document.getElementById('loading').innerHTML += '<p class="text-danger">無法取得使用者資料: ' + err + '</p>';
+                document.getElementById('loading').innerHTML = `
+                  <div class="card p-5 mt-5">
+                    <h3 class="text-danger mb-4 text-center">❌ 錯誤</h3>
+                    <p class="text-center">無法取得使用者資料，請重試</p>
+                    <p class="text-muted text-center"><small>錯誤信息: ${err.message || err}</small></p>
+                  </div>
+                `;
             });
           }
         })
         .catch(err => {
             console.log("❌ LIFF 初始化失敗:", err);
-            document.getElementById('loading').innerHTML += '<p class="text-danger">LIFF 初始化失敗: ' + err + '</p>';
-            // Fallback：在開發環境使用測試帳號
-            if(!liff.isInClient()) {
-                userId = "TEST_USER_001";
-                checkMemberStatus();
-            }
+            document.getElementById('loading').innerHTML = `
+              <div class="card p-5 mt-5">
+                <h3 class="text-danger mb-4 text-center">❌ LIFF 初始化失敗</h3>
+                <p class="text-center">無法初始化應用。請確保在 LINE 應用內打開此連結。</p>
+                <p class="text-muted text-center"><small>錯誤信息: ${err.message || err}</small></p>
+              </div>
+            `;
         });
     };
 
+    /**
+     * 驗證是否為完整的 LINE User ID
+     * LINE User ID 格式：U + 32 個字元 (例：U3fc41859edbcbbdae05141bf30b2e14c)
+     */
+    function isValidLineUserId(id) {
+        if (!id) return false;
+        
+        // LINE User ID 格式驗證：必須以 U 開頭，後面跟 32 個十六進制字符
+        const lineIdPattern = /^U[a-f0-9]{32}$/i;
+        
+        const isValid = lineIdPattern.test(id);
+        
+        if (!isValid) {
+            console.warn(`❌ 無效的 User ID 格式: ${id}`);
+            console.warn("預期格式: U[32個十六進制字符]，例如: U3fc41859edbcbbdae05141bf30b2e14c");
+        }
+        
+        return isValid;
+    }
+
     function checkMemberStatus() {
         if (!userId) return;
+
+        // 驗證 USER ID 是否有效
+        if (!isValidLineUserId(userId)) {
+            console.error("❌ 無效的 LINE User ID:", userId);
+            document.getElementById('loading').innerHTML = `
+              <div class="card p-5 mt-5">
+                <h3 class="text-danger mb-4 text-center">❌ 驗證失敗</h3>
+                <p class="text-center">無法取得有效的 LINE User ID</p>
+                <p class="text-muted text-center">請確保在 LINE 應用內打開此連結</p>
+              </div>
+            `;
+            return;
+        }
 
         // 如果網址有指定 page，就直接去該頁面，不檢查會員 (例如想直接看歷史紀錄)
         const urlParams = new URLSearchParams(window.location.search);
@@ -315,6 +376,12 @@
     // === 新版：使用 fetch 呼叫 Python API ===
 
     function submitRegister() {
+        // ✅ 首先驗證 LINE User ID 是否有效
+        if (!userId || !isValidLineUserId(userId)) {
+            alert("❌ 錯誤：無法取得有效的 LINE User ID\n\n請確保在 LINE 應用內打開此連結");
+            return;
+        }
+
         // 表單驗證
         const name = document.getElementById('reg-name').value.trim();
         const phone = document.getElementById('reg-phone').value.trim();
@@ -435,6 +502,12 @@
     }
 
     function submitEditMember() {
+        // ✅ 首先驗證 LINE User ID 是否有效
+        if (!userId || !isValidLineUserId(userId)) {
+            alert("❌ 錯誤：無法取得有效的 LINE User ID");
+            return;
+        }
+
         // 表單驗證
         const name = document.getElementById('edit-mem-name').value.trim();
         const phone = document.getElementById('edit-mem-phone').value.trim();
@@ -504,6 +577,12 @@
     }
 
     function submitOrder() {
+       // ✅ 首先驗證 LINE User ID 是否有效
+       if (!userId || !isValidLineUserId(userId)) {
+           alert("❌ 錯誤：無法取得有效的 LINE User ID");
+           return;
+       }
+
        const productId = document.getElementById('order-items').value;
        const selectedOption = document.getElementById('order-items').selectedOptions[0];
        const itemName = selectedOption ? selectedOption.dataset.name : '';

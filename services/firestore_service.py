@@ -103,6 +103,85 @@ class FirestoreService:
             return False
     
     @classmethod
+    def get_all_members(cls):
+        """獲取所有會員"""
+        try:
+            docs = cls._db.collection('members').stream()
+            members = []
+            for doc in docs:
+                data = doc.to_dict()
+                # 處理時間戳記
+                created_at = data.get('createdAt')
+                updated_at = data.get('updatedAt')
+                
+                if created_at and hasattr(created_at, 'strftime'):
+                    data['createdAt'] = created_at.strftime('%Y-%m-%d %H:%M:%S')
+                else:
+                    data['createdAt'] = str(created_at) if created_at else ''
+                
+                if updated_at and hasattr(updated_at, 'strftime'):
+                    data['updatedAt'] = updated_at.strftime('%Y-%m-%d %H:%M:%S')
+                else:
+                    data['updatedAt'] = str(updated_at) if updated_at else ''
+                
+                # 添加默認狀態如果不存在
+                if 'status' not in data:
+                    data['status'] = '啟用'
+                
+                members.append(data)
+            
+            # 按更新時間排序（最新優先）
+            members.sort(key=lambda x: x.get('updatedAt', ''), reverse=True)
+            return members
+        except Exception as e:
+            logger.error(f"Error getting all members: {e}")
+            return []
+    
+    @classmethod
+    def get_member_by_id(cls, user_id):
+        """按ID獲取會員資料"""
+        try:
+            doc = cls._db.collection('members').document(user_id).get()
+            if doc.exists:
+                data = doc.to_dict()
+                # 處理時間戳記
+                created_at = data.get('createdAt')
+                updated_at = data.get('updatedAt')
+                
+                if created_at and hasattr(created_at, 'strftime'):
+                    data['createdAt'] = created_at.strftime('%Y-%m-%d %H:%M:%S')
+                
+                if updated_at and hasattr(updated_at, 'strftime'):
+                    data['updatedAt'] = updated_at.strftime('%Y-%m-%d %H:%M:%S')
+                
+                if 'status' not in data:
+                    data['status'] = '啟用'
+                
+                return data
+            return None
+        except Exception as e:
+            logger.error(f"Error getting member {user_id}: {e}")
+            return None
+    
+    @classmethod
+    def update_member_status(cls, user_id, status):
+        """更新會員狀態"""
+        try:
+            valid_statuses = ['啟用', '停用', '黑名單']
+            if status not in valid_statuses:
+                return False, f"無效的狀態。必須是: {', '.join(valid_statuses)}"
+            
+            cls._db.collection('members').document(user_id).update({
+                'status': status,
+                'updatedAt': datetime.now(TW_TZ)
+            })
+            logger.info(f"Member status updated: {user_id} -> {status}")
+            return True, "狀態更新成功"
+        except Exception as e:
+            logger.error(f"Error updating member status: {e}")
+            return False, str(e)
+    
+    @classmethod
     def add_order(cls, order_id, user_id, item_str, amount, status, payment_status, payment_method):
         """新增訂單"""
         try:

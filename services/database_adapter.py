@@ -40,6 +40,24 @@ class DatabaseAdapter:
         service = DatabaseAdapter.get_service()
         return service.update_member(user_id, name, phone, address, address2)
     
+    @staticmethod
+    def get_all_members():
+        """獲取所有會員"""
+        service = DatabaseAdapter.get_service()
+        return service.get_all_members()
+    
+    @staticmethod
+    def get_member_by_id(user_id):
+        """按ID獲取會員資料"""
+        service = DatabaseAdapter.get_service()
+        return service.get_member_by_id(user_id)
+    
+    @staticmethod
+    def update_member_status(user_id, status):
+        """更新會員狀態"""
+        service = DatabaseAdapter.get_service()
+        return service.update_member_status(user_id, status)
+    
     # ===== 訂單相關操作 =====
     
     @staticmethod

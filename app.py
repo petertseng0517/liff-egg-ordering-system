@@ -114,7 +114,7 @@ def admin_members_page():
     if not session.get('logged_in'):
         return redirect('/login')
     
-    return render_template('admin_settings.html')
+    return render_template('admin_members.html')
 
 
 @app.route('/admin/reports')

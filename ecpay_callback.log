@@ -4393,3 +4393,16 @@
 2026-01-18 17:17:28,515 ERROR: 127.0.0.1 - - [18/Jan/2026 17:17:28] code 400, message Bad request version ('ehs')
 2026-01-18 17:17:28,516 ERROR: 127.0.0.1 - - [18/Jan/2026 17:17:28] code 400, message Bad request version ('\x8c«¨ðO2äc\x0f\x1b·\x9dGry©CÿH[3L\x0fíz»ë')
 2026-01-18 17:17:28,517 ERROR: 127.0.0.1 - - [18/Jan/2026 17:17:28] code 400, message Bad request version ('\x02h2\x08http/1.1\x00-\x00\x02\x01\x01\x00')
+2026-02-10 16:26:41,511 INFO: Firebase Firestore initialized successfully
+2026-02-10 16:26:41,512 INFO: Firebase Firestore initialized successfully
+2026-02-10 16:26:41,512 INFO: Application initialized successfully
+2026-02-10 16:27:14,272 WARNING: Failed login attempt for user 'peter' from IP 127.0.0.1
+2026-02-10 16:27:16,978 WARNING: Failed login attempt for user 'peter' from IP 127.0.0.1
+2026-02-10 16:27:25,451 WARNING: Failed login attempt for user 'admin' from IP 127.0.0.1
+2026-02-10 16:28:03,435 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-02-10 16:54:01,609 INFO: Admin login successful: admin from IP 127.0.0.1
+2026-02-10 16:54:22,724 INFO: Retrieved 0 discounts
+2026-02-10 16:54:23,513 INFO: Retrieved 0 stock alerts
+2026-02-10 16:54:23,515 INFO: Retrieved 0 categories
+2026-02-10 16:54:23,517 INFO: Retrieved 2 products
+2026-02-10 16:54:27,676 INFO: Retrieved 2 products

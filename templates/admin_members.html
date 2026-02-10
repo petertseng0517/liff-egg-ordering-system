@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員管理 - 蛋商品管理系統</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        * {
+            font-family: "Microsoft YaHei", Segoe UI, Roboto, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: #2c3e50 !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link.active {
+            border-bottom: 3px solid #3498db !important;
+        }
+        
+        .container-main {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .table {
+            background-color: white;
+            border-radius: 4px;
+        }
+        
+        .table thead {
+            background-color: #ecf0f1;
+        }
+        
+        .table th {
+            color: #2c3e50;
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border: none;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: middle;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .status-啟用 {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-停用 {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-黑名單 {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-action {
+            padding: 5px 10px;
+            font-size: 0.9em;
+            margin: 2px;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .filter-section {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .pagination {
+            margin-top: 20px;
+        }
+        
+        .stats-box {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stats-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 導航欄 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">🥚 土雞蛋管理後台</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">📋 訂單管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">📦 商品管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/reports">📊 報表管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/admin/members">👥 會員管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/settings">⚙️ 系統設定</a>
+        </li>
+      </ul>
+    </div>
+    <a href="/logout" class="btn btn-outline-light btn-sm">登出</a>
+  </div>
+</nav>
+
+<!-- 主容器 -->
+<div class="container-fluid container-main">
+    <!-- 統計區域 -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stats-box">
+                <div class="stats-number" id="total-members">0</div>
+                <div class="stats-label">總會員數</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-box">
+                <div class="stats-number" id="active-members">0</div>
+                <div class="stats-label">啟用會員</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-box">
+                <div class="stats-number" id="disabled-members">0</div>
+                <div class="stats-label">停用會員</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-box">
+                <div class="stats-number" id="blacklist-members">0</div>
+                <div class="stats-label">黑名單會員</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 篩選和操作區 -->
+    <div class="filter-section">
+        <div class="row align-items-end">
+            <div class="col-md-5">
+                <label class="form-label">搜尋</label>
+                <input type="text" class="form-control" id="search-input" 
+                       placeholder="搜尋姓名、手機或會員ID">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">篩選狀態</label>
+                <select class="form-select" id="status-filter">
+                    <option value="">全部狀態</option>
+                    <option value="啟用">✅ 啟用</option>
+                    <option value="停用">⏸️ 停用</option>
+                    <option value="黑名單">🚫 黑名單</option>
+                </select>
+            </div>
+            <div class="col-md-4 text-end">
+                <button class="btn btn-primary" onclick="loadMembers()">
+                    <i class="bi bi-arrow-clockwise"></i> 重新整理
+                </button>
+                <button class="btn btn-success" onclick="exportMembers()">
+                    <i class="bi bi-download"></i> 導出 CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 會員列表 -->
+    <div class="card">
+        <div class="card-header">
+            會員列表
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="members-table">
+                    <thead>
+                        <tr>
+                            <th>會員ID</th>
+                            <th>姓名</th>
+                            <th>手機</th>
+                            <th>地址</th>
+                            <th>狀態</th>
+                            <th>加入日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="members-tbody">
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">載入中...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分頁 -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center" id="pagination">
+        </ul>
+    </nav>
+</div>
+
+<!-- 編輯會員模態窗 -->
+<div class="modal fade" id="editMemberModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">編輯會員資料</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-member-form">
+            <input type="hidden" id="edit-user-id">
+            
+            <div class="mb-3">
+                <label class="form-label">會員ID</label>
+                <input type="text" class="form-control" id="edit-user-id-display" disabled>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">姓名 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="edit-name" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">手機 <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="edit-phone" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">地址 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="edit-address" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">地址備註</label>
+                <input type="text" class="form-control" id="edit-address2">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">生日</label>
+                <input type="date" class="form-control" id="edit-birth-date">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">會員狀態 <span class="text-danger">*</span></label>
+                <select class="form-select" id="edit-status" required>
+                    <option value="啟用">✅ 啟用</option>
+                    <option value="停用">⏸️ 停用</option>
+                    <option value="黑名單">🚫 黑名單</option>
+                </select>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="saveMemberChanges()">保存變更</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 確認變更模態窗 -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">確認操作</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" id="confirm-btn" onclick="confirmAction()">確認</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ID 驗證工具模態窗 -->
+<div class="modal fade" id="verificationModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">⚠️ 會員 ID 驗證工具</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" role="alert">
+          <strong>❓ 為什麼需要驗證？</strong><br>
+          該會員的 LINE ID 格式不完整。需要重新驗證以獲得完整的 32 位 ID。
+        </div>
+
+        <div class="mb-4">
+          <h6>📋 會員信息</h6>
+          <table class="table table-sm">
+            <tr>
+              <td><strong>會員ID：</strong></td>
+              <td id="verify-user-id-display"></td>
+            </tr>
+            <tr>
+              <td><strong>姓名：</strong></td>
+              <td id="verify-member-name"></td>
+            </tr>
+            <tr>
+              <td><strong>手機：</strong></td>
+              <td id="verify-member-phone"></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mb-4">
+          <h6>🔗 驗證方式</h6>
+          <div class="nav nav-tabs" role="tablist">
+            <button class="nav-link active" id="method1-tab" data-bs-toggle="tab" data-bs-target="#method1" type="button" role="tab">
+              生成驗證連結
+            </button>
+            <button class="nav-link" id="method2-tab" data-bs-toggle="tab" data-bs-target="#method2" type="button" role="tab">
+              手動輸入 ID
+            </button>
+            <button class="nav-link" id="method3-tab" data-bs-toggle="tab" data-bs-target="#method3" type="button" role="tab">
+              查看日誌
+            </button>
+          </div>
+
+          <!-- 方法 1：生成驗證連結 -->
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="method1" role="tabpanel">
+              <div class="mt-3">
+                <p>複製以下連結發送給會員，他們點擊後會自動驗證並更新 ID：</p>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="verification-link" readonly>
+                  <button class="btn btn-outline-secondary" onclick="copyToClipboard('verification-link')" type="button">
+                    <i class="bi bi-clipboard"></i> 複製
+                  </button>
+                </div>
+                <small class="text-muted">連結有效期：24 小時</small>
+              </div>
+            </div>
+
+            <!-- 方法 2：手動輸入 ID -->
+            <div class="tab-pane fade" id="method2" role="tabpanel">
+              <div class="mt-3">
+                <label class="form-label">完整的 LINE User ID</label>
+                <input type="text" class="form-control" id="manual-user-id" placeholder="例：U3fc41859edbcbbdae05141bf30b2e14c">
+                <small class="form-text text-muted">格式：U + 32 個十六進制字符</small>
+                <button class="btn btn-primary mt-3" onclick="manuallyUpdateUserId()">更新</button>
+              </div>
+            </div>
+
+            <!-- 方法 3：查看日誌 -->
+            <div class="tab-pane fade" id="method3" role="tabpanel">
+              <div class="mt-3">
+                <p>最近的 Webhook 日誌：</p>
+                <div id="webhook-logs" style="height: 300px; overflow-y: auto; background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.85em;">
+                  <p class="text-muted">載入中...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let allMembers = [];
+let currentPage = 1;
+const itemsPerPage = 10;
+let pendingAction = {};
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+    loadMembers();
+    
+    // 搜尋和篩選事件監聽
+    document.getElementById('search-input').addEventListener('keyup', applyFilters);
+    document.getElementById('status-filter').addEventListener('change', applyFilters);
+});
+
+// 載入會員列表
+function loadMembers() {
+    fetch('/api/admin/members')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                allMembers = data.members || [];
+                updateStatistics();
+                applyFilters();
+            } else {
+                alert('載入會員列表失敗: ' + data.msg);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('载入会员列表出错');
+        });
+}
+
+// 更新統計數據
+function updateStatistics() {
+    const total = allMembers.length;
+    const active = allMembers.filter(m => m.status === '啟用').length;
+    const disabled = allMembers.filter(m => m.status === '停用').length;
+    const blacklist = allMembers.filter(m => m.status === '黑名單').length;
+    
+    document.getElementById('total-members').textContent = total;
+    document.getElementById('active-members').textContent = active;
+    document.getElementById('disabled-members').textContent = disabled;
+    document.getElementById('blacklist-members').textContent = blacklist;
+}
+
+// 應用篩選和搜尋
+function applyFilters() {
+    const searchText = document.getElementById('search-input').value.toLowerCase();
+    const statusFilter = document.getElementById('status-filter').value;
+    
+    let filtered = allMembers.filter(member => {
+        const matchSearch = !searchText || 
+                          member.userId.toLowerCase().includes(searchText) ||
+                          member.name.toLowerCase().includes(searchText) ||
+                          member.phone.includes(searchText);
+        
+        const matchStatus = !statusFilter || member.status === statusFilter;
+        
+        return matchSearch && matchStatus;
+    });
+    
+    currentPage = 1;
+    displayMembers(filtered);
+}
+
+// 顯示會員列表
+function displayMembers(members) {
+    const tbody = document.getElementById('members-tbody');
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageMembers = members.slice(startIndex, endIndex);
+    
+    if (pageMembers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4">找不到符合條件的會員</td></tr>';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+    
+    tbody.innerHTML = pageMembers.map(member => {
+        const isValidId = isValidLineUserId(member.userId);
+        const idWarning = !isValidId ? ' <span class="badge bg-danger ms-2" title="無效的 LINE ID">⚠️ 需驗證</span>' : '';
+        
+        return `
+        <tr ${!isValidId ? 'style="background-color: #fffbf0;"' : ''}>
+            <td><small>${member.userId}${idWarning}</small></td>
+            <td>${member.name}</td>
+            <td>${member.phone}</td>
+            <td><small>${member.address}${member.address2 ? ' ' + member.address2 : ''}</small></td>
+            <td>
+                <span class="status-badge status-${member.status}">
+                    ${getStatusIcon(member.status)} ${member.status}
+                </span>
+            </td>
+            <td><small>${formatDate(member.createdAt)}</small></td>
+            <td>
+                <button class="btn btn-sm btn-primary btn-action" onclick="editMember('${member.userId}')">
+                    <i class="bi bi-pencil"></i> 編輯
+                </button>
+                ${!isValidId ? `
+                <button class="btn btn-sm btn-warning btn-action" onclick="generateVerificationToken('${member.userId}')">
+                    <i class="bi bi-exclamation-triangle"></i> 驗證
+                </button>
+                ` : ''}
+                <div class="btn-group btn-action" role="group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-gear"></i> 狀態
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '啟用')">✅ 啟用</a></li>
+                        <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '停用')">⏸️ 停用</a></li>
+                        <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '黑名單')">🚫 黑名單</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    `}).join('');
+    
+    // 分頁按鈕
+    const totalPages = Math.ceil(members.length / itemsPerPage);
+    displayPagination(totalPages, members);
+}
+
+// 顯示分頁按鈕
+function displayPagination(totalPages, members) {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+    
+    if (totalPages <= 1) return;
+    
+    // 上一頁
+    const prevBtn = document.createElement('li');
+    prevBtn.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
+    prevBtn.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}); return false;">上一頁</a>`;
+    pagination.appendChild(prevBtn);
+    
+    // 頁碼按鈕
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('li');
+        btn.className = 'page-item' + (i === currentPage ? ' active' : '');
+        btn.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i}); return false;">${i}</a>`;
+        pagination.appendChild(btn);
+    }
+    
+    // 下一頁
+    const nextBtn = document.createElement('li');
+    nextBtn.className = 'page-item' + (currentPage === totalPages ? ' disabled' : '');
+    nextBtn.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}); return false;">下一頁</a>`;
+    pagination.appendChild(nextBtn);
+}
+
+// 跳到指定頁
+function goToPage(page) {
+    currentPage = page;
+    applyFilters();
+}
+
+// 編輯會員
+function editMember(userId) {
+    const member = allMembers.find(m => m.userId === userId);
+    if (!member) return;
+    
+    document.getElementById('edit-user-id').value = userId;
+    document.getElementById('edit-user-id-display').value = userId;
+    document.getElementById('edit-name').value = member.name;
+    document.getElementById('edit-phone').value = member.phone;
+    document.getElementById('edit-address').value = member.address;
+    document.getElementById('edit-address2').value = member.address2 || '';
+    document.getElementById('edit-birth-date').value = member.birthDate || '';
+    document.getElementById('edit-status').value = member.status || '啟用';
+    
+    new bootstrap.Modal(document.getElementById('editMemberModal')).show();
+}
+
+// 保存會員變更
+function saveMemberChanges() {
+    const userId = document.getElementById('edit-user-id').value;
+    const name = document.getElementById('edit-name').value.trim();
+    const phone = document.getElementById('edit-phone').value.trim();
+    const address = document.getElementById('edit-address').value.trim();
+    const address2 = document.getElementById('edit-address2').value.trim();
+    const status = document.getElementById('edit-status').value;
+    
+    if (!name || !phone || !address) {
+        alert('請填寫必填欄位（姓名、手機、地址）');
+        return;
+    }
+    
+    // 先更新基本資料
+    fetch('/api/member/edit_member', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userId,
+            name: name,
+            phone: phone,
+            address: address,
+            address2: address2
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // 再更新狀態
+            updateMemberStatus(userId, status, true);
+        } else {
+            alert('更新失敗: ' + data.msg);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('更新出錯');
+    });
+}
+
+// 更新會員狀態
+function updateMemberStatus(userId, status, isFromEdit = false) {
+    fetch('/api/admin/member/update_status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userId,
+            status: status
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (isFromEdit) {
+                bootstrap.Modal.getInstance(document.getElementById('editMemberModal')).hide();
+                loadMembers();
+                alert('會員資料已更新');
+            } else {
+                loadMembers();
+            }
+        } else {
+            alert('更新失敗: ' + data.msg);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('更新出錯');
+    });
+}
+
+// 變更會員狀態（確認對話框）
+function changeStatus(userId, newStatus) {
+    pendingAction = { userId: userId, status: newStatus };
+    const member = allMembers.find(m => m.userId === userId);
+    
+    document.getElementById('confirm-message').textContent = 
+        `確認要將會員 ${member.name} (${userId}) 的狀態變更為 ${newStatus} 嗎？`;
+    
+    document.getElementById('confirm-btn').className = 'btn ' + 
+        (newStatus === '黑名單' ? 'btn-danger' : 'btn-warning');
+    
+    new bootstrap.Modal(document.getElementById('confirmModal')).show();
+}
+
+// 確認操作
+function confirmAction() {
+    if (!pendingAction.userId) return;
+    
+    bootstrap.Modal.getInstance(document.getElementById('confirmModal')).hide();
+    updateMemberStatus(pendingAction.userId, pendingAction.status);
+}
+
+// 導出會員資料
+function exportMembers() {
+    window.location.href = '/api/admin/members/export';
+}
+
+// ===== 會員 ID 驗證工具 =====
+
+/**
+ * 檢查是否為有效的 LINE User ID
+ * 格式：U + 32 個十六進制字符
+ */
+function isValidLineUserId(id) {
+    if (!id) return false;
+    const lineIdPattern = /^U[a-f0-9]{32}$/i;
+    return lineIdPattern.test(id);
+}
+
+// 生成驗證令牌
+function generateVerificationToken(userId) {
+    const member = allMembers.find(m => m.userId === userId);
+    if (!member) return;
+    
+    // 填充驗證模態窗的信息
+    document.getElementById('verify-user-id-display').textContent = userId;
+    document.getElementById('verify-member-name').textContent = member.name;
+    document.getElementById('verify-member-phone').textContent = member.phone;
+    
+    // 呼叫後端生成驗證令牌
+    fetch('/api/admin/member/generate_verification_token', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ userId: userId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const verificationUrl = `${window.location.origin}/?page=verify&token=${data.token}`;
+            document.getElementById('verification-link').value = verificationUrl;
+            
+            // 加載 Webhook 日誌
+            loadWebhookLogs(userId);
+            
+            new bootstrap.Modal(document.getElementById('verificationModal')).show();
+        } else {
+            alert('生成驗證令牌失敗: ' + data.msg);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('生成驗證令牌出錯');
+    });
+}
+
+// 手動更新 User ID
+function manuallyUpdateUserId() {
+    const userId = document.getElementById('verify-user-id-display').textContent;
+    const newUserId = document.getElementById('manual-user-id').value.trim();
+    
+    if (!newUserId) {
+        alert('請輸入 LINE User ID');
+        return;
+    }
+    
+    if (!isValidLineUserId(newUserId)) {
+        alert('❌ 無效的 LINE User ID 格式\n格式應為：U + 32 個十六進制字符');
+        return;
+    }
+    
+    if (!confirm(`確認要將會員 ID 從 ${userId} 更新為 ${newUserId} 嗎？`)) {
+        return;
+    }
+    
+    fetch('/api/admin/member/update_user_id', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            oldUserId: userId,
+            newUserId: newUserId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('✅ 會員 ID 已更新');
+            bootstrap.Modal.getInstance(document.getElementById('verificationModal')).hide();
+            loadMembers();
+        } else {
+            alert('❌ 更新失敗: ' + data.msg);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('更新出錯');
+    });
+}
+
+// 加載 Webhook 日誌
+function loadWebhookLogs(userId) {
+    const logsDiv = document.getElementById('webhook-logs');
+    
+    fetch(`/api/admin/webhook_logs?userId=${userId}`, {
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success' && data.logs) {
+            if (data.logs.length === 0) {
+                logsDiv.innerHTML = '<p class="text-muted">暫無日誌</p>';
+            } else {
+                logsDiv.innerHTML = data.logs.map(log => `
+                    <div style="margin-bottom: 10px; padding: 8px; border-bottom: 1px solid #ccc;">
+                        <strong>${log.timestamp}</strong><br>
+                        事件：${log.event}<br>
+                        ${log.userId ? `LINE ID: ${log.userId}<br>` : ''}
+                        <small style="color: #666;">${log.details || ''}</small>
+                    </div>
+                `).join('');
+            }
+        } else {
+            logsDiv.innerHTML = '<p class="text-danger">載入日誌失敗</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading logs:', error);
+        logsDiv.innerHTML = '<p class="text-danger">載入日誌出錯</p>';
+    });
+}
+
+// 複製到剪貼簿
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    element.select();
+    document.execCommand('copy');
+    alert('✅ 已複製到剪貼簿');
+}
+
+// 輔助函數
+function getStatusIcon(status) {
+    switch(status) {
+        case '啟用': return '✅';
+        case '停用': return '⏸️';
+        case '黑名單': return '🚫';
+        default: return '•';
+    }
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('zh-TW', {year: 'numeric', month: '2-digit', day: '2-digit'});
+}
+</script>
+
+</body>
+</html>

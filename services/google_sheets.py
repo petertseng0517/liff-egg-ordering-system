@@ -108,6 +108,77 @@ class GoogleSheetsService:
             return None
     
     @classmethod
+    def get_all_members(cls):
+        """獲取所有會員"""
+        try:
+            sheet = cls.get_sheet("Members")
+            rows = sheet.get_all_records()
+            members = []
+            
+            for row in rows:
+                members.append({
+                    "userId": row.get('會員ID', row.get('userId', '')),
+                    "name": row.get('姓名', row.get('name', '')),
+                    "phone": row.get('手機', row.get('phone', '')),
+                    "address": row.get('地址', row.get('address', '')),
+                    "address2": row.get('地址2', row.get('address2', '')),
+                    "birthDate": row.get('生日', row.get('birthDate', '')),
+                    "status": row.get('狀態', row.get('status', '啟用')),
+                    "createdAt": '',
+                    "updatedAt": ''
+                })
+            
+            return members
+        except Exception as e:
+            logger.error(f"Error getting all members: {e}")
+            return []
+    
+    @classmethod
+    def get_member_by_id(cls, user_id):
+        """按ID獲取會員資料"""
+        try:
+            sheet = cls.get_sheet("Members")
+            cell = sheet.find(user_id)
+            if cell:
+                row_values = sheet.row_values(cell.row)
+                return {
+                    "userId": row_values[0] if len(row_values) > 0 else "",
+                    "name": row_values[1] if len(row_values) > 1 else "",
+                    "phone": row_values[2] if len(row_values) > 2 else "",
+                    "address": row_values[3] if len(row_values) > 3 else "",
+                    "address2": row_values[5] if len(row_values) > 5 else "",
+                    "birthDate": row_values[4] if len(row_values) > 4 else "",
+                    "status": row_values[6] if len(row_values) > 6 else "啟用",
+                    "createdAt": '',
+                    "updatedAt": ''
+                }
+            return None
+        except Exception as e:
+            logger.error(f"Error getting member {user_id}: {e}")
+            return None
+    
+    @classmethod
+    def update_member_status(cls, user_id, status):
+        """更新會員狀態"""
+        try:
+            valid_statuses = ['啟用', '停用', '黑名單']
+            if status not in valid_statuses:
+                return False, f"無效的狀態。必須是: {', '.join(valid_statuses)}"
+            
+            sheet = cls.get_sheet("Members")
+            cell = sheet.find(user_id)
+            if not cell:
+                return False, "會員不存在"
+            
+            # 更新狀態（第7欄）
+            sheet.update_cell(cell.row, 7, status)
+            logger.info(f"Member status updated: {user_id} -> {status}")
+            return True, "狀態更新成功"
+        except Exception as e:
+            logger.error(f"Error updating member status: {e}")
+            return False, str(e)
+    
+    @classmethod
     def add_order(cls, order_id, user_id, item_str, amount, status, payment_status, payment_method):
         """新增訂單"""
         try:
