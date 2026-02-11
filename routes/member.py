@@ -6,7 +6,7 @@ from datetime import datetime
 from services.database_adapter import DatabaseAdapter
 from services.line_service import LINEService
 from validation import FormValidator
-from config import ProductConfig
+from config import Config, ProductConfig
 from ecpay_sdk import ECPaySDK
 import os
 import logging
@@ -193,7 +193,7 @@ def create_order():
         
         # ECPay 付款
         if payment_method == 'ecpay':
-            base_url = os.getenv('APP_BASE_URL')
+            base_url = Config.APP_BASE_URL
             if not base_url:
                 base_url = request.url_root.rstrip('/')
                 if 'onrender.com' in base_url or 'herokuapp.com' in base_url:
@@ -205,10 +205,10 @@ def create_order():
             client_back_url = f"{base_url}/api/ecpay/client_return"
             
             ecpay_service = ECPaySDK(
-                os.getenv('ECPAY_MERCHANT_ID', '2000132'),
-                os.getenv('ECPAY_HASH_KEY', '5294y06JbISpM5x9'),
-                os.getenv('ECPAY_HASH_IV', 'v77hoKGq4kWxNNIS'),
-                'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+                Config.ECPAY_MERCHANT_ID,
+                Config.ECPAY_HASH_KEY,
+                Config.ECPAY_HASH_IV,
+                Config.ECPAY_ACTION_URL
             )
             
             ecpay_params = ecpay_service.create_order(
@@ -225,7 +225,7 @@ def create_order():
                 "msg": "前往綠界付款",
                 "orderId": order_id,
                 "ecpayParams": ecpay_params,
-                "actionUrl": 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+                "actionUrl": Config.ECPAY_ACTION_URL
             })
         
         return jsonify({
@@ -297,10 +297,10 @@ def retry_payment():
         client_back_url = f"{base_url}/api/ecpay/client_return"
         
         ecpay_service = ECPaySDK(
-            os.getenv('ECPAY_MERCHANT_ID', '2000132'),
-            os.getenv('ECPAY_HASH_KEY', '5294y06JbISpM5x9'),
-            os.getenv('ECPAY_HASH_IV', 'v77hoKGq4kWxNNIS'),
-            'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5'
+            Config.ECPAY_MERCHANT_ID,
+            Config.ECPAY_HASH_KEY,
+            Config.ECPAY_HASH_IV,
+            Config.ECPAY_ACTION_URL
         )
         
         ecpay_params = ecpay_service.create_order(
@@ -315,7 +315,7 @@ def retry_payment():
         logger.info(f"Retry payment for order {order_id}, ECPay Trade No: {ecpay_trade_no} (length: {len(ecpay_trade_no)})")
         return jsonify({
             "status": "ecpay_init",
-            "actionUrl": 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
+            "actionUrl": Config.ECPAY_ACTION_URL,
             "ecpayParams": ecpay_params
         })
     
