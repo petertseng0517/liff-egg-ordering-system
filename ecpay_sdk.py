@@ -51,7 +51,7 @@ class ECPaySDK:
             "ItemName": item_name,
             "ReturnURL": return_url, # Server-side callback (POST)
             "ChoosePayment": "ALL",
-            "IgnorePayment": "CVS#BARCODE#GooglePay",  # 排除超商代碼和超商條碼
+            "IgnorePayment": "CVS#BARCODE#DigitalPayment",  # 排除超商代碼、超商條碼、綠界Pay
             "ClientBackURL": client_back_url, # Client-side redirect (GET)
             "EncryptType": "1",
             "ItemURL": "",
