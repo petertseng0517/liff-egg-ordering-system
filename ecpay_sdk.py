@@ -50,7 +50,7 @@ class ECPaySDK:
             "TradeDesc": "EggOrder",
             "ItemName": item_name,
             "ReturnURL": return_url, # Server-side callback (POST)
-            "ChoosePayment": "CREDIT,WEBATM,APPLEPAY",
+            "ChoosePayment": "Credit#WebATM#ApplePay",
             "ClientBackURL": client_back_url, # Client-side redirect (GET)
             "EncryptType": "1",
             "ItemURL": "",
