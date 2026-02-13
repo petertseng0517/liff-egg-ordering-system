@@ -195,7 +195,7 @@ def correct_delivery_log():
             LINEService.send_delivery_correction_notification(
                 user_id,
                 order_id,
-                '',
+                new_delivery_date,
                 old_qty,
                 new_qty
             )
