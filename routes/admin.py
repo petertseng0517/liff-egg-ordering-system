@@ -231,6 +231,113 @@ def get_delivery_audit(order_id):
             "msg": str(e)
         }), 500
 
+
+@admin_bp.route('/order/create-for-member', methods=['POST'])
+@require_admin_login_api
+def create_order_for_member():
+    """店家為已註冊的會員建立訂單（銀行轉帳/貨到付款）"""
+    try:
+        data = request.json
+        
+        # 取得參數
+        user_id = data.get('userId')
+        product_id = data.get('productId')
+        item_name = data.get('itemName')
+        qty = int(data.get('qty', 1))
+        remarks = data.get('remarks', '').strip()
+        
+        # 驗證必填項
+        if not user_id or not product_id or not item_name or qty <= 0:
+            return jsonify({
+                "status": "error",
+                "msg": "缺少必要參數或參數無效"
+            }), 400
+        
+        # 驗證會員存在
+        success, member = DatabaseAdapter.get_member_by_id(user_id)
+        if not success or not member:
+            return jsonify({
+                "status": "error",
+                "msg": "會員不存在"
+            }), 404
+        
+        # 驗證商品存在
+        success, product = DatabaseAdapter.get_product(product_id)
+        if not success or not product:
+            return jsonify({
+                "status": "error",
+                "msg": "商品不存在"
+            }), 404
+        
+        # 驗證商品是否上架
+        if product.get('status') != 'active':
+            return jsonify({
+                "status": "error",
+                "msg": "該商品已下架"
+            }), 400
+        
+        # 計算總金額
+        unit_price = product.get('price', 0)
+        total_amount = int(unit_price * qty)
+        
+        # 生成訂單編號
+        timestamp_str = str(int(datetime.now(pytz.timezone('Asia/Taipei')).timestamp()))
+        order_id = "ORD" + timestamp_str[-8:]
+        
+        # 組合商品字串
+        item_str = f"{item_name} x{qty}"
+        if remarks:
+            item_str += f" ({remarks})"
+        
+        # 取得實際數量
+        actual_quantity = product.get('actualQuantity', 1)
+        
+        # 新增訂單：強制使用銀行轉帳/貨到付款，付款狀態為未付款
+        success = DatabaseAdapter.add_order(
+            order_id=order_id,
+            user_id=user_id,
+            product_id=product_id,
+            item_str=item_str,
+            amount=total_amount,
+            status="已確認",  # 商家建立的訂單直接設為已確認
+            payment_status="未付款",  # 一律未付款
+            payment_method="transfer",  # 一律銀行轉帳（涵蓋貨到付款）
+            actual_quantity=actual_quantity,
+            order_qty=qty
+        )
+        
+        if not success:
+            return jsonify({
+                "status": "error",
+                "msg": "訂單建立失敗"
+            }), 500
+        
+        # 發送 LINE 通知 - 通知會員訂單已建立
+        admin_name = session.get('user_name', '店家')
+        notification_msg = (
+            f"✅ 店家為您建立訂單\n"
+            f"訂單編號: {order_id}\n"
+            f"商品: {item_str}\n"
+            f"總金額: ${total_amount}\n"
+            f"付款方式: 銀行轉帳 / 貨到付款\n"
+            f"\n請洽店家完成付款"
+        )
+        LINEService.send_push_message(user_id, notification_msg)
+        
+        return jsonify({
+            "status": "success",
+            "orderId": order_id,
+            "msg": f"成功為{member.get('name', '會員')}建立訂單"
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in create_order_for_member: {e}")
+        return jsonify({
+            "status": "error",
+            "msg": str(e)
+        }), 500
+
+
 @admin_bp.route('/member/update', methods=['POST'])
 @require_admin_login_api
 def update_member():
