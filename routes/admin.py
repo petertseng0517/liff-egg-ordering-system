@@ -491,8 +491,8 @@ def get_all_members():
 def get_member(user_id):
     """取得單個會員資料"""
     try:
-        member = DatabaseAdapter.get_member_by_id(user_id)
-        if member:
+        success, member = DatabaseAdapter.get_member_by_id(user_id)
+        if success and member:
             return jsonify({
                 "status": "success",
                 "member": member
@@ -610,8 +610,8 @@ def generate_verification_token():
                 "msg": "缺少必要參數"
             }), 400
         
-        member = DatabaseAdapter.get_member_by_id(user_id)
-        if not member:
+        success, member = DatabaseAdapter.get_member_by_id(user_id)
+        if not success or not member:
             return jsonify({
                 "status": "error",
                 "msg": "會員不存在"
@@ -670,16 +670,16 @@ def update_user_id():
             }), 400
         
         # 檢查新 ID 是否已存在
-        existing_member = DatabaseAdapter.get_member_by_id(new_user_id)
-        if existing_member:
+        success, existing_member = DatabaseAdapter.get_member_by_id(new_user_id)
+        if success and existing_member:
             return jsonify({
                 "status": "error",
                 "msg": "新的 User ID 已被其他會員使用"
             }), 400
         
         # 獲取舊會員資料
-        old_member = DatabaseAdapter.get_member_by_id(old_user_id)
-        if not old_member:
+        success, old_member = DatabaseAdapter.get_member_by_id(old_user_id)
+        if not success or not old_member:
             return jsonify({
                 "status": "error",
                 "msg": "會員不存在"

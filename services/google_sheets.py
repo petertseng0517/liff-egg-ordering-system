@@ -134,6 +134,7 @@ class GoogleSheetsService:
             return []
     
     @classmethod
+    @classmethod
     def get_member_by_id(cls, user_id):
         """按ID獲取會員資料"""
         try:
@@ -141,7 +142,7 @@ class GoogleSheetsService:
             cell = sheet.find(user_id)
             if cell:
                 row_values = sheet.row_values(cell.row)
-                return {
+                return True, {
                     "userId": row_values[0] if len(row_values) > 0 else "",
                     "name": row_values[1] if len(row_values) > 1 else "",
                     "phone": row_values[2] if len(row_values) > 2 else "",
@@ -152,10 +153,10 @@ class GoogleSheetsService:
                     "createdAt": '',
                     "updatedAt": ''
                 }
-            return None
+            return False, "會員不存在"
         except Exception as e:
             logger.error(f"Error getting member {user_id}: {e}")
-            return None
+            return False, str(e)
     
     @classmethod
     def update_member_status(cls, user_id, status):

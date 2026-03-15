@@ -157,11 +157,11 @@ class FirestoreService:
                 if 'status' not in data:
                     data['status'] = '啟用'
                 
-                return data
-            return None
+                return True, data
+            return False, "會員不存在"
         except Exception as e:
             logger.error(f"Error getting member {user_id}: {e}")
-            return None
+            return False, str(e)
     
     @classmethod
     def update_member_status(cls, user_id, status):
