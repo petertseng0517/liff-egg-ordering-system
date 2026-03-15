@@ -541,12 +541,27 @@
         // 預設出貨地點為客戶主要地址
         document.getElementById('new-delivery-address').value = currentOrder.customer.address || '';
 
-        // Parse Total Qty
-        totalOrderedQty = 1;
-        const match = currentOrder.items.match(/x(\d+)/);
-        if(match && match[1]) {
-            totalOrderedQty = parseInt(match[1]);
+        // Parse Total Qty and Calculate Expected Total
+        // 新訂單格式：expected_total = orderQty × actualQuantity
+        // 舊訂單格式：向後兼容，只用訂購數量
+        let orderQty = 1;
+        let actualQuantity = 1;
+
+        if(currentOrder.orderQty !== undefined && currentOrder.actualQuantity !== undefined) {
+            // 新訂單格式：使用保存的欄位
+            orderQty = currentOrder.orderQty;
+            actualQuantity = currentOrder.actualQuantity;
+        } else {
+            // 舊訂單格式：從 items 字符串提取訂購數量
+            const match = currentOrder.items.match(/x(\d+)/);
+            if(match && match[1]) {
+                orderQty = parseInt(match[1]);
+            }
+            // 嘗試取得 actualQuantity（可能沒有此欄位）
+            actualQuantity = currentOrder.actualQuantity || 1;
         }
+
+        totalOrderedQty = orderQty * actualQuantity;
 
         renderDeliveryLogs();
         new bootstrap.Modal(document.getElementById('orderModal')).show();
