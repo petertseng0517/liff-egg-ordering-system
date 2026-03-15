@@ -61,10 +61,10 @@ class DatabaseAdapter:
     # ===== 訂單相關操作 =====
     
     @staticmethod
-    def add_order(order_id, user_id, item_str, amount, status, payment_status, payment_method):
+    def add_order(order_id, user_id, item_str, amount, status, payment_status, payment_method, product_id="", actual_quantity=1, order_qty=1):
         """新增訂單"""
         service = DatabaseAdapter.get_service()
-        return service.add_order(order_id, user_id, item_str, amount, status, payment_status, payment_method)
+        return service.add_order(order_id, user_id, item_str, amount, status, payment_status, payment_method, product_id, actual_quantity, order_qty)
     
     @staticmethod
     def get_user_orders(user_id):

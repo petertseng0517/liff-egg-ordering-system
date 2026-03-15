@@ -171,15 +171,21 @@ def create_order():
         # 設定初始付款狀態
         initial_payment_status = "待付款" if payment_method == 'ecpay' else "未付款"
         
+        # 取得實際數量（默認為 1）
+        actual_quantity = product.get('actualQuantity', 1)
+        
         # 新增訂單
         success = DatabaseAdapter.add_order(
             order_id=order_id,
             user_id=user_id,
+            product_id=product_id,
             item_str=item_str,
             amount=total_amount,
             status="處理中",
             payment_status=initial_payment_status,
-            payment_method=payment_method
+            payment_method=payment_method,
+            actual_quantity=actual_quantity,
+            order_qty=qty
         )
         
         if not success:

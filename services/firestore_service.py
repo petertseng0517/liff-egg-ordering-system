@@ -182,18 +182,21 @@ class FirestoreService:
             return False, str(e)
     
     @classmethod
-    def add_order(cls, order_id, user_id, item_str, amount, status, payment_status, payment_method):
+    def add_order(cls, order_id, user_id, item_str, amount, status, payment_status, payment_method, product_id="", actual_quantity=1, order_qty=1):
         """新增訂單"""
         try:
             now = datetime.now(TW_TZ)
             cls._db.collection('orders').document(order_id).set({
                 'orderId': order_id,
                 'userId': user_id,
+                'productId': product_id,
                 'items': item_str,
                 'amount': amount,
                 'status': status,
                 'paymentStatus': payment_status,
                 'paymentMethod': payment_method,
+                'actualQuantity': int(actual_quantity),
+                'orderQty': int(order_qty),
                 'date': now.strftime('%Y-%m-%d %H:%M:%S'),
                 'deliveryLogs': [],
                 'createdAt': now,
@@ -232,14 +235,24 @@ class FirestoreService:
                 
                 # 計算剩餘盤數（用於部分配送狀態）
                 import re
-                items_str = order_data.get('items', '')
-                match = re.search(r'x(\d+)', items_str)
-                total_ordered = int(match.group(1)) if match else 1
+                
+                # 獲取應該出貨的總數
+                actual_quantity = order_data.get('actualQuantity', 1)
+                order_qty = order_data.get('orderQty')
+                
+                if order_qty is not None:
+                    # 新訂單格式：應該出貨 = 訂購數量 × 實際數量
+                    expected_total = int(actual_quantity) * int(order_qty)
+                else:
+                    # 舊訂單格式（向後兼容）
+                    items_str = order_data.get('items', '')
+                    match = re.search(r'x(\d+)', items_str)
+                    expected_total = int(match.group(1)) if match else 1
                 
                 delivery_logs = order_data.get('deliveryLogs', [])
-                total_delivered = sum(int(log.get('qty', 0)) for log in delivery_logs)
+                total_delivered = sum(int(log.get('corrected_qty') or log.get('qty', 0)) for log in delivery_logs)
                 
-                order_data['remainingQty'] = max(0, total_ordered - total_delivered)
+                order_data['remainingQty'] = max(0, expected_total - total_delivered)
                 
                 orders.append(order_data)
             return orders
@@ -292,7 +305,7 @@ class FirestoreService:
         
         Args:
             order_id: 訂單 ID
-            qty: 出貨數量
+            qty: 出貨數量（此數量應該已包含實際數量計算）
             address: 配送地點
             delivery_date: 與客戶約定的出貨日期 (YYYY-MM-DD)
         """
@@ -316,12 +329,24 @@ class FirestoreService:
             
             # 計算新狀態（使用 corrected_qty 如果存在，否則使用 qty）
             total_delivered = sum(int(log.get('corrected_qty') or log.get('qty', 0)) for log in delivery_logs)
-            items_str = order_data.get('items', '')
-            import re
-            match = re.search(r'x(\d+)', items_str)
-            total_ordered = int(match.group(1)) if match else 1
             
-            new_status = "已完成" if total_delivered >= total_ordered else "部分配送"
+            # 獲取應該出貨的總數
+            # 如果訂單中有 actualQuantity 和 orderQty，使用它們
+            # 否則從 items_str 中提取訂購數量（向後兼容）
+            actual_quantity = order_data.get('actualQuantity', 1)
+            order_qty = order_data.get('orderQty')
+            
+            if order_qty is not None:
+                # 新訂單格式：應該出貨 = 訂購數量 × 實際數量
+                expected_total = int(actual_quantity) * int(order_qty)
+            else:
+                # 舊訂單格式（向後兼容）：只比較訂購數量
+                items_str = order_data.get('items', '')
+                import re
+                match = re.search(r'x(\d+)', items_str)
+                expected_total = int(match.group(1)) if match else 1
+            
+            new_status = "已完成" if total_delivered >= expected_total else "部分配送"
             
             # 更新訂單
             cls._db.collection('orders').document(order_id).update({
