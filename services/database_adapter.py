@@ -114,7 +114,7 @@ class DatabaseAdapter:
     
     # 商品管理方法
     @staticmethod
-    def add_product(name, unit, price, cost, stock, min_stock_alert, category_id=None, supplier_id=None, description=None, image=None):
+    def add_product(name, unit, price, cost, stock, min_stock_alert, category_id=None, supplier_id=None, description=None, image=None, actual_quantity=None):
         """新增商品"""
         service = DatabaseAdapter.get_service()
         return service.add_product(
@@ -127,7 +127,8 @@ class DatabaseAdapter:
             category_id=category_id or '',
             supplier_id=supplier_id or '',
             description=description or '',
-            image=image or ''
+            image=image or '',
+            actual_quantity=int(actual_quantity) if actual_quantity else 1
         )
     
     @staticmethod

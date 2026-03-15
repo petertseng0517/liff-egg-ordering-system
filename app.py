@@ -165,7 +165,8 @@ def add_product():
             category_id=data.get('categoryId', ''),
             supplier_id=data.get('supplierId', ''),
             description=data.get('description', ''),
-            image=data.get('image', '')
+            image=data.get('image', ''),
+            actual_quantity=int(data.get('actualQuantity', 1)) if data.get('actualQuantity') else 1
         )
         
         if success:
@@ -208,6 +209,8 @@ def update_product(product_id):
             data['stock'] = int(data['stock'])
         if 'minStockAlert' in data:
             data['minStockAlert'] = int(data['minStockAlert'])
+        if 'actualQuantity' in data:
+            data['actualQuantity'] = int(data['actualQuantity'])
         
         success, result = DatabaseAdapter.update_product(product_id, **data)
         

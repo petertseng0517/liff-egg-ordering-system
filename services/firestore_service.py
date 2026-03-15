@@ -463,7 +463,7 @@ class FirestoreService:
     # ===== 商品管理 =====
     
     @classmethod
-    def add_product(cls, name, unit, price, cost, stock, min_stock_alert=10, max_stock_alert=1000, category_id="", supplier_id="", description="", image=""):
+    def add_product(cls, name, unit, price, cost, stock, min_stock_alert=10, max_stock_alert=1000, category_id="", supplier_id="", description="", image="", actual_quantity=1):
         """新增商品"""
         try:
             product_id = f"prod_{datetime.now(TW_TZ).strftime('%Y%m%d%H%M%S')}"
@@ -480,6 +480,7 @@ class FirestoreService:
                 'categoryId': category_id,
                 'supplierId': supplier_id,
                 'image': image,
+                'actualQuantity': int(actual_quantity),
                 'status': 'active',
                 'createdAt': datetime.now(TW_TZ),
                 'updatedAt': datetime.now(TW_TZ)

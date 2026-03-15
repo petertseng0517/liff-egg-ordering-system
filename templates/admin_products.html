@@ -249,6 +249,7 @@
                                     <th>單位</th>
                                     <th>售價</th>
                                     <th>成本</th>
+                                    <th>實際數量</th>
                                     <th>庫存</th>
                                     <th>狀態</th>
                                     <th>操作</th>
@@ -256,7 +257,7 @@
                             </thead>
                             <tbody id="productList">
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted py-4">
+                                    <td colspan="8" class="text-center text-muted py-4">
                                         <div class="spinner-border spinner-border-sm me-2"></div>
                                         加載中...
                                     </td>
@@ -406,6 +407,16 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">實際數量</label>
+                                <input type="number" class="form-control" id="productActualQuantity" value="1" min="1">
+                                <small class="form-text text-muted">客戶訂購1個時，實際提供的數量</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">分類</label>
                                 <input type="text" class="form-control" id="productCategory" placeholder="可選">
@@ -580,6 +591,7 @@ function displayProducts(products) {
                 <td>${product.unit}</td>
                 <td>$${product.price.toFixed(2)}</td>
                 <td>$${product.cost.toFixed(2)}</td>
+                <td><strong>${product.actualQuantity || 1}</strong></td>
                 <td>${stockLevel}</td>
                 <td><button class="status-badge ${status.badge}" onclick="toggleStatus('${product.productId}', '${product.status}')" title="點擊切換狀態">${status.text}</button></td>
                 <td>
@@ -627,6 +639,7 @@ function editProduct(productId) {
                 document.getElementById('productStock').disabled = true; // 編輯時禁止改庫存
                 document.getElementById('productMinStock').value = product.minStockAlert;
                 document.getElementById('productMaxStock').value = product.maxStockAlert || 1000;
+                document.getElementById('productActualQuantity').value = product.actualQuantity || 1;
                 document.getElementById('productDescription').value = product.description || '';
                 document.getElementById('productCategory').value = product.categoryId || '';
                 document.getElementById('productStatus').value = product.status || 'active';
@@ -645,6 +658,7 @@ function saveProduct() {
     const stock = parseInt(document.getElementById('productStock').value);
     const minStockAlert = parseInt(document.getElementById('productMinStock').value);
     const maxStockAlert = parseInt(document.getElementById('productMaxStock').value);
+    const actualQuantity = parseInt(document.getElementById('productActualQuantity').value);
     const description = document.getElementById('productDescription').value;
     const categoryId = document.getElementById('productCategory').value;
     const status = document.getElementById('productStatus').value;
@@ -654,7 +668,7 @@ function saveProduct() {
         return;
     }
     
-    const payload = { name, unit, price, cost, stock, minStockAlert, maxStockAlert, description, categoryId, status };
+    const payload = { name, unit, price, cost, stock, minStockAlert, maxStockAlert, actualQuantity, description, categoryId, status };
     
     if (currentProductId) {
         // 編輯
