@@ -359,7 +359,7 @@ class FirestoreService:
             return True, {
                 "status": new_status,
                 "total_delivered": total_delivered,
-                "total_ordered": total_ordered,
+                "total_ordered": expected_total,
                 "delivery_date": new_log.get("delivery_date", new_log.get("stamp", ""))
             }
         except Exception as e:

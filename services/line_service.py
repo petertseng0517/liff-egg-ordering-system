@@ -69,8 +69,9 @@ class LINEService:
         msg = (
             f"📦 出貨通知\n\n"
             f"訂單編號：{order_id}\n"
-            f"出貨日期：{delivery_date}\n"
-            f"出貨數量：{qty}盤"
+            f"本次出貨日期：{delivery_date}\n"
+            f"本次出貨數量：{qty}盤\n"
+            f"本訂單剩餘：{remaining_qty}盤"
         )
         return LINEService.send_push_message(user_id, msg)
     
