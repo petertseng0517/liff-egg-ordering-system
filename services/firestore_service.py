@@ -265,15 +265,20 @@ class FirestoreService:
         """取得所有訂單併入會員資料"""
         try:
             results = []
+
+            # 一次撈取所有會員，建立 userId -> member dict，避免 N+1 查詢
+            members_map = {}
+            for member_doc in cls._db.collection('members').stream():
+                members_map[member_doc.id] = member_doc.to_dict()
+
             orders_docs = cls._db.collection('orders').stream()
-            
+
             for order_doc in orders_docs:
                 order_data = order_doc.to_dict()
                 user_id = order_data.get('userId')
-                
-                # 取得會員資料
-                member_doc = cls._db.collection('members').document(user_id).get()
-                customer = member_doc.to_dict() if member_doc.exists else {}
+
+                # 從 map 取得會員資料，不再個別查詢
+                customer = members_map.get(user_id, {})
                 
                 # 確保 date 字段存在且是字符串格式
                 if 'date' not in order_data or order_data['date'] is None:

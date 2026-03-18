@@ -397,13 +397,19 @@
     });
 
     function loadOrders() {
+        const btn = document.querySelector('button[onclick="loadOrders()"]');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> 載入中...'; }
+
         fetch('/api/admin/orders')
             .then(res => res.json())
             .then(data => {
                 allOrders = data;
                 applyFilters();
             })
-            .catch(err => alert('載入失敗: ' + err));
+            .catch(err => alert('載入失敗: ' + err))
+            .finally(() => {
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> 重新整理'; }
+            });
     }
 
     function loadMembers() {
@@ -854,7 +860,7 @@
             deliveredTotal += parseInt(actualQty);
             const isCorrected = log.corrected ? '✏️ 已修正' : '';
             const address = log.address || '(未記錄)';
-            const deliveryDate = log.delivery_date || '(未指定)';
+            const deliveryDate = (log.delivery_date || '(未指定)').replace(/^0+(\d)/, '$1');
             tbody.innerHTML += `
                 <tr>
                     <td>${deliveryDate}</td>

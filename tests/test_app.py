@@ -127,11 +127,15 @@ class TestMemberAPI(unittest.TestCase):
         }, content_type='application/json')
         self.assertIn(response.status_code, [200, 201])
 
+    @patch('services.database_adapter.DatabaseAdapter.add_order')
+    @patch('services.database_adapter.DatabaseAdapter.get_product')
     @patch('services.line_service.LINEService.send_push_message')
-    def test_order_notification(self, mock_line):
+    def test_order_notification(self, mock_line, mock_get_product, mock_add_order):
         """測試訂單通知"""
         mock_line.return_value = True
-        
+        mock_get_product.return_value = (True, {'price': 100, 'status': 'active', 'actualQuantity': 1})
+        mock_add_order.return_value = True
+
         response = self.app.post('/api/order', json={
             'userId': 'U123',
             'productId': 'prod_test123',
@@ -149,19 +153,19 @@ class TestMemberAPI(unittest.TestCase):
             cls.app = app
             cls.client = app.test_client()
     
-    @patch('services.google_sheets.GoogleSheetsService.check_member_exists')
+    @patch('services.database_adapter.DatabaseAdapter.check_member_exists')
     def test_check_member_exists(self, mock_check):
         """測試檢查會員是否存在"""
         mock_check.return_value = {
             'userId': 'U123',
             'name': 'Test User'
         }
-        
-        response = self.client.post('/api/check_member', 
+
+        response = self.client.post('/api/check_member',
             json={'userId': 'U123'},
             content_type='application/json'
         )
-        
+
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertTrue(data['registered'])
@@ -215,12 +219,14 @@ class TestOrderAPI(unittest.TestCase):
             cls.app = app
             cls.client = app.test_client()
     
-    @patch('services.google_sheets.GoogleSheetsService.add_order')
+    @patch('services.database_adapter.DatabaseAdapter.add_order')
+    @patch('services.database_adapter.DatabaseAdapter.get_product')
     @patch('services.line_service.LINEService.send_order_confirmation')
-    def test_create_order_transfer(self, mock_line, mock_add):
+    def test_create_order_transfer(self, mock_line, mock_get_product, mock_add):
         """測試建立轉帳訂單"""
+        mock_get_product.return_value = (True, {'price': 100, 'status': 'active', 'actualQuantity': 1})
         mock_add.return_value = True
-        
+
         response = self.client.post('/api/order',
             json={
                 'userId': 'U123',
@@ -232,7 +238,7 @@ class TestOrderAPI(unittest.TestCase):
             },
             content_type='application/json'
         )
-        
+
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertEqual(data['status'], 'success')

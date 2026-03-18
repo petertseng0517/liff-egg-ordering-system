@@ -1,0 +1,7 @@
+[run]
+omit =
+    services/google_sheets.py
+
+[report]
+omit =
+    services/google_sheets.py
