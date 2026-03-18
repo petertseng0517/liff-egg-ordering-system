@@ -891,7 +891,7 @@ function formatDate(dateStr) {
     try {
         // 如果是時間戳
         if (typeof dateStr === 'number') {
-            return new Date(dateStr).toLocaleString('zh-TW', { 
+            return new Date(dateStr).toLocaleString('zh-TW-u-ca-gregory', {
                 year: 'numeric', month: '2-digit', day: '2-digit',
                 hour: '2-digit', minute: '2-digit'
             });
@@ -900,7 +900,7 @@ function formatDate(dateStr) {
         // 如果是 ISO 字符串
         if (typeof dateStr === 'string') {
             const date = new Date(dateStr);
-            return date.toLocaleString('zh-TW', { 
+            return date.toLocaleString('zh-TW-u-ca-gregory', {
                 year: 'numeric', month: '2-digit', day: '2-digit',
                 hour: '2-digit', minute: '2-digit'
             });
