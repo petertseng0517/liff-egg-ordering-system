@@ -4,10 +4,13 @@
 from flask import Blueprint, request, jsonify, session
 from auth import require_admin_login_api
 from services.database_adapter import DatabaseAdapter
+from services.firestore_service import FirestoreService
 from services.line_service import LINEService
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 import logging
+
+TW_TZ = pytz.timezone('Asia/Taipei')
 
 logger = logging.getLogger(__name__)
 
@@ -486,6 +489,40 @@ def get_all_members():
         }), 500
 
 
+@admin_bp.route('/member/create', methods=['POST'])
+@require_admin_login_api
+def create_member():
+    """管理者新增會員（自動產生 ADMIN_ userId）"""
+    try:
+        import secrets
+        import time
+
+        data = request.json
+        name = (data.get('name') or '').strip()
+        phone = (data.get('phone') or '').strip()
+        address = (data.get('address') or '').strip()
+        address2 = (data.get('address2') or '').strip()
+        birth_date = (data.get('birthDate') or '').strip()
+
+        if not name or not phone or not address:
+            return jsonify({"status": "error", "msg": "姓名、手機、地址為必填"}), 400
+
+        existing = DatabaseAdapter.get_all_members()
+        if any(m.get('phone') == phone for m in existing):
+            return jsonify({"status": "error", "msg": f"手機 {phone} 已有會員資料"}), 400
+
+        user_id = f"ADMIN_{int(time.time())}_{secrets.token_hex(2).upper()}"
+        success = DatabaseAdapter.add_member(user_id, name, phone, address, birth_date or None, address2 or None)
+
+        if success:
+            logger.info(f"Admin created member: {user_id} ({name})")
+            return jsonify({"status": "success", "msg": "會員新增成功", "userId": user_id})
+        return jsonify({"status": "error", "msg": "新增失敗，請稍後再試"}), 500
+    except Exception as e:
+        logger.error(f"Error in create_member: {e}")
+        return jsonify({"status": "error", "msg": str(e)}), 500
+
+
 @admin_bp.route('/member/<user_id>', methods=['GET'])
 @require_admin_login_api
 def get_member(user_id):
@@ -619,16 +656,15 @@ def generate_verification_token():
         
         # 生成驗證令牌（隨機 32 位字符串）
         token = secrets.token_urlsafe(32)
-        
-        # 儲存令牌（實際應用中應存儲在緩存或資料庫中，有效期 24 小時）
-        # 簡化版：存儲在 session 中
-        session_key = f"verify_token_{token}"
-        session[session_key] = {
-            "userId": user_id,
-            "timestamp": datetime.now(pytz.timezone('Asia/Taipei')).isoformat(),
-            "membername": member.get('name', '')
-        }
-        
+
+        # 儲存令牌至 Firestore（有效期 24 小時），確保跨裝置有效
+        expiry = datetime.now(TW_TZ) + timedelta(hours=24)
+        FirestoreService._db.collection('verificationTokens').document(token).set({
+            'userId': user_id,
+            'createdAt': datetime.now(TW_TZ),
+            'expiresAt': expiry
+        })
+
         logger.info(f"Verification token generated for user: {user_id}")
         
         return jsonify({

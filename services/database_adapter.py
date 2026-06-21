@@ -1,8 +1,6 @@
 """
-資料庫適配器 - 支援 Google Sheets 和 Firestore 切換
+資料庫適配器 - 統一介面包裝 Firestore
 """
-from config import Config
-from services.google_sheets import GoogleSheetsService
 from services.firestore_service import FirestoreService
 import logging
 
@@ -10,16 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseAdapter:
-    """資料庫適配器 - 統一介面支援多個後端"""
-    
+    """資料庫適配器 - 統一介面"""
+
     @staticmethod
     def get_service():
-        """根據配置返回相應的服務"""
-        if Config.USE_FIRESTORE:
-            return FirestoreService
-        else:
-            return GoogleSheetsService
-    
+        """返回資料庫服務"""
+        return FirestoreService
+
     # ===== 會員相關操作 =====
     
     @staticmethod

@@ -4,6 +4,7 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 from services.database_adapter import DatabaseAdapter
+from services.firestore_service import FirestoreService
 from services.line_service import LINEService
 from validation import FormValidator
 from config import Config, ProductConfig
@@ -11,6 +12,8 @@ from ecpay_sdk import ECPaySDK
 import os
 import logging
 import pytz
+
+TW_TZ = pytz.timezone('Asia/Taipei')
 
 logger = logging.getLogger(__name__)
 
@@ -327,4 +330,61 @@ def retry_payment():
     
     except Exception as e:
         logger.error(f"Error in retry_payment: {e}")
+        return jsonify({"status": "error", "msg": "系統錯誤"}), 500
+
+
+@member_bp.route('/verify_line_id', methods=['POST'])
+def verify_line_id():
+    """客戶點驗證連結後，將 LINE ID 綁定至 ADMIN_ 帳號"""
+    try:
+        data = request.json
+        token = (data.get('token') or '').strip()
+        line_user_id = (data.get('lineUserId') or '').strip()
+
+        if not token or not line_user_id:
+            return jsonify({"status": "error", "msg": "缺少參數"}), 400
+
+        # 從 Firestore 讀取 token
+        token_ref = FirestoreService._db.collection('verificationTokens').document(token)
+        token_doc = token_ref.get()
+        if not token_doc.exists:
+            return jsonify({"status": "error", "msg": "驗證連結無效或已使用"}), 400
+
+        token_data = token_doc.to_dict()
+        expiry = token_data.get('expiresAt')
+        if expiry and datetime.now(TW_TZ) > expiry:
+            token_ref.delete()
+            return jsonify({"status": "error", "msg": "驗證連結已過期（24小時內有效）"}), 400
+
+        old_user_id = token_data.get('userId')
+
+        # 取得舊會員資料
+        success, old_member = DatabaseAdapter.get_member_by_id(old_user_id)
+        if not success or not old_member:
+            return jsonify({"status": "error", "msg": "找不到會員資料"}), 404
+
+        # 檢查新 LINE ID 是否已有帳號
+        existing_success, existing = DatabaseAdapter.get_member_by_id(line_user_id)
+        if existing_success and existing:
+            return jsonify({"status": "error", "msg": "此 LINE 帳號已有會員資料，請聯絡管理員"}), 400
+
+        # 複製資料到真實 LINE userId
+        DatabaseAdapter.add_member(
+            user_id=line_user_id,
+            name=old_member.get('name'),
+            phone=old_member.get('phone'),
+            address=old_member.get('address'),
+            birth_date=old_member.get('birthDate'),
+            address2=old_member.get('address2')
+        )
+
+        # 停用舊 ADMIN_ 帳號並刪除 token
+        DatabaseAdapter.update_member_status(old_user_id, '停用')
+        token_ref.delete()
+
+        logger.info(f"LINE ID binding success: {old_user_id} -> {line_user_id}")
+        return jsonify({"status": "success", "msg": "LINE 帳號綁定成功"})
+
+    except Exception as e:
+        logger.error(f"Error in verify_line_id: {e}")
         return jsonify({"status": "error", "msg": "系統錯誤"}), 500

@@ -177,7 +177,6 @@ ai_eggs/
 ├── services/                       # 業務邏輯層
 │   ├── database_adapter.py        # 資料庫適配器
 │   ├── firestore_service.py       # Firestore 操作
-│   ├── google_sheets.py           # Google Sheets 操作 (備用)
 │   └── line_service.py            # LINE 推播通知
 │
 ├── templates/                      # 前端模板
@@ -209,7 +208,6 @@ ai_eggs/
 # ========== 應用基礎設定 ==========
 DEBUG=False                                    # 生產環境設為 False
 TIMEZONE=Asia/Taipei                           # 時區設定
-USE_FIRESTORE=True                             # 使用 Firestore（True）或 Google Sheets（False）
 
 # ========== LINE 官方帳號配置 ==========
 LINE_CHANNEL_ACCESS_TOKEN=你的_CHANNEL_ACCESS_TOKEN
@@ -333,16 +331,24 @@ cp .env.example .env
 # 放在專案根目錄或指定的路徑
 ```
 
-### Step 3：安裝依賴
+### Step 3：建立虛擬環境並安裝依賴
+
+> ⚠️ 請勿直接使用 `pip install`，建議建立獨立的虛擬環境以避免套件衝突。
+> 若搬移或重新命名專案目錄，既有的 `venv/` 會因路徑寫死而失效，需重新建立。
+
 ```bash
-pip install -r requirements.txt
+# 建立虛擬環境（只需執行一次）
+python3 -m venv venv
+
+# 安裝依賴
+venv/bin/pip install -r requirements.txt
 ```
 
 ### Step 4：本地開發環境設定
 
 **終端機 1 - 啟動 Flask 應用**
 ```bash
-python3 app.py
+venv/bin/python app.py
 # 預設運行於 http://localhost:5005
 ```
 
@@ -394,7 +400,6 @@ pytest --cov=routes --cov=services tests/
    DEBUG=False
    FLASK_SECRET_KEY=隨機密鑰（32+ 字元）
    SESSION_TIMEOUT=300
-   USE_FIRESTORE=True
    LINE_CHANNEL_ACCESS_TOKEN=your_token
    ADMIN_ACCOUNTS=admin:password
    ECPAY_MERCHANT_ID=2000132

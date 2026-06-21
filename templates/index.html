@@ -195,6 +195,44 @@
               userId = profile.userId;
               userName = profile.displayName;
               console.log("✅ 已取得 LINE User ID:", userId);
+
+              // 偵測驗證連結（管理者新增會員後發送給客戶的綁定連結）
+              const urlParams = new URLSearchParams(window.location.search);
+              if (urlParams.get('page') === 'verify' && urlParams.get('token')) {
+                const verifyToken = urlParams.get('token');
+                fetch('/api/verify_line_id', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ token: verifyToken, lineUserId: userId })
+                })
+                .then(r => r.json())
+                .then(data => {
+                  if (data.status === 'success') {
+                    document.getElementById('loading').innerHTML = `
+                      <div class="card p-5 mt-5 text-center">
+                        <h3 class="text-success mb-3">✅ LINE 帳號綁定成功</h3>
+                        <p>您的帳號已成功綁定，現在可以透過 LINE 訂購了！</p>
+                        <button class="btn btn-primary mt-3" onclick="location.href='/?page=order'">前往訂購</button>
+                      </div>`;
+                  } else {
+                    document.getElementById('loading').innerHTML = `
+                      <div class="card p-5 mt-5 text-center">
+                        <h3 class="text-danger mb-3">❌ 綁定失敗</h3>
+                        <p>${data.msg}</p>
+                        <p class="text-muted">請聯絡管理員協助處理。</p>
+                      </div>`;
+                  }
+                })
+                .catch(() => {
+                  document.getElementById('loading').innerHTML = `
+                    <div class="card p-5 mt-5 text-center">
+                      <h3 class="text-danger mb-3">❌ 系統錯誤</h3>
+                      <p>無法完成綁定，請稍後再試或聯絡管理員。</p>
+                    </div>`;
+                });
+                return;
+              }
+
               checkMemberStatus();
             }).catch(err => {
                 console.error("❌ 取得使用者資料失敗:", err);

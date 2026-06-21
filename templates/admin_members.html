@@ -96,7 +96,12 @@
             background-color: #f8d7da;
             color: #721c24;
         }
-        
+
+        .status-已刪除 {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
         .btn-action {
             padding: 5px 10px;
             font-size: 0.9em;
@@ -225,9 +230,13 @@
                     <option value="啟用">✅ 啟用</option>
                     <option value="停用">⏸️ 停用</option>
                     <option value="黑名單">🚫 黑名單</option>
+                    <option value="已刪除">🗑️ 已刪除</option>
                 </select>
             </div>
             <div class="col-md-4 text-end">
+                <button class="btn btn-warning" onclick="openCreateMemberModal()">
+                    <i class="bi bi-person-plus-fill"></i> 新增會員
+                </button>
                 <button class="btn btn-primary" onclick="loadMembers()">
                     <i class="bi bi-arrow-clockwise"></i> 重新整理
                 </button>
@@ -278,6 +287,49 @@
     </nav>
 </div>
 
+<!-- 新增會員模態窗 -->
+<div class="modal fade" id="createMemberModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-person-plus-fill"></i> 新增會員</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" role="alert">
+          系統將自動產生暫時會員 ID。若客戶日後透過 LINE 掃描驗證連結，即可將帳號綁定至其 LINE 帳號。
+        </div>
+        <form id="create-member-form" autocomplete="off">
+            <div class="mb-3">
+                <label class="form-label">姓名 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="create-name" name="create-name" required placeholder="請輸入姓名" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">手機 <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="create-phone" name="create-phone" required placeholder="例：0912345678" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">地址 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="create-address" name="create-address" required placeholder="請輸入配送地址" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">地址備註</label>
+                <input type="text" class="form-control" id="create-address2" name="create-address2" placeholder="公司名稱、樓層等（可選）" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">生日</label>
+                <input type="date" class="form-control" id="create-birth-date" name="create-birth-date" autocomplete="off">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-warning" onclick="createMember()">新增會員</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 編輯會員模態窗 -->
 <div class="modal fade" id="editMemberModal" tabindex="-1">
   <div class="modal-dialog">
@@ -287,37 +339,37 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="edit-member-form">
+        <form id="edit-member-form" autocomplete="off">
             <input type="hidden" id="edit-user-id">
-            
+
             <div class="mb-3">
                 <label class="form-label">會員ID</label>
                 <input type="text" class="form-control" id="edit-user-id-display" disabled>
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label">姓名 <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="edit-name" required>
+                <input type="text" class="form-control" id="edit-name" name="edit-name" required autocomplete="off">
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label">手機 <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control" id="edit-phone" required>
+                <input type="tel" class="form-control" id="edit-phone" name="edit-phone" required autocomplete="off">
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label">地址 <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="edit-address" required>
+                <input type="text" class="form-control" id="edit-address" name="edit-address" required autocomplete="off">
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label">地址備註</label>
-                <input type="text" class="form-control" id="edit-address2">
+                <input type="text" class="form-control" id="edit-address2" name="edit-address2" autocomplete="off">
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label">生日</label>
-                <input type="date" class="form-control" id="edit-birth-date">
+                <input type="date" class="form-control" id="edit-birth-date" name="edit-birth-date" autocomplete="off">
             </div>
             
             <div class="mb-3">
@@ -326,6 +378,7 @@
                     <option value="啟用">✅ 啟用</option>
                     <option value="停用">⏸️ 停用</option>
                     <option value="黑名單">🚫 黑名單</option>
+                    <option value="已刪除">🗑️ 已刪除</option>
                 </select>
             </div>
         </form>
@@ -464,6 +517,43 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('status-filter').addEventListener('change', applyFilters);
 });
 
+// 開啟新增會員 Modal
+function openCreateMemberModal() {
+    document.getElementById('create-member-form').reset();
+    new bootstrap.Modal(document.getElementById('createMemberModal')).show();
+}
+
+// 新增會員
+function createMember() {
+    const name = document.getElementById('create-name').value.trim();
+    const phone = document.getElementById('create-phone').value.trim();
+    const address = document.getElementById('create-address').value.trim();
+    const address2 = document.getElementById('create-address2').value.trim();
+    const birthDate = document.getElementById('create-birth-date').value;
+
+    if (!name || !phone || !address) {
+        alert('請填寫姓名、手機與地址（必填）');
+        return;
+    }
+
+    fetch('/api/admin/member/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, address, address2, birthDate })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById('createMemberModal')).hide();
+            loadMembers();
+            alert(`✅ 會員已新增\n會員 ID：${data.userId}`);
+        } else {
+            alert('❌ 新增失敗：' + data.msg);
+        }
+    })
+    .catch(() => alert('❌ 新增時發生錯誤，請稍後再試'));
+}
+
 // 載入會員列表
 function loadMembers() {
     fetch('/api/admin/members')
@@ -507,7 +597,7 @@ function applyFilters() {
                           member.name.toLowerCase().includes(searchText) ||
                           member.phone.includes(searchText);
         
-        const matchStatus = !statusFilter || member.status === statusFilter;
+        const matchStatus = statusFilter ? member.status === statusFilter : member.status !== '已刪除';
         
         return matchSearch && matchStatus;
     });
@@ -564,6 +654,8 @@ function displayMembers(members) {
                         <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '啟用')">✅ 啟用</a></li>
                         <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '停用')">⏸️ 停用</a></li>
                         <li><a class="dropdown-item" onclick="changeStatus('${member.userId}', '黑名單')">🚫 黑名單</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" onclick="changeStatus('${member.userId}', '已刪除')">🗑️ 刪除會員</a></li>
                     </ul>
                 </div>
             </td>
@@ -641,7 +733,7 @@ function saveMemberChanges() {
     }
     
     // 先更新基本資料
-    fetch('/api/member/edit_member', {
+    fetch('/api/edit_member', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -865,6 +957,7 @@ function getStatusIcon(status) {
         case '啟用': return '✅';
         case '停用': return '⏸️';
         case '黑名單': return '🚫';
+        case '已刪除': return '🗑️';
         default: return '•';
     }
 }

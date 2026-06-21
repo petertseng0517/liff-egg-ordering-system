@@ -83,6 +83,7 @@
                             <option value="部分配送">部分配送</option>
                             <option value="已完成">已完成</option>
                             <option value="已取消">已取消</option>
+                            <option value="已刪除">已刪除</option>
                         </select>
                     </div>
                 </div>
@@ -276,6 +277,7 @@
                     <option value="部分配送">部分配送</option>
                     <option value="已完成">已完成</option>
                     <option value="已取消">已取消</option>
+                    <option value="已刪除">已刪除</option>
                 </select>
                 <button class="btn btn-primary" onclick="updateStatus()">手動更新狀態</button>
             </div>
@@ -589,7 +591,11 @@
                                (o.customer.name && o.customer.name.toLowerCase().includes(query)) ||
                                (o.customer.phone && o.customer.phone.includes(query)));
             if (!searchMatch) return false;
-            if (status && o.status !== status) return false;
+            if (status) {
+                if (o.status !== status) return false;
+            } else if (o.status === '已刪除') {
+                return false;
+            }
 
             const orderDate = new Date(o.date);
             const now = new Date();
@@ -680,6 +686,7 @@
             case '部分配送': return 'bg-secondary text-dark';
             case '已完成': return 'bg-success';
             case '已取消': return 'bg-secondary';
+            case '已刪除': return 'bg-light text-muted border';
             default: return 'bg-secondary';
         }
     }    function getPaymentBadge(status) {

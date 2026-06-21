@@ -167,7 +167,7 @@ class FirestoreService:
     def update_member_status(cls, user_id, status):
         """更新會員狀態"""
         try:
-            valid_statuses = ['啟用', '停用', '黑名單']
+            valid_statuses = ['啟用', '停用', '黑名單', '已刪除']
             if status not in valid_statuses:
                 return False, f"無效的狀態。必須是: {', '.join(valid_statuses)}"
             
@@ -216,7 +216,10 @@ class FirestoreService:
             orders = []
             for doc in docs:
                 order_data = doc.to_dict()
-                
+
+                if order_data.get('status') == '已刪除':
+                    continue
+
                 # 確保 date 字段存在且是字符串格式
                 if 'date' not in order_data or order_data['date'] is None:
                     # 如果沒有 date，使用 createdAt

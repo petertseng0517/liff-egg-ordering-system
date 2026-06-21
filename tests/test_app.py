@@ -22,8 +22,8 @@ class TestFlaskApp(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        # 模擬 Google Sheets 初始化，避免實際連線
-        with patch('services.google_sheets.GoogleSheetsService.init'):
+        # 模擬 Firestore 初始化，避免實際連線
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()
@@ -57,7 +57,7 @@ class TestAuthRoutes(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        with patch('services.google_sheets.GoogleSheetsService.init'):
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()
@@ -103,7 +103,7 @@ class TestMemberAPI(unittest.TestCase):
         self.app = app.test_client()
         self.app.testing = True
 
-    @patch('services.google_sheets.GoogleSheetsService.check_member_exists')
+    @patch('services.firestore_service.FirestoreService.check_member_exists')
     def test_check_member(self, mock_check):
         """測試成員查詢"""
         mock_check.return_value = {'userId': 'U123', 'name': 'Test'}
@@ -114,7 +114,7 @@ class TestMemberAPI(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-    @patch('services.google_sheets.GoogleSheetsService.add_member')
+    @patch('services.firestore_service.FirestoreService.add_member')
     def test_add_member(self, mock_add):
         """測試新增成員"""
         mock_add.return_value = True
@@ -148,7 +148,7 @@ class TestMemberAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        with patch('services.google_sheets.GoogleSheetsService.init'):
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()
@@ -171,7 +171,7 @@ class TestMemberAPI(unittest.TestCase):
         self.assertTrue(data['registered'])
         self.assertEqual(data['name'], 'Test User')
     
-    @patch('services.google_sheets.GoogleSheetsService.check_member_exists')
+    @patch('services.firestore_service.FirestoreService.check_member_exists')
     def test_check_member_not_exists(self, mock_check):
         """測試會員不存在"""
         mock_check.return_value = None
@@ -185,7 +185,7 @@ class TestMemberAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertFalse(data['registered'])
     
-    @patch('services.google_sheets.GoogleSheetsService.add_member')
+    @patch('services.firestore_service.FirestoreService.add_member')
     @patch('services.line_service.LINEService.send_push_message')
     def test_register_member(self, mock_line, mock_add):
         """測試註冊會員"""
@@ -214,7 +214,7 @@ class TestOrderAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        with patch('services.google_sheets.GoogleSheetsService.init'):
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()

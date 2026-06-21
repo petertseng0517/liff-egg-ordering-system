@@ -34,15 +34,7 @@ class Config:
     # 時區設置 - 台灣時區
     TIMEZONE = 'Asia/Taipei'
     
-    # Google Sheets 配置
-    SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
-    GOOGLE_SHEETS_SCOPES = [
-        'https://www.googleapis.com/auth/spreadsheets',
-        'https://www.googleapis.com/auth/drive'
-    ]
-    
     # Firebase Firestore 配置
-    USE_FIRESTORE = os.getenv('USE_FIRESTORE', 'false').lower() == 'true'
     FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID')
     FIREBASE_PRIVATE_KEY = os.getenv('FIREBASE_PRIVATE_KEY')
     FIREBASE_CLIENT_EMAIL = os.getenv('FIREBASE_CLIENT_EMAIL')

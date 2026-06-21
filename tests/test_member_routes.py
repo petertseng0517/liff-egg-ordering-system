@@ -20,8 +20,7 @@ class TestMemberRoutes(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        with patch('services.firestore_service.FirestoreService.init'), \
-             patch('services.google_sheets.GoogleSheetsService.init'):
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()
@@ -45,8 +44,7 @@ class TestMemberDataValidation(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """測試類初始化"""
-        with patch('services.firestore_service.FirestoreService.init'), \
-             patch('services.google_sheets.GoogleSheetsService.init'):
+        with patch('services.firestore_service.FirestoreService.init'):
             from app import app
             cls.app = app
             cls.client = app.test_client()

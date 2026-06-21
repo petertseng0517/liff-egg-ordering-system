@@ -6,7 +6,6 @@ import logging
 import os
 from datetime import timedelta
 from config import Config
-from services.google_sheets import GoogleSheetsService
 from services.firestore_service import FirestoreService
 from routes.auth import auth_bp
 from routes.member import member_bp
@@ -47,12 +46,8 @@ if os.environ.get('FLASK_ENV') == 'testing':
 
 # 初始化資料庫服務
 try:
-    if Config.USE_FIRESTORE:
-        FirestoreService.init()
-        logger.info("Firebase Firestore initialized successfully")
-    else:
-        GoogleSheetsService.init()
-        logger.info("Google Sheets initialized successfully")
+    FirestoreService.init()
+    logger.info("Firebase Firestore initialized successfully")
     logger.info("Application initialized successfully")
 except Exception as e:
     logger.error(f"Failed to initialize application: {e}")
