@@ -23,3 +23,6 @@ htmlcov/
 .idea/
 *.swp
 *.swo
+
+# 報告匯出檔案
+*.pdf

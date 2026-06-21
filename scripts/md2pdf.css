@@ -1,0 +1,12 @@
+body { font-family: -apple-system, "PingFang TC", "Helvetica Neue", sans-serif; font-size: 14px; line-height: 1.6; max-width: 900px; margin: 30px auto; padding: 0 20px; color: #1a1a1a; }
+h1 { font-size: 24px; border-bottom: 2px solid #333; padding-bottom: 8px; }
+h2 { font-size: 19px; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-top: 28px; }
+h3 { font-size: 16px; margin-top: 20px; }
+h4 { font-size: 14px; margin-top: 16px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 12.5px; }
+th, td { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+th { background-color: #f0f0f0; }
+code { background: #f3f3f3; padding: 1px 4px; border-radius: 3px; font-size: 0.9em; }
+pre { background: #f3f3f3; padding: 10px; border-radius: 4px; overflow-x: auto; }
+hr { border: none; border-top: 1px solid #ccc; margin: 24px 0; }
+blockquote { border-left: 3px solid #aaa; margin-left: 0; padding-left: 12px; color: #555; }
