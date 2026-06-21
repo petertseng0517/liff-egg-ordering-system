@@ -383,8 +383,8 @@ def verify_line_id():
             address2=old_member.get('address2')
         )
 
-        # 將舊 ADMIN_ 帳號設為已刪除（預設列表自動隱藏）並刪除 token
-        DatabaseAdapter.update_member_status(old_user_id, '已刪除')
+        # 將舊 ADMIN_ 帳號標記為「已綁定-略」（預設列表自動隱藏）並刪除 token
+        DatabaseAdapter.update_member_status(old_user_id, '已綁定-略')
         token_ref.delete()
 
         logger.info(f"LINE ID binding success: {old_user_id} -> {line_user_id}")

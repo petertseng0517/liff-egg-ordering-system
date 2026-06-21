@@ -102,6 +102,11 @@
             color: #383d41;
         }
 
+        .status-已綁定-略 {
+            background-color: #cfe2ff;
+            color: #084298;
+        }
+
         .btn-action {
             padding: 5px 10px;
             font-size: 0.9em;
@@ -227,10 +232,11 @@
                 <label class="form-label">篩選狀態</label>
                 <select class="form-select" id="status-filter">
                     <option value="">全部狀態</option>
-                    <option value="啟用">✅ 啟用</option>
+                    <option value="啟用" selected>✅ 啟用</option>
                     <option value="停用">⏸️ 停用</option>
                     <option value="黑名單">🚫 黑名單</option>
                     <option value="已刪除">🗑️ 已刪除</option>
+                    <option value="已綁定-略">🔗 已綁定-略</option>
                 </select>
             </div>
             <div class="col-md-4 text-end">
@@ -597,7 +603,9 @@ function applyFilters() {
                           member.name.toLowerCase().includes(searchText) ||
                           member.phone.includes(searchText);
         
-        const matchStatus = statusFilter ? member.status === statusFilter : member.status !== '已刪除';
+        const matchStatus = statusFilter
+            ? member.status === statusFilter
+            : (member.status !== '已刪除' && member.status !== '已綁定-略');
         
         return matchSearch && matchStatus;
     });
@@ -959,6 +967,7 @@ function getStatusIcon(status) {
         case '停用': return '⏸️';
         case '黑名單': return '🚫';
         case '已刪除': return '🗑️';
+        case '已綁定-略': return '🔗';
         default: return '•';
     }
 }

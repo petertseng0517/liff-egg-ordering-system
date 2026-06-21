@@ -167,7 +167,7 @@ class FirestoreService:
     def update_member_status(cls, user_id, status):
         """更新會員狀態"""
         try:
-            valid_statuses = ['啟用', '停用', '黑名單', '已刪除']
+            valid_statuses = ['啟用', '停用', '黑名單', '已刪除', '已綁定-略']
             if status not in valid_statuses:
                 return False, f"無效的狀態。必須是: {', '.join(valid_statuses)}"
             
