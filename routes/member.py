@@ -340,8 +340,9 @@ def verify_line_id():
         data = request.json
         token = (data.get('token') or '').strip()
         line_user_id = (data.get('lineUserId') or '').strip()
+        phone = (data.get('phone') or '').strip()
 
-        if not token or not line_user_id:
+        if not token or not line_user_id or not phone:
             return jsonify({"status": "error", "msg": "缺少參數"}), 400
 
         # 從 Firestore 讀取 token
@@ -362,6 +363,10 @@ def verify_line_id():
         success, old_member = DatabaseAdapter.get_member_by_id(old_user_id)
         if not success or not old_member:
             return jsonify({"status": "error", "msg": "找不到會員資料"}), 404
+
+        # 二次驗證：手機號碼須與管理者建立帳號時填寫的一致
+        if phone != (old_member.get('phone') or '').strip():
+            return jsonify({"status": "error", "msg": "手機號碼不符，請確認後再試"}), 400
 
         # 檢查新 LINE ID 是否已有帳號
         existing_success, existing = DatabaseAdapter.get_member_by_id(line_user_id)
