@@ -851,7 +851,8 @@ function generateVerificationToken(userId) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            const verificationUrl = `${window.location.origin}/?page=verify&token=${data.token}`;
+            const LIFF_ID = "2008795367-LqjjCaaQ";  // 與 index.html 的 MY_LIFF_ID 一致
+            const verificationUrl = `https://liff.line.me/${LIFF_ID}?page=verify&token=${data.token}`;
             document.getElementById('verification-link').value = verificationUrl;
             
             // 加載 Webhook 日誌
